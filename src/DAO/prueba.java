@@ -9,5 +9,5 @@ package DAO;
  * @author PC
  */
 public class prueba {
-    
+    int number;
 }
