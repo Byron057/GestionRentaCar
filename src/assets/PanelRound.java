@@ -8,7 +8,6 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JPanel;
-import java.awt.Cursor;
 
 public class PanelRound extends JPanel {
 
@@ -53,11 +52,19 @@ public class PanelRound extends JPanel {
     private int roundBottomLeft = 0;
     private int roundBottomRight = 0;
     private int borderSize = 0;
-    private java.awt.Color borderColor = java.awt.Color.BLACK;
+    private java.awt.Color borderColor = new java.awt.Color(220, 220, 220); // Gris claro
     
+    public int getBorderSize() {
+        return borderSize;
+    }
+
     public void setBorderSize(int borderSize) {
         this.borderSize = borderSize;
         repaint();
+    }
+
+    public java.awt.Color getBorderColor() {
+        return borderColor;
     }
 
     public void setBorderColor(java.awt.Color borderColor) {
@@ -67,14 +74,20 @@ public class PanelRound extends JPanel {
 
     public PanelRound() {
         setOpaque(false);
-    
     }
 
     @Override
     protected void paintComponent(Graphics grphcs) {
+        super.paintComponent(grphcs);
         Graphics2D g2 = (Graphics2D) grphcs.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
+        
+        // Trasladamos sutilmente el lienzo para que el borde izquierdo y superior no se corten
+        if (borderSize > 0) {
+            g2.translate(borderSize / 2.0, borderSize / 2.0);
+        }
+
         Area area = new Area(createRoundTopLeft());
         if (roundTopRight > 0) {
             area.intersect(new Area(createRoundTopRight()));
@@ -86,19 +99,23 @@ public class PanelRound extends JPanel {
             area.intersect(new Area(createRoundBottomRight()));
         }
         g2.fill(area);
+        
         if (borderSize > 0) {
-    g2.setColor(borderColor);
-    g2.setStroke(new java.awt.BasicStroke(borderSize));
-    g2.draw(area);
-}
+            g2.setColor(borderColor);
+            g2.setStroke(new java.awt.BasicStroke(borderSize));
+            g2.draw(area);
+        }
 
-g2.dispose();
-super.paintComponent(grphcs);
+        g2.dispose();
     }
 
+    // --- CORRECCIÓN --- 
+    // Restamos el borderSize al ancho y alto para que no se rebase a la derecha/abajo.
+
     private Shape createRoundTopLeft() {
-        int width = getWidth();
-        int height = getHeight();
+        int offset = borderSize > 0 ? borderSize : 0;
+        int width = getWidth() - offset;
+        int height = getHeight() - offset;
         int roundX = Math.min(width, roundTopLeft);
         int roundY = Math.min(height, roundTopLeft);
         Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
@@ -108,8 +125,9 @@ super.paintComponent(grphcs);
     }
 
     private Shape createRoundTopRight() {
-        int width = getWidth();
-        int height = getHeight();
+        int offset = borderSize > 0 ? borderSize : 0;
+        int width = getWidth() - offset;
+        int height = getHeight() - offset;
         int roundX = Math.min(width, roundTopRight);
         int roundY = Math.min(height, roundTopRight);
         Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
@@ -119,8 +137,9 @@ super.paintComponent(grphcs);
     }
 
     private Shape createRoundBottomLeft() {
-        int width = getWidth();
-        int height = getHeight();
+        int offset = borderSize > 0 ? borderSize : 0;
+        int width = getWidth() - offset;
+        int height = getHeight() - offset;
         int roundX = Math.min(width, roundBottomLeft);
         int roundY = Math.min(height, roundBottomLeft);
         Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
@@ -130,8 +149,9 @@ super.paintComponent(grphcs);
     }
 
     private Shape createRoundBottomRight() {
-        int width = getWidth();
-        int height = getHeight();
+        int offset = borderSize > 0 ? borderSize : 0;
+        int width = getWidth() - offset;
+        int height = getHeight() - offset;
         int roundX = Math.min(width, roundBottomRight);
         int roundY = Math.min(height, roundBottomRight);
         Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
