@@ -29,6 +29,7 @@ public class ComboBoxRound extends JComboBox<Object> {
     // PROPIEDADES VISUALES PARA NETBEANS
     // ==========================================
     private String opciones = "";
+    private String placeholder = "Seleccione una opción"; // NUEVA PROPIEDAD
     
     // Bordes del ComboBox (La caja principal)
     private int borderSize = 0;
@@ -49,13 +50,16 @@ public class ComboBoxRound extends JComboBox<Object> {
                     this.addItem(item.trim());
                 }
             }
-            // ESTO SOLUCIONA QUE SE VEAN ENCIMADOS EN EL DESIGNER:
-            // Fuerza a que solo se muestre la primera opción
+            // MODIFICACIÓN: En lugar de 0, ponemos -1 para que inicie sin selección
             if (this.getItemCount() > 0) {
-                this.setSelectedIndex(0); 
+                this.setSelectedIndex(-1); 
             }
         }
     }
+
+    // GETTERS Y SETTERS DEL PLACEHOLDER
+    public String getPlaceholder() { return placeholder; }
+    public void setPlaceholder(String placeholder) { this.placeholder = placeholder; repaint(); }
 
     public int getBorderSize() { return borderSize; }
     public void setBorderSize(int borderSize) { this.borderSize = borderSize; repaint(); }
@@ -186,12 +190,19 @@ public class ComboBoxRound extends JComboBox<Object> {
             JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, false);
             label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
             
-            if (isSelected && index >= 0) {
-                label.setBackground(new Color(245, 245, 245)); 
-                label.setForeground(Color.BLACK);
-            } else {
+            // LÓGICA DEL PLACEHOLDER
+            if (index == -1 && value == null) {
+                label.setText(placeholder);
+                label.setForeground(new Color(153, 153, 153)); // Color gris para el texto guía
                 label.setBackground(Color.WHITE);
-                label.setForeground(new Color(60, 60, 60));
+            } else {
+                if (isSelected && index >= 0) {
+                    label.setBackground(new Color(245, 245, 245)); 
+                    label.setForeground(Color.BLACK);
+                } else {
+                    label.setBackground(Color.WHITE);
+                    label.setForeground(new Color(60, 60, 60));
+                }
             }
             return label;
         }

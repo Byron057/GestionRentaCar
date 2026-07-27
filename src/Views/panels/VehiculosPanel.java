@@ -3,18 +3,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+import java.awt.Color;
+import java.awt.Cursor;
+import javax.swing.ImageIcon;
+
 
 /**
  *
  * @author PC
  */
 public class VehiculosPanel extends javax.swing.JPanel {
+        private String idClienteSeleccionado = null;
 
     /**
      * Creates new form ClientesPanel
      */
     public VehiculosPanel() {
         initComponents();
+        tableVehiculos.agregarFila(new Object[]{"2", "0987654321", "María", "Gómez", "0991122334", "Norte", "Inactivo"});
+        activarBotonesAccion(false);
+        
+
+    }
+    // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
+    private void activarBotonesAccion(boolean activar) {
+        if (activar) {
+            btnEditarVehiculo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnEditarVehiculo.setBackground(new Color(254, 240, 228)); 
+            txtEditarCliente.setForeground(new Color(251, 124, 20));
+            iconEditarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
+            btnEliminarVehiculos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnEliminarVehiculos.setBackground(new Color(254, 234, 232));
+            txtEliminarCliente.setForeground(new Color(255, 0, 51));
+             iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+        } else {
+           
+            btnEditarVehiculo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            btnEditarVehiculo.setBackground(new Color(245, 245, 245)); 
+            txtEditarCliente.setForeground(new Color(170, 170, 170)); 
+            iconEditarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
+            btnEliminarVehiculos.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            btnEliminarVehiculos.setBackground(new Color(245, 245, 245)); 
+            txtEliminarCliente.setForeground(new Color(170, 170, 170)); 
+            iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
+            idClienteSeleccionado = null;
+        }
     }
 
     /**
@@ -27,23 +60,34 @@ public class VehiculosPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         panelRound1 = new assets.PanelRound();
-        tableClientes = new assets.TableRow();
-        btnEliminarCliente = new assets.PanelRound();
-        btnAgregarCliente = new assets.PanelRound();
-        btnEditarCliente = new assets.PanelRound();
+        tableVehiculos = new assets.TableRow();
+        btnEditarVehiculo = new assets.PanelRound();
+        iconEditarCliente = new javax.swing.JLabel();
+        txtEditarCliente = new javax.swing.JLabel();
+        btnAgregarVehiculo = new assets.PanelRound();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        btnEliminarVehiculos = new assets.PanelRound();
+        iconEliminarCliente = new javax.swing.JLabel();
+        txtEliminarCliente = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(710, 502));
 
-        panelRound1.setBackground(new java.awt.Color(0, 0, 255));
+        panelRound1.setBackground(new java.awt.Color(253, 251, 250));
+        panelRound1.setBorderColor(new java.awt.Color(204, 204, 204));
+        panelRound1.setBorderSize(1);
         panelRound1.setRoundBottomLeft(20);
         panelRound1.setRoundBottomRight(20);
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
 
-        tableClientes.setColumnas(
-            new String[]{"ID","Cedula","Nombre","Apellidos","Telefono","Direccion","Estado"}
-        );
+        tableVehiculos.setNombresColumnas("ID, Placa,Marca,Modelo,Tipo,Color,Estado");
+        tableVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableVehiculosMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
@@ -51,62 +95,121 @@ public class VehiculosPanel extends javax.swing.JPanel {
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addComponent(tableVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
+            .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
+                .addComponent(tableVehiculos, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        btnEliminarCliente.setRoundBottomLeft(20);
-        btnEliminarCliente.setRoundBottomRight(20);
-        btnEliminarCliente.setRoundTopLeft(20);
-        btnEliminarCliente.setRoundTopRight(20);
+        btnEditarVehiculo.setBackground(new java.awt.Color(254, 240, 228));
+        btnEditarVehiculo.setRoundBottomLeft(20);
+        btnEditarVehiculo.setRoundBottomRight(20);
+        btnEditarVehiculo.setRoundTopLeft(20);
+        btnEditarVehiculo.setRoundTopRight(20);
+        btnEditarVehiculo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEditarVehiculo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarVehiculoMouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout btnEliminarClienteLayout = new javax.swing.GroupLayout(btnEliminarCliente);
-        btnEliminarCliente.setLayout(btnEliminarClienteLayout);
-        btnEliminarClienteLayout.setHorizontalGroup(
-            btnEliminarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+        iconEditarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconPencilOrange.png"))); // NOI18N
+
+        txtEditarCliente.setBackground(new java.awt.Color(251, 124, 20));
+        txtEditarCliente.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtEditarCliente.setForeground(new java.awt.Color(251, 124, 20));
+        txtEditarCliente.setText("Editar");
+
+        javax.swing.GroupLayout btnEditarVehiculoLayout = new javax.swing.GroupLayout(btnEditarVehiculo);
+        btnEditarVehiculo.setLayout(btnEditarVehiculoLayout);
+        btnEditarVehiculoLayout.setHorizontalGroup(
+            btnEditarVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditarVehiculoLayout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addComponent(iconEditarCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        btnEliminarClienteLayout.setVerticalGroup(
-            btnEliminarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 45, Short.MAX_VALUE)
+        btnEditarVehiculoLayout.setVerticalGroup(
+            btnEditarVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconEditarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+            .addComponent(txtEditarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        btnAgregarCliente.setRoundBottomLeft(20);
-        btnAgregarCliente.setRoundBottomRight(20);
-        btnAgregarCliente.setRoundTopLeft(20);
-        btnAgregarCliente.setRoundTopRight(20);
+        btnAgregarVehiculo.setBackground(new java.awt.Color(255, 153, 0));
+        btnAgregarVehiculo.setRoundBottomLeft(20);
+        btnAgregarVehiculo.setRoundBottomRight(20);
+        btnAgregarVehiculo.setRoundTopLeft(20);
+        btnAgregarVehiculo.setRoundTopRight(20);
+        btnAgregarVehiculo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAgregarVehiculo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarVehiculoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarVehiculoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAgregarVehiculoMouseExited(evt);
+            }
+        });
+        btnAgregarVehiculo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout btnAgregarClienteLayout = new javax.swing.GroupLayout(btnAgregarCliente);
-        btnAgregarCliente.setLayout(btnAgregarClienteLayout);
-        btnAgregarClienteLayout.setHorizontalGroup(
-            btnAgregarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
-        );
-        btnAgregarClienteLayout.setVerticalGroup(
-            btnAgregarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 45, Short.MAX_VALUE)
-        );
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("+");
+        btnAgregarVehiculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 36, 90));
 
-        btnEditarCliente.setRoundBottomLeft(20);
-        btnEditarCliente.setRoundBottomRight(20);
-        btnEditarCliente.setRoundTopLeft(20);
-        btnEditarCliente.setRoundTopRight(20);
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Nuevo Vehiculo");
+        btnAgregarVehiculo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 9, 150, 20));
 
-        javax.swing.GroupLayout btnEditarClienteLayout = new javax.swing.GroupLayout(btnEditarCliente);
-        btnEditarCliente.setLayout(btnEditarClienteLayout);
-        btnEditarClienteLayout.setHorizontalGroup(
-            btnEditarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+        btnEliminarVehiculos.setBackground(new java.awt.Color(254, 234, 232));
+        btnEliminarVehiculos.setRoundBottomLeft(20);
+        btnEliminarVehiculos.setRoundBottomRight(20);
+        btnEliminarVehiculos.setRoundTopLeft(20);
+        btnEliminarVehiculos.setRoundTopRight(20);
+        btnEliminarVehiculos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEliminarVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarVehiculosMouseClicked(evt);
+            }
+        });
+
+        iconEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconTrashRed.png"))); // NOI18N
+
+        txtEliminarCliente.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtEliminarCliente.setForeground(new java.awt.Color(255, 0, 51));
+        txtEliminarCliente.setText("Eliminar");
+
+        javax.swing.GroupLayout btnEliminarVehiculosLayout = new javax.swing.GroupLayout(btnEliminarVehiculos);
+        btnEliminarVehiculos.setLayout(btnEliminarVehiculosLayout);
+        btnEliminarVehiculosLayout.setHorizontalGroup(
+            btnEliminarVehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEliminarVehiculosLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(iconEliminarCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtEliminarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        btnEditarClienteLayout.setVerticalGroup(
-            btnEditarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 45, Short.MAX_VALUE)
+        btnEliminarVehiculosLayout.setVerticalGroup(
+            btnEliminarVehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEliminarVehiculosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(btnEliminarVehiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconEliminarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(txtEliminarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -117,34 +220,172 @@ public class VehiculosPanel extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditarVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEliminarVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(btnAgregarVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(btnAgregarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(btnAgregarVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEliminarVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditarVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVehiculoMouseClicked
+
+        javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        
+        // 2. Creamos el efecto de fondo oscuro
+        javax.swing.JPanel fondoOscuro = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.setColor(new java.awt.Color(0, 0, 0, 150)); // Negro con transparencia
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        fondoOscuro.setOpaque(false);
+        fondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {}); // Bloquea los clics de atrás
+
+        //Encendemos el fondo oscuro
+        ventanaPadre.setGlassPane(fondoOscuro);
+        fondoOscuro.setVisible(true);
+
+        VehiculosForm modal = new VehiculosForm(ventanaPadre, true); 
+        modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
+        
+        modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
+
+        //SApagamos el fondo oscuro cuando se cierra el JDialog
+        fondoOscuro.setVisible(false);
+       
+    }//GEN-LAST:event_btnAgregarVehiculoMouseClicked
+
+    private void btnAgregarVehiculoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVehiculoMouseEntered
+        // TODO add your handling code here:
+        btnAgregarVehiculo.setBackground(new Color(255,139,49));
+    }//GEN-LAST:event_btnAgregarVehiculoMouseEntered
+
+    private void btnAgregarVehiculoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVehiculoMouseExited
+        // TODO add your handling code here:
+        btnAgregarVehiculo.setBackground(new Color(255,153,0));
+    }//GEN-LAST:event_btnAgregarVehiculoMouseExited
+
+    private void tableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVehiculosMouseClicked
+      int filaSeleccionada = tableVehiculos.getTabla().getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            Object id = tableVehiculos.getTabla().getValueAt(filaSeleccionada, 0);
+            
+            if (id != null && !id.toString().trim().isEmpty()) {
+                // Guardamos el ID y encendemos los botones
+                idClienteSeleccionado = id.toString();
+                activarBotonesAccion(true);
+            } else {
+                // Si hace clic en una fila de relleno vacía, los apagamos
+                activarBotonesAccion(false);
+            }
+        } else {
+            // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
+            activarBotonesAccion(false);
+        }
+    }//GEN-LAST:event_tableVehiculosMouseClicked
+
+    private void btnEditarVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarVehiculoMouseClicked
+        if (idClienteSeleccionado == null) return;
+
+        // Obtenemos la fila
+        int fila = tableVehiculos.getTabla().getSelectedRow();
+        
+        // ¡LA SOLUCIÓN! Evitamos que el código continúe si se perdió la selección visual (fila -1)
+        if (fila == -1) return;
+
+        // Extraer los datos de la fila seleccionada de forma segura
+        String cedula = tableVehiculos.getTabla().getValueAt(fila, 1).toString();
+        String nombre = tableVehiculos.getTabla().getValueAt(fila, 2).toString();
+        String apellido = tableVehiculos.getTabla().getValueAt(fila, 3).toString();
+        String telefono = tableVehiculos.getTabla().getValueAt(fila, 4).toString();
+        String direccion = tableVehiculos.getTabla().getValueAt(fila, 5).toString();
+        String estado = tableVehiculos.getTabla().getValueAt(fila, 6).toString();
+
+        javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+        
+        javax.swing.JPanel fondoOscuro = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(java.awt.Graphics g) {
+                super.paintComponent(g);
+                g.setColor(new java.awt.Color(0, 0, 0, 150));
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        fondoOscuro.setOpaque(false);
+        fondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {});
+
+        ventanaPadre.setGlassPane(fondoOscuro);
+        fondoOscuro.setVisible(true);
+
+        ClientesForm modal = new ClientesForm(ventanaPadre, true); 
+        
+        // Enviamos todos los datos, incluyendo el estado
+        modal.cargarDatosEdicion(idClienteSeleccionado, cedula, nombre, apellido, telefono, direccion, estado);
+        
+        modal.setLocationRelativeTo(ventanaPadre);
+        modal.setVisible(true);
+
+        fondoOscuro.setVisible(false);
+    }//GEN-LAST:event_btnEditarVehiculoMouseClicked
+
+    private void btnEliminarVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarVehiculosMouseClicked
+        // TODO add your handling code here:
+        if (idClienteSeleccionado == null) return;
+
+        // 1. Mostrar ventana de confirmación
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro que desea eliminar el cliente seleccionado?", 
+            "Confirmar Eliminación", 
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+
+        // 2. Si el usuario presiona "Sí"
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            
+            // AQUÍ IRÁ TU LÓGICA SQL (DELETE FROM clientes WHERE id = ...)
+            System.out.println("Eliminando de la BD al cliente ID: " + idClienteSeleccionado);
+            
+            // 3. Lo eliminamos visualmente de la tabla
+            int fila = tableVehiculos.getTabla().getSelectedRow();
+            tableVehiculos.eliminarFila(fila);
+            
+            // 4. Como ya se eliminó, apagamos los botones de nuevo
+            activarBotonesAccion(false);
+        }
+    }//GEN-LAST:event_btnEliminarVehiculosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private assets.PanelRound btnAgregarCliente;
-    private assets.PanelRound btnEditarCliente;
-    private assets.PanelRound btnEliminarCliente;
+    private assets.PanelRound btnAgregarVehiculo;
+    private assets.PanelRound btnEditarVehiculo;
+    private assets.PanelRound btnEliminarVehiculos;
+    private javax.swing.JLabel iconEditarCliente;
+    private javax.swing.JLabel iconEliminarCliente;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
-    private assets.TableRow tableClientes;
+    private assets.TableRow tableVehiculos;
+    private javax.swing.JLabel txtEditarCliente;
+    private javax.swing.JLabel txtEliminarCliente;
     // End of variables declaration//GEN-END:variables
 }
