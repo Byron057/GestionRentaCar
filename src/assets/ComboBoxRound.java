@@ -29,11 +29,7 @@ public class ComboBoxRound extends JComboBox<Object> {
     // PROPIEDADES VISUALES PARA NETBEANS
     // ==========================================
     private String opciones = "";
-    
-    // Propiedades EXCLUSIVAS del Placeholder (Texto guía)
-    private String placeholder = "Seleccione una opción";
-    private Color placeholderColor = new Color(153, 153, 153);
-    private Font placeholderFont = new Font("Segoe UI", Font.ITALIC, 13);
+    private String placeholder = "Seleccione una opción"; // NUEVA PROPIEDAD
     
     // Bordes del ComboBox (La caja principal)
     private int borderSize = 0;
@@ -54,65 +50,28 @@ public class ComboBoxRound extends JComboBox<Object> {
                     this.addItem(item.trim());
                 }
             }
-            // Forzamos a que inicie sin nada seleccionado (-1)
+            // MODIFICACIÓN: En lugar de 0, ponemos -1 para que inicie sin selección
             if (this.getItemCount() > 0) {
                 this.setSelectedIndex(-1); 
             }
         }
     }
-    
-    // Método extra para limpiar el combobox desde tu formulario (Vuelve al placeholder)
-    public void limpiarSeleccion() {
-        this.setSelectedIndex(-1);
-    }
 
-    // ==========================================
-    // GETTERS Y SETTERS (CON ACTUALIZACIÓN FORZADA EN DESIGNER)
-    // ==========================================
+    // GETTERS Y SETTERS DEL PLACEHOLDER
     public String getPlaceholder() { return placeholder; }
-    public void setPlaceholder(String placeholder) { 
-        this.placeholder = placeholder; 
-        setRenderer(new CustomRenderer()); 
-        repaint(); 
-    }
-
-    public Color getPlaceholderColor() { return placeholderColor; }
-    public void setPlaceholderColor(Color placeholderColor) { 
-        this.placeholderColor = placeholderColor; 
-        setRenderer(new CustomRenderer()); 
-        repaint(); 
-    }
-
-    public Font getPlaceholderFont() { return placeholderFont; }
-    public void setPlaceholderFont(Font placeholderFont) { 
-        this.placeholderFont = placeholderFont; 
-        setRenderer(new CustomRenderer()); 
-        repaint(); 
-    }
+    public void setPlaceholder(String placeholder) { this.placeholder = placeholder; repaint(); }
 
     public int getBorderSize() { return borderSize; }
-    public void setBorderSize(int borderSize) { 
-        this.borderSize = borderSize; 
-        repaint(); 
-    }
+    public void setBorderSize(int borderSize) { this.borderSize = borderSize; repaint(); }
 
     public Color getBorderColor() { return borderColor; }
-    public void setBorderColor(Color borderColor) { 
-        this.borderColor = borderColor; 
-        repaint(); 
-    }
+    public void setBorderColor(Color borderColor) { this.borderColor = borderColor; repaint(); }
 
     public int getPopupBorderSize() { return popupBorderSize; }
-    public void setPopupBorderSize(int popupBorderSize) { 
-        this.popupBorderSize = popupBorderSize; 
-        repaint(); 
-    }
+    public void setPopupBorderSize(int popupBorderSize) { this.popupBorderSize = popupBorderSize; repaint(); }
 
     public Color getPopupBorderColor() { return popupBorderColor; }
-    public void setPopupBorderColor(Color popupBorderColor) { 
-        this.popupBorderColor = popupBorderColor; 
-        repaint(); 
-    }
+    public void setPopupBorderColor(Color popupBorderColor) { this.popupBorderColor = popupBorderColor; repaint(); }
 
     // ==========================================
     // CONSTRUCTOR
@@ -120,11 +79,10 @@ public class ComboBoxRound extends JComboBox<Object> {
     public ComboBoxRound() {
         setOpaque(false);
         setBackground(Color.WHITE);
-        
-        // Colores por defecto para las opciones reales (puedes cambiarlos en NetBeans)
         setForeground(new Color(60, 60, 60));
         setFont(new Font("Segoe UI", Font.PLAIN, 13));
         
+        // Quitamos el padding exterior para que se apegue al borde igual que un JTextField
         setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         
         setUI(new CustomComboBoxUI());
@@ -136,6 +94,7 @@ public class ComboBoxRound extends JComboBox<Object> {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
+        // Limpiamos el fondo (ayuda a evitar textos encimados visualmente)
         g2.setColor(getBackground());
         g2.fillRect(0, 0, getWidth(), getHeight());
         
@@ -222,31 +181,27 @@ public class ComboBoxRound extends JComboBox<Object> {
     }
 
     // ==========================================
-    // RENDERIZADOR DE CELDAS LÓGICA ESTRICTA (-1)
+    // RENDERIZADOR DE CELDAS (ALINEACIÓN Y PUNTOS)
     // ==========================================
     private class CustomRenderer extends DefaultListCellRenderer {
         
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, false);
+            label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
             
-            // LÓGICA: Si no hay valor real seleccionado (está vacío o en -1)
-            if (index == -1 && (value == null || value.toString().trim().isEmpty())) {
+            // LÓGICA DEL PLACEHOLDER
+            if (index == -1 && value == null) {
                 label.setText(placeholder);
-                label.setForeground(placeholderColor); // Usa la propiedad personalizada del Placeholder
-                label.setFont(placeholderFont);        // Usa la propiedad personalizada del Placeholder
+                label.setForeground(new Color(153, 153, 153)); // Color gris para el texto guía
                 label.setBackground(Color.WHITE);
             } else {
-                // LÓGICA: Si SÍ hay opciones seleccionadas o estamos desplegando la lista
-                label.setFont(ComboBoxRound.this.getFont()); // Restaura la fuente normal del componente
-                
                 if (isSelected && index >= 0) {
                     label.setBackground(new Color(245, 245, 245)); 
                     label.setForeground(Color.BLACK);
                 } else {
                     label.setBackground(Color.WHITE);
-                    // AQUÍ ESTÁ LA MAGIA: Toma el color 'Foreground' general que configures en NetBeans
-                    label.setForeground(ComboBoxRound.this.getForeground()); 
+                    label.setForeground(new Color(60, 60, 60));
                 }
             }
             return label;
@@ -262,23 +217,25 @@ public class ComboBoxRound extends JComboBox<Object> {
             String text = getText();
             boolean tienePunto = false;
 
-            // Evitamos dibujar el punto de color si el texto es el Placeholder
-            if (text != null && !text.equals(placeholder)) { 
+            if (text != null) {
                 if (text.trim().equalsIgnoreCase("Activo")) {
                     g2.setColor(new Color(40, 167, 69)); 
-                    g2.fillOval(4, (getHeight() - 8) / 2, 8, 8); 
+                    g2.fillOval(4, (getHeight() - 8) / 2, 8, 8); // Punto dibujado pegado a la izquierda (x=4)
                     tienePunto = true;
                 } else if (text.trim().equalsIgnoreCase("Inactivo")) {
                     g2.setColor(new Color(220, 53, 69)); 
-                    g2.fillOval(4, (getHeight() - 8) / 2, 8, 8); 
+                    g2.fillOval(4, (getHeight() - 8) / 2, 8, 8); // Punto dibujado pegado a la izquierda (x=4)
                     tienePunto = true;
                 }
             }
             g2.dispose();
 
+            // ESTO ALINEA EL TEXTO IDÉNTICO AL JTEXTFIELD
             if (tienePunto) {
+                // Si hay punto, deja 18px a la izquierda para saltar el punto
                 setBorder(new EmptyBorder(0, 18, 0, 5)); 
             } else {
+                // Si NO hay punto, deja solo 2px a la izquierda (súper apegado al borde)
                 setBorder(new EmptyBorder(0, 2, 0, 5)); 
             }
 

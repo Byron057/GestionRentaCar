@@ -13,14 +13,14 @@ import javax.swing.ImageIcon;
  * @author PC
  */
 public class VehiculosPanel extends javax.swing.JPanel {
-        private String idVehiculoSeleccionado = null;
+        private String idClienteSeleccionado = null;
 
     /**
      * Creates new form ClientesPanel
      */
     public VehiculosPanel() {
         initComponents();
-        tableVehiculos.agregarFila(new Object[]{"1", "PBA-1234", "Sedán", "Toyota", "Corolla", "Activo", "Activo"});
+        tableVehiculos.agregarFila(new Object[]{"2", "0987654321", "María", "Gómez", "0991122334", "Norte", "Inactivo"});
         activarBotonesAccion(false);
         
 
@@ -46,7 +46,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
             btnEliminarVehiculos.setBackground(new Color(245, 245, 245)); 
             txtEliminarCliente.setForeground(new Color(170, 170, 170)); 
             iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
-            idVehiculoSeleccionado = null;
+            idClienteSeleccionado = null;
         }
     }
 
@@ -165,13 +165,13 @@ public class VehiculosPanel extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("+");
-        btnAgregarVehiculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -32, 36, 90));
+        btnAgregarVehiculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -30, 36, 90));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nuevo Vehiculo");
-        btnAgregarVehiculo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 6, 150, -1));
+        btnAgregarVehiculo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 9, 150, 20));
 
         btnEliminarVehiculos.setBackground(new java.awt.Color(254, 234, 232));
         btnEliminarVehiculos.setRoundBottomLeft(20);
@@ -283,41 +283,44 @@ public class VehiculosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarVehiculoMouseExited
 
     private void tableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVehiculosMouseClicked
-     int filaSeleccionada = tableVehiculos.getTabla().getSelectedRow();
+      int filaSeleccionada = tableVehiculos.getTabla().getSelectedRow();
 
         if (filaSeleccionada != -1) {
             Object id = tableVehiculos.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
-                // Guardamos el ID del vehículo y encendemos los botones
-                idVehiculoSeleccionado = id.toString();
+                // Guardamos el ID y encendemos los botones
+                idClienteSeleccionado = id.toString();
                 activarBotonesAccion(true);
             } else {
+                // Si hace clic en una fila de relleno vacía, los apagamos
                 activarBotonesAccion(false);
             }
         } else {
-            // Si se deselecciona la fila
+            // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
             activarBotonesAccion(false);
         }
     }//GEN-LAST:event_tableVehiculosMouseClicked
 
     private void btnEditarVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarVehiculoMouseClicked
-        if (idVehiculoSeleccionado == null) return;
+        if (idClienteSeleccionado == null) return;
 
+        // Obtenemos la fila
         int fila = tableVehiculos.getTabla().getSelectedRow();
-        if (fila == -1) return; // Validación anti-crasheo
+        
+        // ¡LA SOLUCIÓN! Evitamos que el código continúe si se perdió la selección visual (fila -1)
+        if (fila == -1) return;
 
-        // Extraer los datos de la fila seleccionada (columnas 1 al 6)
-        String placa = tableVehiculos.getTabla().getValueAt(fila, 1).toString();
-        String tipo = tableVehiculos.getTabla().getValueAt(fila, 2).toString();
-        String marca = tableVehiculos.getTabla().getValueAt(fila, 3).toString();
-        String modelo = tableVehiculos.getTabla().getValueAt(fila, 4).toString();
-        String color = tableVehiculos.getTabla().getValueAt(fila, 5).toString();
+        // Extraer los datos de la fila seleccionada de forma segura
+        String cedula = tableVehiculos.getTabla().getValueAt(fila, 1).toString();
+        String nombre = tableVehiculos.getTabla().getValueAt(fila, 2).toString();
+        String apellido = tableVehiculos.getTabla().getValueAt(fila, 3).toString();
+        String telefono = tableVehiculos.getTabla().getValueAt(fila, 4).toString();
+        String direccion = tableVehiculos.getTabla().getValueAt(fila, 5).toString();
         String estado = tableVehiculos.getTabla().getValueAt(fila, 6).toString();
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
-        // Creamos el fondo oscuro
         javax.swing.JPanel fondoOscuro = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -332,11 +335,10 @@ public class VehiculosPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        // Abrimos el formulario de Vehículos
-        VehiculosForm modal = new VehiculosForm(ventanaPadre, true); 
+        ClientesForm modal = new ClientesForm(ventanaPadre, true); 
         
-        // AQUÍ INYECTAMOS LOS DATOS
-        modal.cargarDatosEdicion(idVehiculoSeleccionado, placa, tipo, marca, modelo, color, estado);
+        // Enviamos todos los datos, incluyendo el estado
+        modal.cargarDatosEdicion(idClienteSeleccionado, cedula, nombre, apellido, telefono, direccion, estado);
         
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
@@ -345,30 +347,29 @@ public class VehiculosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditarVehiculoMouseClicked
 
     private void btnEliminarVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarVehiculosMouseClicked
-     if (idVehiculoSeleccionado == null) return;
-        
-        int fila = tableVehiculos.getTabla().getSelectedRow();
-        if (fila == -1) return; // Validación anti-crasheo
+        // TODO add your handling code here:
+        if (idClienteSeleccionado == null) return;
 
-        // Ventana de confirmación
+        // 1. Mostrar ventana de confirmación
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
             this, 
-            "¿Está seguro que desea eliminar el vehículo con placa: " + tableVehiculos.getTabla().getValueAt(fila, 1).toString() + "?", 
+            "¿Está seguro que desea eliminar el cliente seleccionado?", 
             "Confirmar Eliminación", 
             javax.swing.JOptionPane.YES_NO_OPTION,
             javax.swing.JOptionPane.WARNING_MESSAGE
         );
 
-        // Si presiona "Sí"
+        // 2. Si el usuario presiona "Sí"
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando vehículo ID: " + idVehiculoSeleccionado);
+            // AQUÍ IRÁ TU LÓGICA SQL (DELETE FROM clientes WHERE id = ...)
+            System.out.println("Eliminando de la BD al cliente ID: " + idClienteSeleccionado);
             
-            // Lo eliminamos visualmente
+            // 3. Lo eliminamos visualmente de la tabla
+            int fila = tableVehiculos.getTabla().getSelectedRow();
             tableVehiculos.eliminarFila(fila);
             
-            // Apagamos los botones porque la selección desapareció
+            // 4. Como ya se eliminó, apagamos los botones de nuevo
             activarBotonesAccion(false);
         }
     }//GEN-LAST:event_btnEliminarVehiculosMouseClicked

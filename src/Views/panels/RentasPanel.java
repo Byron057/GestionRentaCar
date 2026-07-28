@@ -28,24 +28,24 @@ public class RentasPanel extends javax.swing.JPanel {
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
     private void activarBotonesAccion(boolean activar) {
         if (activar) {
-            btnEditarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnEditarAlquiler.setBackground(new Color(254, 240, 228)); 
-            txtEditarAlquiler.setForeground(new Color(251, 124, 20));
-            iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
-            btnEliminarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnEliminarAlquiler.setBackground(new Color(254, 234, 232));
-            txtEliminarAlquiler.setForeground(new Color(255, 0, 51));
-             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            btnEditarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnEditarCliente.setBackground(new Color(254, 240, 228)); 
+            txtEditarCliente.setForeground(new Color(251, 124, 20));
+            iconEditarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
+            btnEliminarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnEliminarCliente.setBackground(new Color(254, 234, 232));
+            txtEliminarCliente.setForeground(new Color(255, 0, 51));
+             iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
         } else {
            
-            btnEditarAlquiler.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            btnEditarAlquiler.setBackground(new Color(245, 245, 245)); 
-            txtEditarAlquiler.setForeground(new Color(170, 170, 170)); 
-            iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
-            btnEliminarAlquiler.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            btnEliminarAlquiler.setBackground(new Color(245, 245, 245)); 
-            txtEliminarAlquiler.setForeground(new Color(170, 170, 170)); 
-            iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
+            btnEditarCliente.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            btnEditarCliente.setBackground(new Color(245, 245, 245)); 
+            txtEditarCliente.setForeground(new Color(170, 170, 170)); 
+            iconEditarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
+            btnEliminarCliente.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            btnEliminarCliente.setBackground(new Color(245, 245, 245)); 
+            txtEliminarCliente.setForeground(new Color(170, 170, 170)); 
+            iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
             idClienteSeleccionado = null;
         }
     }
@@ -61,15 +61,15 @@ public class RentasPanel extends javax.swing.JPanel {
 
         panelRound1 = new assets.PanelRound();
         tableClientes = new assets.TableRow();
-        btnEditarAlquiler = new assets.PanelRound();
-        iconEditarAlquiler = new javax.swing.JLabel();
-        txtEditarAlquiler = new javax.swing.JLabel();
-        btnAgregarAlquiler = new assets.PanelRound();
+        btnEditarCliente = new assets.PanelRound();
+        iconEditarCliente = new javax.swing.JLabel();
+        txtEditarCliente = new javax.swing.JLabel();
+        btnAgregarCliente = new assets.PanelRound();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnEliminarAlquiler = new assets.PanelRound();
-        iconEliminarAlquiler = new javax.swing.JLabel();
-        txtEliminarAlquiler = new javax.swing.JLabel();
+        btnEliminarCliente = new assets.PanelRound();
+        iconEliminarCliente = new javax.swing.JLabel();
+        txtEliminarCliente = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(710, 502));
@@ -82,7 +82,7 @@ public class RentasPanel extends javax.swing.JPanel {
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
 
-        tableClientes.setNombresColumnas("ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado");
+        tableClientes.setNombresColumnas("ID, Cedula, Nombre, Apellido, Telefono, Direccion, Estado");
         tableClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableClientesMouseClicked(evt);
@@ -106,109 +106,109 @@ public class RentasPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        btnEditarAlquiler.setBackground(new java.awt.Color(254, 240, 228));
-        btnEditarAlquiler.setRoundBottomLeft(20);
-        btnEditarAlquiler.setRoundBottomRight(20);
-        btnEditarAlquiler.setRoundTopLeft(20);
-        btnEditarAlquiler.setRoundTopRight(20);
-        btnEditarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnEditarAlquiler.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEditarCliente.setBackground(new java.awt.Color(254, 240, 228));
+        btnEditarCliente.setRoundBottomLeft(20);
+        btnEditarCliente.setRoundBottomRight(20);
+        btnEditarCliente.setRoundTopLeft(20);
+        btnEditarCliente.setRoundTopRight(20);
+        btnEditarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEditarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarAlquilerMouseClicked(evt);
+                btnEditarClienteMouseClicked(evt);
             }
         });
 
-        iconEditarAlquiler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconPencilOrange.png"))); // NOI18N
+        iconEditarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconPencilOrange.png"))); // NOI18N
 
-        txtEditarAlquiler.setBackground(new java.awt.Color(251, 124, 20));
-        txtEditarAlquiler.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtEditarAlquiler.setForeground(new java.awt.Color(251, 124, 20));
-        txtEditarAlquiler.setText("Editar");
+        txtEditarCliente.setBackground(new java.awt.Color(251, 124, 20));
+        txtEditarCliente.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtEditarCliente.setForeground(new java.awt.Color(251, 124, 20));
+        txtEditarCliente.setText("Editar");
 
-        javax.swing.GroupLayout btnEditarAlquilerLayout = new javax.swing.GroupLayout(btnEditarAlquiler);
-        btnEditarAlquiler.setLayout(btnEditarAlquilerLayout);
-        btnEditarAlquilerLayout.setHorizontalGroup(
-            btnEditarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEditarAlquilerLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnEditarClienteLayout = new javax.swing.GroupLayout(btnEditarCliente);
+        btnEditarCliente.setLayout(btnEditarClienteLayout);
+        btnEditarClienteLayout.setHorizontalGroup(
+            btnEditarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEditarClienteLayout.createSequentialGroup()
                 .addContainerGap(11, Short.MAX_VALUE)
-                .addComponent(iconEditarAlquiler)
+                .addComponent(iconEditarCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEditarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        btnEditarAlquilerLayout.setVerticalGroup(
-            btnEditarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(iconEditarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-            .addComponent(txtEditarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        btnEditarClienteLayout.setVerticalGroup(
+            btnEditarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(iconEditarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+            .addComponent(txtEditarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        btnAgregarAlquiler.setBackground(new java.awt.Color(255, 153, 0));
-        btnAgregarAlquiler.setRoundBottomLeft(20);
-        btnAgregarAlquiler.setRoundBottomRight(20);
-        btnAgregarAlquiler.setRoundTopLeft(20);
-        btnAgregarAlquiler.setRoundTopRight(20);
-        btnAgregarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnAgregarAlquiler.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregarCliente.setBackground(new java.awt.Color(255, 153, 0));
+        btnAgregarCliente.setRoundBottomLeft(20);
+        btnAgregarCliente.setRoundBottomRight(20);
+        btnAgregarCliente.setRoundTopLeft(20);
+        btnAgregarCliente.setRoundTopRight(20);
+        btnAgregarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAgregarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarAlquilerMouseClicked(evt);
+                btnAgregarClienteMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnAgregarAlquilerMouseEntered(evt);
+                btnAgregarClienteMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnAgregarAlquilerMouseExited(evt);
+                btnAgregarClienteMouseExited(evt);
             }
         });
-        btnAgregarAlquiler.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btnAgregarCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("+");
-        btnAgregarAlquiler.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -30, 36, 90));
+        btnAgregarCliente.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -30, 36, 90));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Registrar Alquiler");
-        btnAgregarAlquiler.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 9, 180, 20));
+        jLabel2.setText("Nuevo Cliente");
+        btnAgregarCliente.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 9, 150, 20));
 
-        btnEliminarAlquiler.setBackground(new java.awt.Color(254, 234, 232));
-        btnEliminarAlquiler.setRoundBottomLeft(20);
-        btnEliminarAlquiler.setRoundBottomRight(20);
-        btnEliminarAlquiler.setRoundTopLeft(20);
-        btnEliminarAlquiler.setRoundTopRight(20);
-        btnEliminarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnEliminarAlquiler.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEliminarCliente.setBackground(new java.awt.Color(254, 234, 232));
+        btnEliminarCliente.setRoundBottomLeft(20);
+        btnEliminarCliente.setRoundBottomRight(20);
+        btnEliminarCliente.setRoundTopLeft(20);
+        btnEliminarCliente.setRoundTopRight(20);
+        btnEliminarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnEliminarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarAlquilerMouseClicked(evt);
+                btnEliminarClienteMouseClicked(evt);
             }
         });
 
-        iconEliminarAlquiler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconTrashRed.png"))); // NOI18N
+        iconEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconTrashRed.png"))); // NOI18N
 
-        txtEliminarAlquiler.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtEliminarAlquiler.setForeground(new java.awt.Color(255, 0, 51));
-        txtEliminarAlquiler.setText("Eliminar");
+        txtEliminarCliente.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtEliminarCliente.setForeground(new java.awt.Color(255, 0, 51));
+        txtEliminarCliente.setText("Eliminar");
 
-        javax.swing.GroupLayout btnEliminarAlquilerLayout = new javax.swing.GroupLayout(btnEliminarAlquiler);
-        btnEliminarAlquiler.setLayout(btnEliminarAlquilerLayout);
-        btnEliminarAlquilerLayout.setHorizontalGroup(
-            btnEliminarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEliminarAlquilerLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnEliminarClienteLayout = new javax.swing.GroupLayout(btnEliminarCliente);
+        btnEliminarCliente.setLayout(btnEliminarClienteLayout);
+        btnEliminarClienteLayout.setHorizontalGroup(
+            btnEliminarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEliminarClienteLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(iconEliminarAlquiler)
+                .addComponent(iconEliminarCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEliminarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(txtEliminarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        btnEliminarAlquilerLayout.setVerticalGroup(
-            btnEliminarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEliminarAlquilerLayout.createSequentialGroup()
+        btnEliminarClienteLayout.setVerticalGroup(
+            btnEliminarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEliminarClienteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(btnEliminarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconEliminarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(txtEliminarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(btnEliminarClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconEliminarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(txtEliminarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -220,29 +220,29 @@ public class RentasPanel extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEditarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgregarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(btnAgregarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEliminarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAlquilerMouseClicked
+    private void btnAgregarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarClienteMouseClicked
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
@@ -262,7 +262,7 @@ public class RentasPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        RentasForm modal = new RentasForm(ventanaPadre, true); 
+        ClientesForm modal = new ClientesForm(ventanaPadre, true); 
         modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
         
         modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
@@ -270,17 +270,17 @@ public class RentasPanel extends javax.swing.JPanel {
         //SApagamos el fondo oscuro cuando se cierra el JDialog
         fondoOscuro.setVisible(false);
        
-    }//GEN-LAST:event_btnAgregarAlquilerMouseClicked
+    }//GEN-LAST:event_btnAgregarClienteMouseClicked
 
-    private void btnAgregarAlquilerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAlquilerMouseEntered
+    private void btnAgregarClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarClienteMouseEntered
         // TODO add your handling code here:
-        btnAgregarAlquiler.setBackground(new Color(255,139,49));
-    }//GEN-LAST:event_btnAgregarAlquilerMouseEntered
+        btnAgregarCliente.setBackground(new Color(255,139,49));
+    }//GEN-LAST:event_btnAgregarClienteMouseEntered
 
-    private void btnAgregarAlquilerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarAlquilerMouseExited
+    private void btnAgregarClienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarClienteMouseExited
         // TODO add your handling code here:
-        btnAgregarAlquiler.setBackground(new Color(255,153,0));
-    }//GEN-LAST:event_btnAgregarAlquilerMouseExited
+        btnAgregarCliente.setBackground(new Color(255,153,0));
+    }//GEN-LAST:event_btnAgregarClienteMouseExited
 
     private void tableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientesMouseClicked
       int filaSeleccionada = tableClientes.getTabla().getSelectedRow();
@@ -302,21 +302,21 @@ public class RentasPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tableClientesMouseClicked
 
-    private void btnEditarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarAlquilerMouseClicked
-     if (idClienteSeleccionado == null) return;
+    private void btnEditarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarClienteMouseClicked
+        if (idClienteSeleccionado == null) return;
 
         // Obtenemos la fila
         int fila = tableClientes.getTabla().getSelectedRow();
         
-        // Evitamos que el código continúe si se perdió la selección visual
+        // ¡LA SOLUCIÓN! Evitamos que el código continúe si se perdió la selección visual (fila -1)
         if (fila == -1) return;
 
-        // Extraer los datos basándonos en tu tabla: ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado
-        String cliente = tableClientes.getTabla().getValueAt(fila, 1).toString();
-        String vehiculo = tableClientes.getTabla().getValueAt(fila, 2).toString();
-        String fecha = tableClientes.getTabla().getValueAt(fila, 3).toString();
-        String total = tableClientes.getTabla().getValueAt(fila, 4).toString();
-        String dias = tableClientes.getTabla().getValueAt(fila, 5).toString();
+        // Extraer los datos de la fila seleccionada de forma segura
+        String cedula = tableClientes.getTabla().getValueAt(fila, 1).toString();
+        String nombre = tableClientes.getTabla().getValueAt(fila, 2).toString();
+        String apellido = tableClientes.getTabla().getValueAt(fila, 3).toString();
+        String telefono = tableClientes.getTabla().getValueAt(fila, 4).toString();
+        String direccion = tableClientes.getTabla().getValueAt(fila, 5).toString();
         String estado = tableClientes.getTabla().getValueAt(fila, 6).toString();
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -335,28 +335,25 @@ public class RentasPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        // ¡IMPORTANTE! Llamamos a RentasForm en lugar de ClientesForm
-        RentasForm modal = new RentasForm(ventanaPadre, true); 
+        ClientesForm modal = new ClientesForm(ventanaPadre, true); 
         
-        // Enviamos los datos (asegúrate de que el orden coincida con el método en RentasForm)
-        modal.cargarDatosEdicion(idClienteSeleccionado, cliente, vehiculo, fecha, dias, total, estado);
+        // Enviamos todos los datos, incluyendo el estado
+        modal.cargarDatosEdicion(idClienteSeleccionado, cedula, nombre, apellido, telefono, direccion, estado);
         
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
 
         fondoOscuro.setVisible(false);
-    }//GEN-LAST:event_btnEditarAlquilerMouseClicked
+    }//GEN-LAST:event_btnEditarClienteMouseClicked
 
-    private void btnEliminarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAlquilerMouseClicked
-       if (idClienteSeleccionado == null) return;
-        
-        int fila = tableClientes.getTabla().getSelectedRow();
-        if (fila == -1) return;
+    private void btnEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarClienteMouseClicked
+        // TODO add your handling code here:
+        if (idClienteSeleccionado == null) return;
 
-        // 1. Mostrar ventana de confirmación corregida para Alquileres
+        // 1. Mostrar ventana de confirmación
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
             this, 
-            "¿Está seguro que desea eliminar este alquiler del cliente " + tableClientes.getTabla().getValueAt(fila, 1).toString() + "?", 
+            "¿Está seguro que desea eliminar el cliente seleccionado?", 
             "Confirmar Eliminación", 
             javax.swing.JOptionPane.YES_NO_OPTION,
             javax.swing.JOptionPane.WARNING_MESSAGE
@@ -365,30 +362,30 @@ public class RentasPanel extends javax.swing.JPanel {
         // 2. Si el usuario presiona "Sí"
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando de la BD el alquiler ID: " + idClienteSeleccionado);
+            // AQUÍ IRÁ TU LÓGICA SQL (DELETE FROM clientes WHERE id = ...)
+            System.out.println("Eliminando de la BD al cliente ID: " + idClienteSeleccionado);
             
             // 3. Lo eliminamos visualmente de la tabla
+            int fila = tableClientes.getTabla().getSelectedRow();
             tableClientes.eliminarFila(fila);
             
             // 4. Como ya se eliminó, apagamos los botones de nuevo
             activarBotonesAccion(false);
-        
         }
-    }//GEN-LAST:event_btnEliminarAlquilerMouseClicked
+    }//GEN-LAST:event_btnEliminarClienteMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private assets.PanelRound btnAgregarAlquiler;
-    private assets.PanelRound btnEditarAlquiler;
-    private assets.PanelRound btnEliminarAlquiler;
-    private javax.swing.JLabel iconEditarAlquiler;
-    private javax.swing.JLabel iconEliminarAlquiler;
+    private assets.PanelRound btnAgregarCliente;
+    private assets.PanelRound btnEditarCliente;
+    private assets.PanelRound btnEliminarCliente;
+    private javax.swing.JLabel iconEditarCliente;
+    private javax.swing.JLabel iconEliminarCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
     private assets.TableRow tableClientes;
-    private javax.swing.JLabel txtEditarAlquiler;
-    private javax.swing.JLabel txtEliminarAlquiler;
+    private javax.swing.JLabel txtEditarCliente;
+    private javax.swing.JLabel txtEliminarCliente;
     // End of variables declaration//GEN-END:variables
 }
