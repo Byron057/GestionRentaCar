@@ -28,12 +28,12 @@
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="btnEditarCliente" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEditarAlquiler" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnEliminarCliente" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnEliminarAlquiler" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAgregarCliente" alignment="1" min="-2" pref="196" max="-2" attributes="0"/>
+                  <Component id="btnAgregarAlquiler" alignment="1" min="-2" pref="218" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="11" max="32767" attributes="0"/>
           </Group>
@@ -43,13 +43,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Component id="btnAgregarCliente" min="-2" pref="37" max="-2" attributes="0"/>
+              <Component id="btnAgregarAlquiler" min="-2" pref="37" max="-2" attributes="0"/>
               <EmptySpace pref="34" max="32767" attributes="0"/>
               <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnEliminarCliente" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditarCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnEliminarAlquiler" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnEditarAlquiler" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
@@ -95,7 +95,7 @@
       <SubComponents>
         <Component class="assets.TableRow" name="tableClientes">
           <Properties>
-            <Property name="nombresColumnas" type="java.lang.String" value="ID, Cedula, Nombre, Apellido, Telefono, Direccion, Estado"/>
+            <Property name="nombresColumnas" type="java.lang.String" value="ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableClientesMouseClicked"/>
@@ -103,7 +103,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="assets.PanelRound" name="btnEditarCliente">
+    <Container class="assets.PanelRound" name="btnEditarAlquiler">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e4" green="f0" red="fe" type="rgb"/>
@@ -114,10 +114,10 @@
         <Property name="roundTopRight" type="int" value="20"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEditarClienteMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEditarAlquilerMouseClicked"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEditarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEditarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
       </AuxValues>
 
       <Layout>
@@ -125,29 +125,29 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace pref="11" max="32767" attributes="0"/>
-                  <Component id="iconEditarCliente" min="-2" max="-2" attributes="0"/>
+                  <Component id="iconEditarAlquiler" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtEditarCliente" min="-2" pref="85" max="-2" attributes="0"/>
+                  <Component id="txtEditarAlquiler" min="-2" pref="85" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="iconEditarCliente" pref="44" max="32767" attributes="0"/>
-              <Component id="txtEditarCliente" alignment="0" max="32767" attributes="0"/>
+              <Component id="iconEditarAlquiler" pref="44" max="32767" attributes="0"/>
+              <Component id="txtEditarAlquiler" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="iconEditarCliente">
+        <Component class="javax.swing.JLabel" name="iconEditarAlquiler">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/assets/iconPencilOrange.png"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="txtEditarCliente">
+        <Component class="javax.swing.JLabel" name="txtEditarAlquiler">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="14" green="7c" red="fb" type="rgb"/>
@@ -163,7 +163,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="assets.PanelRound" name="btnAgregarCliente">
+    <Container class="assets.PanelRound" name="btnAgregarAlquiler">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="99" red="ff" type="rgb"/>
@@ -174,12 +174,12 @@
         <Property name="roundTopRight" type="int" value="20"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarClienteMouseClicked"/>
-        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarClienteMouseEntered"/>
-        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarClienteMouseExited"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarAlquilerMouseClicked"/>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarAlquilerMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgregarAlquilerMouseExited"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnAgregarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnAgregarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
       </AuxValues>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
@@ -212,17 +212,17 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Nuevo Cliente"/>
+            <Property name="text" type="java.lang.String" value="Registrar Alquiler"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="30" y="9" width="150" height="20"/>
+              <AbsoluteConstraints x="30" y="9" width="180" height="20"/>
             </Constraint>
           </Constraints>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="assets.PanelRound" name="btnEliminarCliente">
+    <Container class="assets.PanelRound" name="btnEliminarAlquiler">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e8" green="ea" red="fe" type="rgb"/>
@@ -233,10 +233,10 @@
         <Property name="roundTopRight" type="int" value="20"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminarClienteMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminarAlquilerMouseClicked"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEliminarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEliminarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
       </AuxValues>
 
       <Layout>
@@ -244,9 +244,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="iconEliminarCliente" min="-2" max="-2" attributes="0"/>
+                  <Component id="iconEliminarAlquiler" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtEliminarCliente" pref="84" max="32767" attributes="0"/>
+                  <Component id="txtEliminarAlquiler" pref="84" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -256,8 +256,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="iconEliminarCliente" pref="33" max="32767" attributes="0"/>
-                      <Component id="txtEliminarCliente" max="32767" attributes="0"/>
+                      <Component id="iconEliminarAlquiler" pref="33" max="32767" attributes="0"/>
+                      <Component id="txtEliminarAlquiler" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -265,14 +265,14 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="iconEliminarCliente">
+        <Component class="javax.swing.JLabel" name="iconEliminarAlquiler">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/assets/iconTrashRed.png"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="txtEliminarCliente">
+        <Component class="javax.swing.JLabel" name="txtEliminarAlquiler">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="1"/>

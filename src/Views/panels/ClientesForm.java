@@ -66,6 +66,7 @@ public class ClientesForm extends javax.swing.JDialog {
         aplicarPlaceholder(flApellidoCliente, "Ingrese el apellido");
         aplicarPlaceholder(flTelefonoCliente, "Ingrese el teléfono");
         aplicarPlaceholder(flDireccionCliente, "Ingrese la dirección");
+        aplicarPlaceholderComboBox(cbxsEstadoCliente);
     }
 
     private void aplicarPlaceholder(javax.swing.JTextField campo, String textoGuia) {
@@ -90,6 +91,29 @@ public class ClientesForm extends javax.swing.JDialog {
                 if (campo.getText().trim().isEmpty()) {
                     campo.setText(textoGuia);
                     campo.setForeground(new java.awt.Color(153, 153, 153)); // Restaura el color gris
+                }
+            }
+        });
+    }
+    private void aplicarPlaceholderComboBox(assets.ComboBoxRound combo) {
+        // 1. Configuración inicial al abrir el formulario
+        if (combo.getSelectedIndex() == -1) {
+            combo.setForeground(new java.awt.Color(153, 153, 153)); // Gris si inicia vacío
+        } else {
+            combo.setForeground(new java.awt.Color(60, 60, 60)); // Oscuro si ya tiene datos
+        }
+
+        // 2. Evento que escucha cada vez que el usuario elige una opción
+        combo.addItemListener(new java.awt.event.ItemListener() {
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                // Solo nos importa cuando la selección ya se completó
+                if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                    combo.setForeground(new java.awt.Color(60, 60, 60)); // Cambia a oscuro al seleccionar "Activo" o "Inactivo"
+                } 
+                // Si por alguna razón se resetea a -1 (por ejemplo, con tu método limpiarSeleccion)
+                else if (combo.getSelectedIndex() == -1) {
+                    combo.setForeground(new java.awt.Color(153, 153, 153)); // Vuelve a Gris
                 }
             }
         });
@@ -377,6 +401,9 @@ public class ClientesForm extends javax.swing.JDialog {
 
         cbxsEstadoCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxsEstadoCliente.setOpciones("Activo\nInactivo\n");
+        cbxsEstadoCliente.setPlaceholderColor(new java.awt.Color(102, 255, 102));
+        cbxsEstadoCliente.setPlaceholderFont(new java.awt.Font("Segoe UI", 2, 48)); // NOI18N
+        cbxsEstadoCliente.addActionListener(this::cbxsEstadoClienteActionPerformed);
         panelRound15.add(cbxsEstadoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 250, 40));
@@ -437,6 +464,10 @@ public class ClientesForm extends javax.swing.JDialog {
     private void flCedulaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flCedulaMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_flCedulaMouseClicked
+
+    private void cbxsEstadoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxsEstadoClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxsEstadoClienteActionPerformed
 
     /**
      * @param args the command line arguments

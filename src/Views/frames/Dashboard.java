@@ -28,6 +28,7 @@ public class Dashboard extends javax.swing.JFrame {
     private boolean isClientesSelected = false;
     private boolean isVehiculosSelected = false;
     private boolean isRentasSelected = false;
+    private boolean isCatalogosSelected = false;
     public Dashboard() {
         initComponents();
         isInicioSelected = true;
@@ -57,7 +58,10 @@ public class Dashboard extends javax.swing.JFrame {
     btnRentas.setBackground(Color.WHITE);
     iconRentas.setIcon(new ImageIcon(getClass().getResource("/assets/iconRentaBlack.png")));
     txtRentas.setForeground(Color.BLACK);
-
+    
+    btnCatalogos.setBackground(Color.WHITE);
+    iconCatalogos.setIcon(new ImageIcon(getClass().getResource("/assets/iconRentaBlack.png")));
+    txtCatalogos.setForeground(Color.BLACK);
 }
     public void showPanel(JPanel panel){
     panel.setSize(contentInicio.getWidth(), contentInicio.getHeight());
@@ -108,6 +112,9 @@ public class Dashboard extends javax.swing.JFrame {
         btnLogout = new assets.PanelRound();
         iconLogout = new javax.swing.JLabel();
         txtLogout = new javax.swing.JLabel();
+        btnCatalogos = new assets.PanelRound();
+        iconCatalogos = new javax.swing.JLabel();
+        txtCatalogos = new javax.swing.JLabel();
         btnRentas = new assets.PanelRound();
         iconRentas = new javax.swing.JLabel();
         txtRentas = new javax.swing.JLabel();
@@ -299,6 +306,35 @@ public class Dashboard extends javax.swing.JFrame {
 
         panelApartados.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 424, 250, -1));
 
+        btnCatalogos.setBackground(new java.awt.Color(255, 255, 255));
+        btnCatalogos.setRoundBottomLeft(20);
+        btnCatalogos.setRoundBottomRight(20);
+        btnCatalogos.setRoundTopLeft(20);
+        btnCatalogos.setRoundTopRight(20);
+        btnRentas.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnCatalogos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCatalogosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCatalogosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnCatalogosMouseExited(evt);
+            }
+        });
+        btnCatalogos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        iconCatalogos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCatalogoBlack.png"))); // NOI18N
+        btnCatalogos.add(iconCatalogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 33, 49));
+
+        txtCatalogos.setFont(new java.awt.Font("Roboto Condensed", 1, 24)); // NOI18N
+        txtCatalogos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtCatalogos.setText("Catalogos");
+        btnCatalogos.add(txtCatalogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, -1, 250, 50));
+
+        panelApartados.add(btnCatalogos, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 273, -1, 50));
+
         btnRentas.setBackground(new java.awt.Color(255, 255, 255));
         btnRentas.setRoundBottomLeft(20);
         btnRentas.setRoundBottomRight(20);
@@ -488,6 +524,35 @@ public class Dashboard extends javax.swing.JFrame {
             txtRentas.setForeground(Color.black);
         }
     }//GEN-LAST:event_btnRentasMouseExited
+
+    private void btnCatalogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogosMouseClicked
+        // TODO add your handling code here:
+        resetearBotonesMenu();
+        isCatalogosSelected = true;
+
+        btnCatalogos.setBackground(new Color(253,239,222));
+        iconCatalogos.setIcon(new ImageIcon(getClass().getResource("/assets/iconCatalogoOrange.png")));
+        txtCatalogos.setForeground(new Color(251,124,20));
+        showPanel(new RentasPanel());
+    }//GEN-LAST:event_btnCatalogosMouseClicked
+
+    private void btnCatalogosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogosMouseEntered
+        // TODO add your handling code here:
+          if (!isCatalogosSelected) {
+            btnCatalogos.setBackground(new Color(253,239,222));
+            iconCatalogos.setIcon(new ImageIcon(getClass().getResource("/assets/iconCatalogoOrange.png")));
+            txtCatalogos.setForeground(new Color(251,124,20));
+        }
+    }//GEN-LAST:event_btnCatalogosMouseEntered
+
+    private void btnCatalogosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogosMouseExited
+        // TODO add your handling code here:
+          if (!isCatalogosSelected) {
+            btnCatalogos.setBackground(Color.white);
+            iconCatalogos.setIcon(new ImageIcon(getClass().getResource("/assets/iconCatalogoBlack.png")));
+            txtCatalogos.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_btnCatalogosMouseExited
     
     /**
      * @param args the command line arguments
@@ -515,6 +580,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private assets.PanelRound btnCatalogos;
     private assets.PanelRound btnClientes;
     private assets.PanelRound btnIncio;
     private assets.PanelRound btnLogout;
@@ -523,6 +589,7 @@ public class Dashboard extends javax.swing.JFrame {
     private assets.PanelRound contentInicio;
     private javax.swing.JPanel fondoDashboard;
     private assets.PanelRound fondoDashboard2;
+    private javax.swing.JLabel iconCatalogos;
     private javax.swing.JLabel iconClientes;
     private javax.swing.JLabel iconInicio;
     private javax.swing.JLabel iconLogout;
@@ -542,6 +609,7 @@ public class Dashboard extends javax.swing.JFrame {
     private assets.PanelRound panelTittle;
     private assets.PanelRound panelTopBar;
     private javax.swing.JLabel txtAdministrador;
+    private javax.swing.JLabel txtCatalogos;
     private javax.swing.JLabel txtClientes;
     private javax.swing.JLabel txtFecha;
     private javax.swing.JLabel txtIncio;
