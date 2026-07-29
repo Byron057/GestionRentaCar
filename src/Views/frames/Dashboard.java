@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Views.frames;
+import Views.panels.CatalogosPanel;
+import Views.panels.MarcasPanel;
 import Views.panels.ClientesPanel;
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -362,7 +364,7 @@ public class Dashboard extends javax.swing.JFrame {
         txtRentas.setText("Rentas");
         btnRentas.add(txtRentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, -1, 250, 50));
 
-        panelApartados.add(btnRentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 217, -1, 50));
+        panelApartados.add(btnRentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 210, -1, 50));
 
         fondoDashboard2.add(panelApartados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 270, 500));
 
@@ -533,7 +535,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnCatalogos.setBackground(new Color(253,239,222));
         iconCatalogos.setIcon(new ImageIcon(getClass().getResource("/assets/iconCatalogoOrange.png")));
         txtCatalogos.setForeground(new Color(251,124,20));
-        showPanel(new RentasPanel());
+        showPanel(new CatalogosPanel());
     }//GEN-LAST:event_btnCatalogosMouseClicked
 
     private void btnCatalogosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogosMouseEntered
