@@ -15,9 +15,7 @@ import javax.swing.ImageIcon;
 public class VehiculosPanel extends javax.swing.JPanel {
         private String idVehiculoSeleccionado = null;
 
-    /**
-     * Creates new form ClientesPanel
-     */
+    
     public VehiculosPanel() {
         initComponents();
         tableVehiculos.agregarFila(new Object[]{"1", "PBA-1234", "Sedán", "Toyota", "Corolla", "Activo", "Activo"});
@@ -372,6 +370,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
             activarBotonesAccion(false);
         }
     }//GEN-LAST:event_btnEliminarVehiculosMouseClicked
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

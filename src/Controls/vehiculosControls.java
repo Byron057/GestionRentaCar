@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JTable;
 
 import javax.swing.table.DefaultTableModel;
 //imortar models
@@ -69,14 +70,15 @@ public class vehiculosControls {
 public void insertar(){
     vehiculos v = new vehiculos();
     v.setPlaca(vista.flPlaca.getText());
-    v.setIdMarca(((marca) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-    v.setIdModelo(((modelo) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-    v.setIdTipo(((tipo) vista.cbxTipoVehiculo.getSelectedItem()).getId());
-    v.setIdColor(((color) vista.cbxColorVehiculo.getSelectedItem()).getId());
+    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
+    v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+    v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+    v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
     v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
     
     if(dao.insertarVehiculo(v)){
         JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
+        mostrarTabla();
     }else{
         JOptionPane.showMessageDialog(null,"Error");
     }
@@ -90,10 +92,10 @@ public void mostrarTabla(){
             model.addRow(new Object[]{
               x.getIdVehiculo(),
               x.getPlaca(),
-              x.getnombreMarca(),
-              x.getnombreModelo(),
-              x.getnombreTipo(),
-              x.getnombreColor(),
+              x.getNombreMarca(),
+              x.getNombreModelo(),
+              x.getNombreTipo(),
+              x.getNombreColor(),
               x.getEstado()
               
               
@@ -101,6 +103,79 @@ public void mostrarTabla(){
         }
         
     }
+
+public void editar(){
+            try{
+
+            int fila =
+                vista.tableVehiculos.getSelectedRow();
+
+
+            if(fila == -1){
+                JOptionPane.showMessageDialog(null,
+                        "Seleccione un Vehiculo");
+                return;
+
+            }
+
+            vehiculos v = new vehiculos();
+            //obtener id del vehiculo seleccionado
+            v.setIdVehiculo(Integer.parseInt(vista.tableVehiculos.getValueAt(fila, 0).toString()));
+            //id de las relaciones multitabla
+            v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
+            v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+            v.setIdTipo(((Tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+            v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+
+            v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
+            if(dao.editarVehiculo(v)){
+                JOptionPane.showMessageDialog(null, "Vehículo actualizado exitosamente");
+                mostrarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el vehículo");
+            }
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error.vehiculosControls (editar) " + e.getMessage());
+        }
+            
+
+}
+
+public void eliminar(){
+    
+    int fila = vista.tableVehiculos.getSelectedRow();
+    
+    if(fila== -1){
+        JOptionPane.showMessageDialog(null, "Seleccion un vehiculo");
+        return;    
+    }
+    
+    int id= Integer.parseInt(vista.tableVehiculos.getValueAt(fila,0).toString());
+    
+        int confirmar =
+                JOptionPane.showConfirmDialog(null,
+                "¿Eliminar vehiculo?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION);
+                if(confirmar == JOptionPane.YES_OPTION){
+
+
+            if(dao.eliminarVehiculo(id)){
+                
+                JOptionPane.showMessageDialog(null,
+                        "Vehiculo eliminado");
+                
+                mostrarTabla();
+
+            }else{
+                JOptionPane.showMessageDialog(null,
+                        "No se pudo eliminar");
+
+            }
+
+        }  
+}
     
 }
     
