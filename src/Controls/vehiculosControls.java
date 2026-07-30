@@ -86,7 +86,8 @@ public void insertar(){
 }
 
 public void mostrarTabla(){
-        DefaultTableModel model = (DefaultTableModel) vista.tableVehiculos.getModel();
+        // En lugar de castear mal la tabla directamente, hazlo así:
+        DefaultTableModel model = (DefaultTableModel) vista.tableVehiculos.getTabla().getModel();
         model.setRowCount(0);
         for(vehiculos x:dao.listarVehiculo()){
             model.addRow(new Object[]{
