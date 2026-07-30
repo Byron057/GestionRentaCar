@@ -301,7 +301,6 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         flPlaca.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        flPlaca.setForeground(new java.awt.Color(204, 204, 204));
         flPlaca.setText("jTextField1");
         flPlaca.setBorder(null);
         flPlaca.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -486,12 +485,12 @@ public class VehiculosForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxColorVehiculo;
-    private assets.ComboBoxRound cbxEstadoCliente;
-    private assets.ComboBoxRound cbxMarcaVehiculo;
-    private assets.ComboBoxRound cbxModeloVehiculo;
-    private assets.ComboBoxRound cbxTipoVehiculo;
-    private javax.swing.JTextField flPlaca;
+    public assets.ComboBoxRound cbxColorVehiculo;
+    public assets.ComboBoxRound cbxEstadoCliente;
+    public assets.ComboBoxRound cbxMarcaVehiculo;
+    public assets.ComboBoxRound cbxModeloVehiculo;
+    public assets.ComboBoxRound cbxTipoVehiculo;
+    public javax.swing.JTextField flPlaca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

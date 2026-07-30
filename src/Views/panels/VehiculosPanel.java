@@ -383,7 +383,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
-    private assets.TableRow tableVehiculos;
+    public assets.TableRow tableVehiculos;
     private javax.swing.JLabel txtEditarCliente;
     private javax.swing.JLabel txtEliminarCliente;
     // End of variables declaration//GEN-END:variables
