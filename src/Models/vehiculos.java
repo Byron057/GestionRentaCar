@@ -16,6 +16,13 @@ public class vehiculos {
     private int idTipo;
     private int idColor;
     private String estado;
+    
+    //axuxiliares
+    private String nombreMarca;
+    private String nombreModelo;
+    private String nombreTipo;
+    private String nombreColor;
+    
 
     public int getIdVehiculo() {
         return idVehiculo;
@@ -71,6 +78,40 @@ public class vehiculos {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+    
+    //axuliares
+
+    public String getNombreMarca() {
+        return nombreMarca;
+    }
+
+    public void setNombreMarca(String nombreMarca) {
+        this.nombreMarca = nombreMarca;
+    }
+
+    public String getNombreModelo() {
+        return nombreModelo;
+    }
+
+    public void setNombreModelo(String nombreModelo) {
+        this.nombreModelo = nombreModelo;
+    }
+
+    public String getNombreTipo() {
+        return nombreTipo;
+    }
+
+    public void setNombreTipo(String nombreTipo) {
+        this.nombreTipo = nombreTipo;
+    }
+
+    public String getNombreColor() {
+        return nombreColor;
+    }
+
+    public void setNombreColor(String nombreColor) {
+        this.nombreColor = nombreColor;
     }
     
     
