@@ -6,6 +6,7 @@ package Views.panels;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import Controls.clientesController;
 
 
 /**
@@ -446,6 +447,9 @@ public class ClientesForm extends javax.swing.JDialog {
         } else {
             // Lógica para INSERT en la base de datos SQLite
             System.out.println("Guardando nuevo cliente");
+            clientesController cl = new clientesController(this);
+            cl.insertar();
+            this.dispose();
         }
         
         this.dispose(); // Cierra el modal al finalizar
@@ -509,12 +513,12 @@ public class ClientesForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxsEstadoCliente;
-    private javax.swing.JTextField flApellidoCliente;
-    private javax.swing.JTextField flCedula;
-    private javax.swing.JTextField flDireccionCliente;
-    private javax.swing.JTextField flNombreCliente;
-    private javax.swing.JTextField flTelefonoCliente;
+    public assets.ComboBoxRound cbxsEstadoCliente;
+    public javax.swing.JTextField flApellidoCliente;
+    public javax.swing.JTextField flCedula;
+    public javax.swing.JTextField flDireccionCliente;
+    public javax.swing.JTextField flNombreCliente;
+    public javax.swing.JTextField flTelefonoCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -6,6 +6,7 @@ package Views.panels;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
+import Controls.clientesController;
 
 
 /**
@@ -20,8 +21,10 @@ public class ClientesPanel extends javax.swing.JPanel {
      */
     public ClientesPanel() {
         initComponents();
-        tableClientes.agregarFila(new Object[]{"2", "0987654321", "María", "Gómez", "0991122334", "Norte", "Inactivo"});
         activarBotonesAccion(false);
+        clientesController cl = new clientesController(this);
+        cl.listar();
+        
         
 
     }
@@ -384,7 +387,7 @@ public class ClientesPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
-    private assets.TableRow tableClientes;
+    public assets.TableRow tableClientes;
     private javax.swing.JLabel txtEditarCliente;
     private javax.swing.JLabel txtEliminarCliente;
     // End of variables declaration//GEN-END:variables
