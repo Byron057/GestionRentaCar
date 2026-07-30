@@ -70,10 +70,10 @@ public class vehiculosControls {
 public void insertar(){
     vehiculos v = new vehiculos();
     v.setPlaca(vista.flPlaca.getText());
-    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-    v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-    v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
-    v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+    //v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
+    //v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+    //v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+   // v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
     v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
     
     if(dao.insertarVehiculo(v)){
