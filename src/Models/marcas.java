@@ -42,6 +42,6 @@ public class marcas {
         return estado;
     }
 
-   
-    
+  
+
 }

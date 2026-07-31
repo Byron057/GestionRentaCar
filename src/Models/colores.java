@@ -12,6 +12,10 @@ public class colores {
     private int id;
     private String color;
     private String estado;
+    
+    public colores() {
+    // Constructor vacío necesario para instanciar sin parámetros
+}
 
     public colores(int id, String color, String estado) {
         this.id = id;
@@ -42,4 +46,6 @@ public class colores {
     public String getEstado() {
         return estado;
     }
+    
+    
 }

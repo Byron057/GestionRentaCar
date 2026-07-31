@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
-import DAO.DAO;
+import DAO.vehiculosDAO;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
@@ -18,7 +18,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
         private String idVehiculoSeleccionado = null;
         private VehiculosForm vista;
         private VehiculosPanel vista2;
-        private DAO dao;
+        private vehiculosDAO dao;
         
     public VehiculosPanel() {
         initComponents();
@@ -264,7 +264,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        VehiculosForm modal = new VehiculosForm(ventanaPadre, true); 
+        VehiculosForm modal = new VehiculosForm(ventanaPadre, true, this); 
         modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
         
         modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
@@ -335,7 +335,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
         fondoOscuro.setVisible(true);
 
         // Abrimos el formulario de Vehículos
-        VehiculosForm modal = new VehiculosForm(ventanaPadre, true); 
+        VehiculosForm modal = new VehiculosForm(ventanaPadre, true,this); 
         
         // AQUÍ INYECTAMOS LOS DATOS
         modal.cargarDatosEdicion(idVehiculoSeleccionado, placa, tipo, marca, modelo, color, estado);

@@ -4,7 +4,7 @@
  */
 package Controls;
 
-import DAO.DAO;
+import DAO.vehiculosDAO;
 import Views.panels.VehiculosForm;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
@@ -12,9 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JTable;
-
-
-import javax.swing.table.DefaultTableModel;
+        
 //imortar models
 
 import Models.vehiculos;
@@ -24,15 +22,18 @@ import Models.marcas;
 import Models.modelos;
 import Models.tipos;
 import Models.colores;
+import Views.panels.VehiculosPanel;
 
 public class vehiculosControls {
     private VehiculosForm vista;
-    private VehiculosForm vista2;
-    private DAO dao;
+    private VehiculosPanel vista2;
+    private vehiculosDAO dao;
+    
+    private List<vehiculos> listaVehiculos;
 
-    public vehiculosControls(VehiculosForm vista){
+    public vehiculosControls(VehiculosForm vista , VehiculosPanel vista2){
         this.vista=vista;
-        dao = new DAO();
+        dao = new vehiculosDAO();
         mostrarTabla();
     }
     
@@ -73,10 +74,47 @@ public void insertar(){
     vehiculos v = new vehiculos();
     v.setPlaca(vista.flPlaca.getText());
     v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-    v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-    v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
-    v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
-    v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
+    
+    //borrar en caso de error; 
+    if (vista.cbxModeloVehiculo.getSelectedItem() != null) {
+    modelos modeloSeleccionado = (modelos) vista.cbxModeloVehiculo.getSelectedItem();
+    v.setIdModelo(modeloSeleccionado.getId());
+} else {
+    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un modelo de vehículo.");
+    return; // Detiene la ejecución para evitar el error
+}
+    //v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+    
+    //borrar igual:; 
+    if (vista.cbxTipoVehiculo.getSelectedItem() != null) {
+    tipos tipoSeleccionado = (tipos) vista.cbxTipoVehiculo.getSelectedItem();
+    v.setIdTipo(tipoSeleccionado.getId());
+} else {
+    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un tipo de vehículo.");
+    return; // Detiene el proceso para evitar que la aplicación falle
+}
+    //v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+    //borrar igual; 
+    if (vista.cbxColorVehiculo.getSelectedItem() != null) {
+    colores colorSeleccionado = (colores) vista.cbxColorVehiculo.getSelectedItem();
+    v.setIdColor(colorSeleccionado.getId());
+} else {
+    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un color.");
+    return;
+}
+ //   v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+ //borra igual
+ 
+ if (vista.cbxEstadoCliente.getSelectedItem() != null) {
+    // Tu código actual de la línea 106 que usa el item seleccionado
+    String valor = vista.cbxEstadoCliente.getSelectedItem().toString();
+    v.setEstado(valor);
+    
+} else {
+    JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.");
+    return;
+}
+    //v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
     
     if(dao.insertarVehiculo(v)){
         JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
@@ -88,12 +126,15 @@ public void insertar(){
 }
 
 public void mostrarTabla(){
-        
-    
-        DefaultTableModel model = (DefaultTableModel) vista2.tableVehiculos.getModel();
-        model.setRowCount(0);
+
+    if (vista2 != null && vista2.tableVehiculos != null) {
+            vista2.tableVehiculos.limpiarTabla();
+            
+             // Llenamos la lista global
+            listaVehiculos = dao.listarVehiculo();
+            
         for(vehiculos x:dao.listarVehiculo()){
-            model.addRow(new Object[]{
+            vista2.tableVehiculos.agregarFila(new Object[]{
               x.getIdVehiculo(),
               x.getPlaca(),
               x.getNombreMarca(),
@@ -107,12 +148,14 @@ public void mostrarTabla(){
         }
         
     }
+            }
 
+
+/*
 public void editar(){
             try{
 
-            int fila =
-                vista.tblVehiculos.getSelectedRow();
+            int fila = vista2.tableVehiculos.getSelectedRow();
 
 
             if(fila == -1){
@@ -122,9 +165,10 @@ public void editar(){
 
             }
 
-            vehiculos v = new vehiculos();
+            
             //obtener id del vehiculo seleccionado
-            v.setIdVehiculo(Integer.parseInt(vista.tableVehiculos.getValueAt(fila, 0).toString()));
+            int idVehiculoSeleccionado = listaVehiculos.get(fila).getIdVehiculo();
+            vehiculos v = new vehiculos();
             //id de las relaciones multitabla
             v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
             v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
@@ -146,16 +190,18 @@ public void editar(){
 
 }
 
+
 public void eliminar(){
     
-    int fila = vista.tableVehiculos.getSelectedRow();
+    int fila = vista2.tableVehiculos.getSelectedRow();
     
     if(fila== -1){
         JOptionPane.showMessageDialog(null, "Seleccion un vehiculo");
         return;    
     }
     
-    int id= Integer.parseInt(vista.tableVehiculos.getValueAt(fila,0).toString());
+    // ID directamente de la lista global
+    int id = listaVehiculos.get(fila).getIdVehiculo();
     
         int confirmar =
                 JOptionPane.showConfirmDialog(null,
@@ -180,7 +226,7 @@ public void eliminar(){
 
         }  
 }
-    
+ */   
 }
     
     

@@ -19,7 +19,7 @@ import Models.marcas;
 import Models.modelos;
 import Models.tipos;
 
-public class DAO {
+public class vehiculosDAO {
     conexion cn = new conexion();
     Connection con;
     PreparedStatement ps;
@@ -94,6 +94,81 @@ public List<vehiculos>listarVehiculo(){
     }
     return lista;
 }
+//activas
+public List<marcas> listarMarcas() {
+    List<marcas> lista = new ArrayList<>();
+    String sql = "SELECT * FROM marcas_vehiculos WHERE estado = 'Activo'";
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            marcas m = new marcas();
+            m.setId(rs.getInt("id_marca"));
+            lista.add(m);
+        }
+    } catch (Exception e) {
+        System.out.println("error.vehiculosDAO (listarMarcas) " + e.toString());
+    }
+    return lista;
+}
+
+public List<modelos> listarModelos() {
+    List<modelos> lista = new ArrayList<>();
+    String sql = "SELECT * FROM modelos WHERE estado = 'Activo'";
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            modelos mod = new modelos();
+            mod.setId(rs.getInt("id_modelo"));
+            
+            lista.add(mod);
+        }
+    } catch (Exception e) {
+        System.out.println("error.vehiculosDAO (listarModelos) " + e.toString());
+    }
+    return lista;
+}
+
+public List<tipos> listarTipos() {
+    List<tipos> lista = new ArrayList<>();
+    String sql = "SELECT * FROM tipos WHERE estado = 'Activo'";
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            tipos t = new tipos();
+            t.setId(rs.getInt("id_tipo"));
+            
+            lista.add(t);
+        }
+    } catch (Exception e) {
+        System.out.println("error.vehiculosDAO (listarTipos) " + e.toString());
+    }
+    return lista;
+}
+
+public List<colores> listarColores() {
+    List<colores> lista = new ArrayList<>();
+    String sql = "SELECT * FROM colores WHERE estado = 'Activo'";
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            colores c = new colores();
+            c.setId_color(rs.getInt("id_color"));
+            
+            lista.add(c);
+        }
+    } catch (Exception e) {
+        System.out.println("error.vehiculosDAO (listarColores) " + e.toString());
+    }
+    return lista;
+}
 
 public boolean eliminarVehiculo(int idVehiculo){
     String sql="DELETE FROM vehiculos WHERE id_vehiculo=?";
@@ -144,29 +219,5 @@ public boolean editarVehiculo(vehiculos v){
 
 
 
-///borrar
-public List<marcas> listarMarcas() {
-    List<marcas> lista = new ArrayList<>();
-    // Método temporal para evitar errores de compilación
-    return lista;
-}
-
-public List<modelos> listarModelos() {
-    List<modelos> lista = new ArrayList<>();
-    // Método temporal para evitar errores de compilación
-    return lista;
-}
-
-public List<tipos> listarTipos() {
-    List<tipos> lista = new ArrayList<>();
-    // Método temporal para evitar errores de compilación
-    return lista;
-}
-
-public List<colores> listarColores() {
-    List<colores> lista = new ArrayList<>();
-    // Método temporal para evitar errores de compilación
-    return lista;
-}
 
 }

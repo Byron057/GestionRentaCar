@@ -4,15 +4,18 @@
  */
 package Views.panels;
 
+import Controls.vehiculosControls;
 import java.awt.Color;
 import java.awt.Cursor;
 
+import Views.panels.VehiculosPanel;
 
 /**
  *
  * @author PC
  */
 public class VehiculosForm extends javax.swing.JDialog {
+    private vehiculosControls controlador;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VehiculosForm.class.getName());
     private boolean esEdicion = false;
@@ -21,9 +24,19 @@ public class VehiculosForm extends javax.swing.JDialog {
     /**
      * Creates new form ClientesForm
      */
-    public VehiculosForm(java.awt.Frame parent, boolean modal) {
+    public VehiculosForm(java.awt.Frame parent, boolean modal,Views.panels.VehiculosPanel vistaPanel) {
         super(parent, modal);
         initComponents();
+        //borrar en caso de error:
+        // Inicializas el controlador pasándole la vista actual y el panel principal
+        this.controlador = new vehiculosControls(this, vistaPanel);
+        
+        // ¡Llamar a los métodos para llenar los ComboBox aquí!
+    controlador.cargarMarcas(cbxMarcaVehiculo);
+    controlador.cargarModelos(cbxModeloVehiculo);
+    controlador.cargarTipos(cbxTipoVehiculo);
+    controlador.cargarColores(cbxColorVehiculo);
+    
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
@@ -422,13 +435,13 @@ public class VehiculosForm extends javax.swing.JDialog {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
         if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
+           // controlador.editar();
             System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
         } else {
-            // Lógica para INSERT en la base de datos SQLite
+           controlador.insertar();
             System.out.println("Guardando nuevo cliente");
         }
-        
+        controlador.mostrarTabla();
         this.dispose(); // Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -471,7 +484,7 @@ public class VehiculosForm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                VehiculosForm dialog = new VehiculosForm(new javax.swing.JFrame(), true);
+                VehiculosForm dialog = new VehiculosForm(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -483,6 +496,8 @@ public class VehiculosForm extends javax.swing.JDialog {
         });
     }
 
+    //borrar en caso de daño
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
