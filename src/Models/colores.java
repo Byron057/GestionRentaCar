@@ -12,6 +12,7 @@ public class colores {
     private int id;
     private String color;
     private String estado;
+    private String nombreColor;
     
     public colores() {
     // Constructor vacío necesario para instanciar sin parámetros
@@ -46,6 +47,18 @@ public class colores {
     public String getEstado() {
         return estado;
     }
+
+    public String getNombreColor() {
+        return nombreColor;
+    }
+
+    public void setNombreColor(String nombreColor) {
+        this.nombreColor = nombreColor;
+    }
     
+    @Override
+public String toString() {
+    return this.nombreColor; // Asegúrate de que esta variable sea la que almacena el texto
+}
     
 }

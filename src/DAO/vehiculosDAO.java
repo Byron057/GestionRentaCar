@@ -105,6 +105,7 @@ public List<marcas> listarMarcas() {
         while (rs.next()) {
             marcas m = new marcas();
             m.setId(rs.getInt("id_marca"));
+            m.setNombreMarca(rs.getString("marca"));
             lista.add(m);
         }
     } catch (Exception e) {
@@ -161,6 +162,7 @@ public List<colores> listarColores() {
         while (rs.next()) {
             colores c = new colores();
             c.setId_color(rs.getInt("id_color"));
+            c.setNombreColor(rs.getString("color"));
             
             lista.add(c);
         }
