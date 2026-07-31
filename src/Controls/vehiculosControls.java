@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JTable;
 
+
 import javax.swing.table.DefaultTableModel;
 //imortar models
 
@@ -86,7 +87,8 @@ public void insertar(){
 }
 
 public void mostrarTabla(){
-        // En lugar de castear mal la tabla directamente, hazlo así:
+        
+    
         DefaultTableModel model = (DefaultTableModel) vista.tableVehiculos.getTabla().getModel();
         model.setRowCount(0);
         for(vehiculos x:dao.listarVehiculo()){
