@@ -26,6 +26,7 @@ public class MarcasForm extends javax.swing.JDialog {
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
+        System.out.println("hola");
     }
 
     /**
