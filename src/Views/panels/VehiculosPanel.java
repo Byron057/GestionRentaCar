@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+import DAO.DAO;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
+
 
 
 /**
@@ -14,8 +16,10 @@ import javax.swing.ImageIcon;
  */
 public class VehiculosPanel extends javax.swing.JPanel {
         private String idVehiculoSeleccionado = null;
-
-    
+        private VehiculosForm vista;
+        private VehiculosPanel vista2;
+        private DAO dao;
+        
     public VehiculosPanel() {
         initComponents();
         tableVehiculos.agregarFila(new Object[]{"1", "PBA-1234", "Sedán", "Toyota", "Corolla", "Activo", "Activo"});

@@ -4,7 +4,7 @@
  */
 package Controls;
 
-import DAO.VehiculosDAO;
+import DAO.DAO;
 import Views.panels.VehiculosForm;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
@@ -20,18 +20,19 @@ import javax.swing.table.DefaultTableModel;
 import Models.vehiculos;
 import java.util.Set;
 
-//import Models.marca;
-//import Models.modelo;
-//import Models.tipo;
-//import Models.color;
+import Models.marcas;
+import Models.modelos;
+import Models.tipos;
+import Models.colores;
 
 public class vehiculosControls {
     private VehiculosForm vista;
-    private VehiculosDAO dao;
+    private VehiculosForm vista2;
+    private DAO dao;
 
     public vehiculosControls(VehiculosForm vista){
         this.vista=vista;
-        dao = new VehiculosDAO();
+        dao = new DAO();
         mostrarTabla();
     }
     
@@ -54,7 +55,7 @@ public class vehiculosControls {
     
     public void cargarTipos(JComboBox cbxTipoVehiculo){
         cbxTipoVehiculo.removeAllItems();
-        for (Tipos t : dao.listarTipos()){
+        for (tipos t : dao.listarTipos()){
             cbxTipoVehiculo.addItem(t);
         }
     mostrarTabla();
@@ -71,10 +72,10 @@ public class vehiculosControls {
 public void insertar(){
     vehiculos v = new vehiculos();
     v.setPlaca(vista.flPlaca.getText());
-    //v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-    //v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-    //v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
-   // v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
+    v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+    v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+    v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
     v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
     
     if(dao.insertarVehiculo(v)){
@@ -89,7 +90,7 @@ public void insertar(){
 public void mostrarTabla(){
         
     
-        DefaultTableModel model = (DefaultTableModel) vista.tableVehiculos.getTabla().getModel();
+        DefaultTableModel model = (DefaultTableModel) vista2.tableVehiculos.getModel();
         model.setRowCount(0);
         for(vehiculos x:dao.listarVehiculo()){
             model.addRow(new Object[]{
@@ -111,7 +112,7 @@ public void editar(){
             try{
 
             int fila =
-                vista.tableVehiculos.getSelectedRow();
+                vista.tblVehiculos.getSelectedRow();
 
 
             if(fila == -1){
@@ -127,7 +128,7 @@ public void editar(){
             //id de las relaciones multitabla
             v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
             v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-            v.setIdTipo(((Tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+            v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
             v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
 
             v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());

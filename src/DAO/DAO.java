@@ -13,7 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class VehiculosDAO {
+//borrar
+import Models.colores;
+import Models.marcas;
+import Models.modelos;
+import Models.tipos;
+
+public class DAO {
     conexion cn = new conexion();
     Connection con;
     PreparedStatement ps;
@@ -133,6 +139,34 @@ public boolean editarVehiculo(vehiculos v){
         System.out.println("error.VehiculosDAO (editarVehiculo)"+e.toString());
         return false;
     }
+}
+
+
+
+
+///borrar
+public List<marcas> listarMarcas() {
+    List<marcas> lista = new ArrayList<>();
+    // Método temporal para evitar errores de compilación
+    return lista;
+}
+
+public List<modelos> listarModelos() {
+    List<modelos> lista = new ArrayList<>();
+    // Método temporal para evitar errores de compilación
+    return lista;
+}
+
+public List<tipos> listarTipos() {
+    List<tipos> lista = new ArrayList<>();
+    // Método temporal para evitar errores de compilación
+    return lista;
+}
+
+public List<colores> listarColores() {
+    List<colores> lista = new ArrayList<>();
+    // Método temporal para evitar errores de compilación
+    return lista;
 }
 
 }
