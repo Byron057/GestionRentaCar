@@ -11,10 +11,18 @@ package Models;
 public class tipos {
     private int id;
     private String tipo;
+    private String estado;
 
-    public tipos(int id, String tipo) {
-        this.id = id;
-        this.tipo = tipo;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public tipos() {
+        
     }
 
     public void setId(int id) {
