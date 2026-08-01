@@ -80,7 +80,7 @@ public class vehiculos {
         this.estado = estado;
     }
     
-    //axuliares
+    //getters y setters axuliares
 
     public String getNombreMarca() {
         return nombreMarca;

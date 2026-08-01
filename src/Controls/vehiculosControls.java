@@ -33,6 +33,7 @@ public class vehiculosControls {
 
     public vehiculosControls(VehiculosForm vista , VehiculosPanel vista2){
         this.vista=vista;
+        this.vista2=vista2;
         dao = new vehiculosDAO();
         mostrarTabla();
     }
@@ -40,7 +41,7 @@ public class vehiculosControls {
     //cargar en los comboBox 
     public void cargarMarcas(JComboBox cbxMarcaVehiculo){
         cbxMarcaVehiculo.removeAllItems();
-        for (marcas m : dao.listarMarcas()){
+        for (marcas m : dao.listarMarcasActivas()){
             cbxMarcaVehiculo.addItem(m);
         }
     mostrarTabla();
@@ -48,7 +49,7 @@ public class vehiculosControls {
     
     public void cargarModelos(JComboBox cbxModeloVehiculo){
         cbxModeloVehiculo.removeAllItems();
-        for (modelos mod : dao.listarModelos()){
+        for (modelos mod : dao.listarModelosActivos()){
             cbxModeloVehiculo.addItem(mod);
         }
     mostrarTabla();
@@ -56,7 +57,7 @@ public class vehiculosControls {
     
     public void cargarTipos(JComboBox cbxTipoVehiculo){
         cbxTipoVehiculo.removeAllItems();
-        for (tipos t : dao.listarTipos()){
+        for (tipos t : dao.listarTiposActivos()){
             cbxTipoVehiculo.addItem(t);
         }
     mostrarTabla();
@@ -64,7 +65,7 @@ public class vehiculosControls {
     
     public void cargarColores(JComboBox cbxColorVehiculo){
         cbxColorVehiculo.removeAllItems();
-        for (colores c : dao.listarColores()){
+        for (colores c : dao.listarColoresActivos()){
             cbxColorVehiculo.addItem(c);
         }
     mostrarTabla();
@@ -73,60 +74,58 @@ public class vehiculosControls {
 public void insertar(){
     vehiculos v = new vehiculos();
     v.setPlaca(vista.flPlaca.getText());
+    
+    // CASGING (Conversión de tipos): Extrae el objeto seleccionado del ComboBox y hace un casting forzado 
+    // a la clase 'marcas' para poder invocar su método getId() y obtener la llave foránea numérica.
     v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
     
-    //borrar en caso de error; 
+    //Revisa que el combobox no este vacio
+    //evitando una excepción de tipo NullPointerException si el usuario no seleccionó nada.
     if (vista.cbxModeloVehiculo.getSelectedItem() != null) {
     modelos modeloSeleccionado = (modelos) vista.cbxModeloVehiculo.getSelectedItem();
     v.setIdModelo(modeloSeleccionado.getId());
-} else {
+    } else {
     JOptionPane.showMessageDialog(vista, "Por favor, seleccione un modelo de vehículo.");
     return; // Detiene la ejecución para evitar el error
-}
-    //v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-    
-    //borrar igual:; 
-    if (vista.cbxTipoVehiculo.getSelectedItem() != null) {
-    tipos tipoSeleccionado = (tipos) vista.cbxTipoVehiculo.getSelectedItem();
-    v.setIdTipo(tipoSeleccionado.getId());
-} else {
-    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un tipo de vehículo.");
-    return; // Detiene el proceso para evitar que la aplicación falle
-}
-    //v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
-    //borrar igual; 
-    if (vista.cbxColorVehiculo.getSelectedItem() != null) {
-    colores colorSeleccionado = (colores) vista.cbxColorVehiculo.getSelectedItem();
-    v.setIdColor(colorSeleccionado.getId());
-} else {
-    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un color.");
-    return;
-}
- //   v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
- //borra igual
- 
- if (vista.cbxEstadoCliente.getSelectedItem() != null) {
-    // Tu código actual de la línea 106 que usa el item seleccionado
-    String valor = vista.cbxEstadoCliente.getSelectedItem().toString();
-    v.setEstado(valor);
-    
-} else {
-    JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.");
-    return;
-}
-    //v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
-    
-    if(dao.insertarVehiculo(v)){
-        JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
-        mostrarTabla();
-    }else{
-        JOptionPane.showMessageDialog(null,"Error");
     }
+   
+        if (vista.cbxTipoVehiculo.getSelectedItem() != null) {
+        tipos tipoSeleccionado = (tipos) vista.cbxTipoVehiculo.getSelectedItem();
+        v.setIdTipo(tipoSeleccionado.getId());
+        } else {
+        JOptionPane.showMessageDialog(vista, "Por favor, seleccione un tipo de vehículo.");
+        return;// Detiene el proceso para evitar que la aplicación falle
+        } 
+
+            if (vista.cbxColorVehiculo.getSelectedItem() != null) {
+            colores colorSeleccionado = (colores) vista.cbxColorVehiculo.getSelectedItem();
+            v.setIdColor(colorSeleccionado.getId());
+            } else {
+            JOptionPane.showMessageDialog(vista, "Por favor, seleccione un color.");
+            return;
+            }
+
+ 
+                if (vista.cbxEstadoCliente.getSelectedItem() != null) {
+                   String valor = vista.cbxEstadoCliente.getSelectedItem().toString();
+                   v.setEstado(valor);    
+                   } else {
+                   JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.");
+                   return;
+                   }
+                
+  
+if(dao.insertarVehiculo(v)){
+     JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
+      mostrarTabla();
+}else{
+      JOptionPane.showMessageDialog(null,"Error");
+}
     
 }
 
 public void mostrarTabla(){
-
+//Validación de que la vista y la tabla no estén vacías o nulas
     if (vista2 != null && vista2.tableVehiculos != null) {
             vista2.tableVehiculos.limpiarTabla();
             
@@ -135,6 +134,7 @@ public void mostrarTabla(){
             
         for(vehiculos x:dao.listarVehiculo()){
             vista2.tableVehiculos.agregarFila(new Object[]{
+               //RELLENO MULTITABLA: Pinta los datos obtenidos con los JOINs
               x.getIdVehiculo(),
               x.getPlaca(),
               x.getNombreMarca(),
@@ -151,25 +151,16 @@ public void mostrarTabla(){
             }
 
 
-/*
-public void editar(){
-            try{
 
-            int fila = vista2.tableVehiculos.getSelectedRow();
+public void editar(int idVehiculos){
 
-
-            if(fila == -1){
-                JOptionPane.showMessageDialog(null,
-                        "Seleccione un Vehiculo");
-                return;
-
-            }
-
-            
-            //obtener id del vehiculo seleccionado
-            int idVehiculoSeleccionado = listaVehiculos.get(fila).getIdVehiculo();
             vehiculos v = new vehiculos();
-            //id de las relaciones multitabla
+            v.setIdVehiculo(idVehiculos);
+            v.setPlaca(vista.flPlaca.getText());
+            // CASTING DE LAS RELACIONES MULTITABLA: 
+            // Como el ComboBox guarda objetos completos (marcas, modelos, tipos, colores), 
+            // aquí obligamos a Java a convertir (hacer casting) el ítem seleccionado 
+            // a su clase respectiva para poder extraer únicamente su ID numérico y actualizarlo.
             v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
             v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
             v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
@@ -183,26 +174,15 @@ public void editar(){
                 JOptionPane.showMessageDialog(null, "Error al actualizar el vehículo");
             }
 
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error.vehiculosControls (editar) " + e.getMessage());
-        }
+       
             
 
 }
 
 
-public void eliminar(){
-    
-    int fila = vista2.tableVehiculos.getSelectedRow();
-    
-    if(fila== -1){
-        JOptionPane.showMessageDialog(null, "Seleccion un vehiculo");
-        return;    
-    }
-    
-    // ID directamente de la lista global
-    int id = listaVehiculos.get(fila).getIdVehiculo();
-    
+
+public void eliminar(int idVehiculo){
+// DIÁLOGO DE CONFIRMACIÓN
         int confirmar =
                 JOptionPane.showConfirmDialog(null,
                 "¿Eliminar vehiculo?",
@@ -210,13 +190,13 @@ public void eliminar(){
                 JOptionPane.YES_NO_OPTION);
                 if(confirmar == JOptionPane.YES_OPTION){
 
-
-            if(dao.eliminarVehiculo(id)){
+// CONDICIONAL DE RESPUESTA:
+            if(dao.eliminarVehiculo(idVehiculo)){
                 
                 JOptionPane.showMessageDialog(null,
                         "Vehiculo eliminado");
                 
-                mostrarTabla();
+                  mostrarTabla();
 
             }else{
                 JOptionPane.showMessageDialog(null,
@@ -226,7 +206,7 @@ public void eliminar(){
 
         }  
 }
- */   
+   
 }
     
     

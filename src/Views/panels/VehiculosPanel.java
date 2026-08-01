@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+import Controls.vehiculosControls;
 import DAO.vehiculosDAO;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -20,9 +21,12 @@ public class VehiculosPanel extends javax.swing.JPanel {
         private VehiculosPanel vista2;
         private vehiculosDAO dao;
         
+        private vehiculosControls controlador;
+        
     public VehiculosPanel() {
         initComponents();
-        tableVehiculos.agregarFila(new Object[]{"1", "PBA-1234", "Sedán", "Toyota", "Corolla", "Activo", "Activo"});
+        this.controlador = new vehiculosControls(null, this);
+        controlador.mostrarTabla();
         activarBotonesAccion(false);
         
 
@@ -316,6 +320,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
         String modelo = tableVehiculos.getTabla().getValueAt(fila, 4).toString();
         String color = tableVehiculos.getTabla().getValueAt(fila, 5).toString();
         String estado = tableVehiculos.getTabla().getValueAt(fila, 6).toString();
+        
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-//borrar
+//modelos axuliares
 import Models.colores;
 import Models.marcas;
 import Models.modelos;
@@ -25,12 +25,13 @@ public class vehiculosDAO {
     PreparedStatement ps;
     ResultSet rs;
     
+//metod para registrar un nuevo vehiculo
     public boolean insertarVehiculo(vehiculos v){
         String sql ="INSERT INTO vehiculos (placa, fk_id_marca, fk_id_modelo, fk_id_tipo, fk_id_color, estado) VALUES(?,?,?,?,?,?)";
         try{
            con = cn.getConnection();
            ps = con.prepareStatement(sql);
-           
+           //Asignando cada valor del objeto Java a los comodines '?' de la consulta en orden numérico
            ps.setString(1, v.getPlaca());
            ps.setInt(2, v.getIdMarca());
            ps.setInt(3, v.getIdModelo());
@@ -46,34 +47,45 @@ public class vehiculosDAO {
             return false;   
         }
     }
+    
+// Método principal para consultar y listar 
 public List<vehiculos>listarVehiculo(){
+    // lista vacía donde iremos guardando cada vehículo 
     List<vehiculos> lista = new ArrayList<>();
+    
+    // CONSULTA MULTITABLA (JOIN): Une la tabla principal de vehículos con tablas secundarias 
+    // para transformar los IDs numéricos en nombres de texto legibles usando alias (AS)
     
     String sql = "SELECT v.id_vehiculo, " +
                 "v.placa, " +
                 "v.fk_id_marca, " +
-                "m.nombre_marca, " +
+                "m.marca AS nombre_marca, " + // Alias temporal para leer el nombre real de la marca
                 "v.fk_id_modelo, " +
-                "mod.nombre_modelo, " +
+                "mo.modelo as nombre_modelo, " + // Alias temporal para leer el nombre real del modelo
                 "v.fk_id_tipo, " +
-                "t.nombre_tipo, " +
+                "t.tipo As nombre_tipo, " + //// Alias temporal para leer el nombre real del tipo
                 "v.fk_id_color, " +
-                "c.nombre_color, " +
+                "c.color as nombre_color, " + //// Alias temporal para leer el nombre real del color
                 "v.estado " +
                 "FROM vehiculos v " +
-                "INNER JOIN marcas_vehiculos m ON v.fk_id_marca = m.id_marca " +
-                "INNER JOIN modelos mod ON v.fk_id_modelo = mod.id_modelo " +
-                "INNER JOIN tipos t ON v.fk_id_tipo = t.id_tipo " +
-                "INNER JOIN colores c ON v.fk_id_color = c.id_color " +
-                "ORDER BY v.id_vehiculo DESC";
+                "INNER JOIN marcas_vehiculos m ON v.fk_id_marca = m.id_marca " + //Une la tabla vehículos con marcas usando el ID como enlace
+                "INNER JOIN modelos mo ON v.fk_id_modelo = mo.id_modelo " + // Conecta con su tabla correspondiente
+                "INNER JOIN tipos t ON v.fk_id_tipo = t.id_tipo " + 
+                "INNER JOIN colores c ON v.fk_id_color = c.id_color " + 
+                "ORDER BY v.id_vehiculo DESC";//Ordena la lista mostrando los registros más nuevos primero
     
 
     try{
+     // Establecemos la conexión con la base de datos
      con = cn.getConnection();
+     // Preparamos la consulta SQL para ser ejecutada
      ps = con.prepareStatement(sql);
+     // Ejecutamos la consulta y guardamos el resultado en el ResultSet (rs)
      rs = ps.executeQuery();
         while(rs.next()){
+            // Instanciamos un nuevo objeto vehículo por cada fila encontrada
             vehiculos v = new vehiculos();
+            
             v.setIdVehiculo(rs.getInt("id_vehiculo"));
             v.setPlaca(rs.getString("placa"));
             v.setIdMarca(rs.getInt("fk_id_marca"));
@@ -94,8 +106,9 @@ public List<vehiculos>listarVehiculo(){
     }
     return lista;
 }
-//activas
-public List<marcas> listarMarcas() {
+
+//Metodos para listar marcas,modelos,tipos y colores activo
+public List<marcas> listarMarcasActivas() {
     List<marcas> lista = new ArrayList<>();
     String sql = "SELECT * FROM marcas_vehiculos WHERE estado = 'Activo'";
     try {
@@ -114,7 +127,7 @@ public List<marcas> listarMarcas() {
     return lista;
 }
 
-public List<modelos> listarModelos() {
+public List<modelos> listarModelosActivos() {
     List<modelos> lista = new ArrayList<>();
     String sql = "SELECT * FROM modelos WHERE estado = 'Activo'";
     try {
@@ -124,6 +137,7 @@ public List<modelos> listarModelos() {
         while (rs.next()) {
             modelos mod = new modelos();
             mod.setId(rs.getInt("id_modelo"));
+            mod.setNombreModelo(rs.getString("modelo"));
             
             lista.add(mod);
         }
@@ -133,7 +147,7 @@ public List<modelos> listarModelos() {
     return lista;
 }
 
-public List<tipos> listarTipos() {
+public List<tipos> listarTiposActivos() {
     List<tipos> lista = new ArrayList<>();
     String sql = "SELECT * FROM tipos WHERE estado = 'Activo'";
     try {
@@ -143,6 +157,7 @@ public List<tipos> listarTipos() {
         while (rs.next()) {
             tipos t = new tipos();
             t.setId(rs.getInt("id_tipo"));
+            t.setNombreTipo(rs.getString("tipo"));
             
             lista.add(t);
         }
@@ -152,7 +167,7 @@ public List<tipos> listarTipos() {
     return lista;
 }
 
-public List<colores> listarColores() {
+public List<colores> listarColoresActivos() {
     List<colores> lista = new ArrayList<>();
     String sql = "SELECT * FROM colores WHERE estado = 'Activo'";
     try {
@@ -172,6 +187,7 @@ public List<colores> listarColores() {
     return lista;
 }
 
+//metodo para eliminar un vehiculo usando su id
 public boolean eliminarVehiculo(int idVehiculo){
     String sql="DELETE FROM vehiculos WHERE id_vehiculo=?";
     try{
@@ -187,6 +203,7 @@ public boolean eliminarVehiculo(int idVehiculo){
         return false;
     }
 }
+
 
 public boolean editarVehiculo(vehiculos v){
     String sql = "UPDATE vehiculos SET "

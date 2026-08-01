@@ -14,6 +14,9 @@ public class modelos {
     private String modelo;
     private String estado;
     
+    //cambio o borrar
+    private String nombreModelo;
+    
     public modelos() {
         
     }
@@ -50,7 +53,22 @@ public class modelos {
         this.estado = estado;
     }
 
+    public String getNombreModelo() {
+        return nombreModelo;
+    }
+
+    public void setNombreModelo(String nombreModelo) {
+        this.nombreModelo = nombreModelo;
+    }
     
+    
+    
+    
+
+  @Override
+public String toString() {
+    return this.nombreModelo; // Asegúrate de que esta variable sea la que almacena el texto
+}    
     
     
 }

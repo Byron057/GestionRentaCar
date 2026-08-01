@@ -435,7 +435,7 @@ public class VehiculosForm extends javax.swing.JDialog {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
         if (esEdicion) {
-           // controlador.editar();
+            controlador.editar(Integer.parseInt(idVehiculoOriginal));
             System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
         } else {
            controlador.insertar();

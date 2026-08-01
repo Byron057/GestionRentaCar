@@ -12,6 +12,8 @@ public class tipos {
     private int id;
     private String tipo;
     private String estado;
+    //cambio o borrar si esta mal
+    private String nombreTipo;
 
     public void setEstado(String estado) {
         this.estado = estado;
@@ -40,6 +42,19 @@ public class tipos {
     public String getTipo() {
         return tipo;
     }
+
+    public String getNombreTipo() {
+        return nombreTipo;
+    }
+
+    public void setNombreTipo(String nombreTipo) {
+        this.nombreTipo = nombreTipo;
+    }
     
     
+    
+      @Override
+public String toString() {
+    return this.nombreTipo; // Asegúrate de que esta variable sea la que almacena el texto
+}
 }
