@@ -58,7 +58,7 @@ public class colores {
     
     @Override
 public String toString() {
-    return this.nombreColor; // Asegúrate de que esta variable sea la que almacena el texto
+    return this.nombreColor; 
 }
     
 }

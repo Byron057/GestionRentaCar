@@ -149,7 +149,7 @@ public List<modelos> listarModelosActivos() {
 
 public List<tipos> listarTiposActivos() {
     List<tipos> lista = new ArrayList<>();
-    String sql = "SELECT * FROM tipos WHERE estado = 'Activo'";
+    String sql = "SELECT * FROM tipos WHERE estado = 'activo'";
     try {
         con = cn.getConnection();
         ps = con.prepareStatement(sql);
@@ -185,6 +185,54 @@ public List<colores> listarColoresActivos() {
         System.out.println("error.vehiculosDAO (listarColores) " + e.toString());
     }
     return lista;
+}
+
+//metodo para conectar marcas con modelos de vehiculos
+public List<modelos> listarModelosMarcas(int idMarca){
+    List<modelos> lista = new ArrayList<>();
+  String sql = "SELECT * FROM modelos WHERE fk_id_marca = ? AND estado = 'activo'";
+  try{
+      con = cn.getConnection();
+      ps=con.prepareStatement(sql);
+      ps.setInt(1, idMarca );
+      rs=ps.executeQuery();
+      while(rs.next()){
+          modelos mod = new modelos();
+          mod.setId(rs.getInt("id_modelo"));
+          mod.setFk_id_marca(rs.getInt("fk_id_marca"));
+          
+          mod.setModelo(rs.getString("modelo"));
+          mod.setEstado(rs.getString("estado"));
+          mod.setNombreModelo(rs.getString("modelo"));
+          lista.add(mod);
+      }
+      
+  }catch(Exception e){
+      System.out.println("error.vehiculosDAO (listarModelosMarcas) "+e.toString());
+      
+  }
+  return lista;
+}
+
+//validacion si ya exite la placa en la Db
+public boolean existePlaca(String placa) {
+    boolean existe = false;
+    String sql = "SELECT * FROM vehiculos WHERE placa = ?"; // Cambia 'vehiculos' por el nombre de tu tabla si es diferente
+    try {
+        con=cn.getConnection();
+        ps=con.prepareStatement(sql);
+        // Reemplaza el '?' con la placa que pasamos por parámetro
+        ps.setString(1, placa);
+        // Ejecuta la consulta y guarda el resultado 
+        rs = ps.executeQuery();
+        // Si 'rs.next()' encuentra al menos una fila, significa que la placa ya está registrada
+        if (rs.next()) {
+            existe = true; // Si encuentra un resultado, significa que la placa ya existe
+        }
+    } catch (Exception e) {
+        System.out.println("Error al verificar placa: " + e.getMessage());
+    }
+    return existe;
 }
 
 //metodo para eliminar un vehiculo usando su id

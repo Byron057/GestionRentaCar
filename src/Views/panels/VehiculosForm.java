@@ -32,10 +32,11 @@ public class VehiculosForm extends javax.swing.JDialog {
         this.controlador = new vehiculosControls(this, vistaPanel);
         
         // ¡Llamar a los métodos para llenar los ComboBox aquí!
-    controlador.cargarMarcas(cbxMarcaVehiculo);
-    controlador.cargarModelos(cbxModeloVehiculo);
-    controlador.cargarTipos(cbxTipoVehiculo);
-    controlador.cargarColores(cbxColorVehiculo);
+        controlador.cargarMarcas(cbxMarcaVehiculo);
+        controlador.cargarTipos(cbxTipoVehiculo);
+        controlador.cargarColores(cbxColorVehiculo);
+        
+        controlador.initEvents();
     
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);

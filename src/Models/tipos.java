@@ -55,6 +55,6 @@ public class tipos {
     
       @Override
 public String toString() {
-    return this.nombreTipo; // Asegúrate de que esta variable sea la que almacena el texto
+    return this.nombreTipo; 
 }
 }

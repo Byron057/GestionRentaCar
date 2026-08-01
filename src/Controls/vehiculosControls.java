@@ -38,12 +38,15 @@ public class vehiculosControls {
         mostrarTabla();
     }
     
+
+    
     //cargar en los comboBox 
     public void cargarMarcas(JComboBox cbxMarcaVehiculo){
         cbxMarcaVehiculo.removeAllItems();
         for (marcas m : dao.listarMarcasActivas()){
             cbxMarcaVehiculo.addItem(m);
         }
+    cbxMarcaVehiculo.setSelectedIndex(-1);
     mostrarTabla();
      }
     
@@ -52,6 +55,7 @@ public class vehiculosControls {
         for (modelos mod : dao.listarModelosActivos()){
             cbxModeloVehiculo.addItem(mod);
         }
+    cbxModeloVehiculo.setSelectedIndex(-1);
     mostrarTabla();
      }
     
@@ -60,6 +64,7 @@ public class vehiculosControls {
         for (tipos t : dao.listarTiposActivos()){
             cbxTipoVehiculo.addItem(t);
         }
+    cbxTipoVehiculo.setSelectedIndex(-1);
     mostrarTabla();
      }
     
@@ -68,71 +73,102 @@ public class vehiculosControls {
         for (colores c : dao.listarColoresActivos()){
             cbxColorVehiculo.addItem(c);
         }
+    cbxColorVehiculo.setSelectedIndex(-1);
     mostrarTabla();
      }
+    
+    
+    //metodo para caragar modelos por marcas 
+    public void cargarModeloPorMarcas(JComboBox cbxModeloVehiculo , int idMarca){
+        System.out.println("ID de marca recibido en controlador: " + idMarca);
+        cbxModeloVehiculo.removeAllItems();
+        List<modelos> modelosFiltrados = dao.listarModelosMarcas(idMarca);
+        System.out.println("Cantidad de modelos encontrados: " + modelosFiltrados.size());
+        for(modelos mod : modelosFiltrados){
+            cbxModeloVehiculo.addItem(mod);
+        }
+        cbxModeloVehiculo.setSelectedIndex(-1);
+    
+    }
+    
+    //controlar el compartimienteo dinamico entre lo comboxBox marca y modelos
+    public void initEvents(){
+        vista.cbxModeloVehiculo.setEnabled(false);
+        
+        vista.cbxMarcaVehiculo.addActionListener(e ->{
+            Object selectedItem = vista.cbxMarcaVehiculo.getSelectedItem();
+        
+        if (selectedItem instanceof marcas) {
+            int idMarca = ((marcas) selectedItem).getId();
+            cargarModeloPorMarcas(vista.cbxModeloVehiculo, idMarca);
+            vista.cbxModeloVehiculo.setEnabled(true);
+        } else {
+            vista.cbxModeloVehiculo.removeAllItems();
+            vista.cbxModeloVehiculo.setEnabled(false);
+        }
+    });
+        
+    }
+    
 
 public void insertar(){
     vehiculos v = new vehiculos();
     String placa = vista.flPlaca.getText().trim().toUpperCase();
-    // 3. Validamos el formato (
+    
+//  VALIDACIÓN GENERAL SI LOS CAMPOS ESTA VACIOS
+    if (placa.isEmpty() ||
+        vista.cbxMarcaVehiculo.getSelectedItem() == null || 
+        vista.cbxModeloVehiculo.getSelectedItem() == null || 
+        vista.cbxTipoVehiculo.getSelectedItem() == null || 
+        vista.cbxColorVehiculo.getSelectedItem() == null || 
+        vista.cbxEstadoCliente.getSelectedItem() == null) {
+        
+        JOptionPane.showMessageDialog(
+            vista, 
+            "Por favor, complete todos los campos obligatorios.", 
+            "Campos Incompletos", 
+            JOptionPane.WARNING_MESSAGE
+        );
+        return; // Detiene la ejecución si falta cualquiera de los ComboBox
+    }
+    
+    //  SI TODO ESTÁ COMPLETO, HACEMOS EL CASTING
+   // CASTING: Cambia un dato genérico por uno específico para poder usarlo.
+    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
+    v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+    v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+    v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+    v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
+    
+    //validacion formato placa
     if (!placa.matches("^[A-Z]{3}-\\d{3,4}$")) {
         JOptionPane.showMessageDialog(
             vista, 
-            "Formato de placa inválido.\nDebe ser similar a: ABC-1234", 
+            "Formato de placa inválido.\nO campo vacio", 
             "Error de Formato", 
             JOptionPane.ERROR_MESSAGE
         );
         return; // Detiene el guardado
     }
-    
     v.setPlaca(placa);
-   
-    
-    // CASGING (Conversión de tipos): Extrae el objeto seleccionado del ComboBox y hace un casting forzado 
-    // a la clase 'marcas' para poder invocar su método getId() y obtener la llave foránea numérica.
-    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-    
-    //Revisa que el combobox no este vacio
-    //evitando una excepción de tipo NullPointerException si el usuario no seleccionó nada.
-    if (vista.cbxModeloVehiculo.getSelectedItem() != null) {
-    modelos modeloSeleccionado = (modelos) vista.cbxModeloVehiculo.getSelectedItem();
-    v.setIdModelo(modeloSeleccionado.getId());
-    } else {
-    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un modelo de vehículo.");
-    return; // Detiene la ejecución para evitar el error
+  
+    //validacion si la placa ya existe  
+    if (dao.existePlaca(v.getPlaca())) {
+        JOptionPane.showMessageDialog(
+            vista, 
+            "La placa '" + v.getPlaca() + "' ya se encuentra registrada.", 
+            "Placa Duplicada", 
+            JOptionPane.WARNING_MESSAGE
+        );
+        return; // Detiene el guardado aquí mismo
     }
    
-        if (vista.cbxTipoVehiculo.getSelectedItem() != null) {
-        tipos tipoSeleccionado = (tipos) vista.cbxTipoVehiculo.getSelectedItem();
-        v.setIdTipo(tipoSeleccionado.getId());
-        } else {
-        JOptionPane.showMessageDialog(vista, "Por favor, seleccione un tipo de vehículo.");
-        return;// Detiene el proceso para evitar que la aplicación falle
-        } 
-
-            if (vista.cbxColorVehiculo.getSelectedItem() != null) {
-            colores colorSeleccionado = (colores) vista.cbxColorVehiculo.getSelectedItem();
-            v.setIdColor(colorSeleccionado.getId());
-            } else {
-            JOptionPane.showMessageDialog(vista, "Por favor, seleccione un color.");
-            return;
-            }
-
- 
-                if (vista.cbxEstadoCliente.getSelectedItem() != null) {
-                   String valor = vista.cbxEstadoCliente.getSelectedItem().toString();
-                   v.setEstado(valor);    
-                   } else {
-                   JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.");
-                   return;
-                   }
-                
-  
 if(dao.insertarVehiculo(v)){
      JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
       mostrarTabla();
 }else{
-      JOptionPane.showMessageDialog(null,"Error");
+     JOptionPane.showMessageDialog(null,"Error al intentar registrar el vehículo");
+        
 }
     
 }
