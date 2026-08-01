@@ -73,7 +73,20 @@ public class vehiculosControls {
 
 public void insertar(){
     vehiculos v = new vehiculos();
-    v.setPlaca(vista.flPlaca.getText());
+    String placa = vista.flPlaca.getText().trim().toUpperCase();
+    // 3. Validamos el formato (
+    if (!placa.matches("^[A-Z]{3}-\\d{3,4}$")) {
+        JOptionPane.showMessageDialog(
+            vista, 
+            "Formato de placa inválido.\nDebe ser similar a: ABC-1234", 
+            "Error de Formato", 
+            JOptionPane.ERROR_MESSAGE
+        );
+        return; // Detiene el guardado
+    }
+    
+    v.setPlaca(placa);
+   
     
     // CASGING (Conversión de tipos): Extrae el objeto seleccionado del ComboBox y hace un casting forzado 
     // a la clase 'marcas' para poder invocar su método getId() y obtener la llave foránea numérica.

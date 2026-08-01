@@ -68,7 +68,8 @@ public class VehiculosForm extends javax.swing.JDialog {
     }
     
     private void configurarPlaceholders() {
-        aplicarPlaceholder(flPlaca, "Ingrese la Placa");
+        aplicarPlaceholder(flPlaca, "Ingrese la Placa"
+                + " Ej: ABC-1234");
         
         aplicarPlaceholderComboBox(cbxTipoVehiculo);
         aplicarPlaceholderComboBox(cbxMarcaVehiculo);
@@ -315,13 +316,14 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         flPlaca.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        flPlaca.setText("jTextField1");
+        flPlaca.setText("formato: ABC-1234");
         flPlaca.setBorder(null);
         flPlaca.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 flPlacaMouseClicked(evt);
             }
         });
+        flPlaca.addActionListener(this::flPlacaActionPerformed);
         panelRound11.add(flPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 10, 220, 20));
 
         panelRound1.add(panelRound11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 250, 40));
@@ -458,6 +460,10 @@ public class VehiculosForm extends javax.swing.JDialog {
     private void flPlacaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flPlacaMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_flPlacaMouseClicked
+
+    private void flPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flPlacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_flPlacaActionPerformed
 
     /**
      * @param args the command line arguments
