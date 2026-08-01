@@ -182,14 +182,6 @@ public void editar(int idVehiculos){
 
 
 public void eliminar(int idVehiculo){
-// DIÁLOGO DE CONFIRMACIÓN
-        int confirmar =
-                JOptionPane.showConfirmDialog(null,
-                "¿Eliminar vehiculo?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION);
-                if(confirmar == JOptionPane.YES_OPTION){
-
 // CONDICIONAL DE RESPUESTA:
             if(dao.eliminarVehiculo(idVehiculo)){
                 
@@ -207,7 +199,7 @@ public void eliminar(int idVehiculo){
         }  
 }
    
-}
+
     
     
 

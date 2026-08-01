@@ -371,12 +371,16 @@ public class VehiculosPanel extends javax.swing.JPanel {
             
             // AQUÍ IRÁ TU LÓGICA SQL
             System.out.println("Eliminando vehículo ID: " + idVehiculoSeleccionado);
+            int idVehiculo = Integer.parseInt(idVehiculoSeleccionado);
             
+            controlador.eliminar(idVehiculo);
             // Lo eliminamos visualmente
             tableVehiculos.eliminarFila(fila);
             
             // Apagamos los botones porque la selección desapareció
             activarBotonesAccion(false);
+        }else{
+            controlador.mostrarTabla();
         }
     }//GEN-LAST:event_btnEliminarVehiculosMouseClicked
 
