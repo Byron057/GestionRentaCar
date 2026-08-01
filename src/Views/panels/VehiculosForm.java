@@ -52,20 +52,42 @@ public class VehiculosForm extends javax.swing.JDialog {
         this.esEdicion = true;
         this.idVehiculoOriginal = id;
         
-        // Cambiamos el título visual
         jLabel3.setText("Editar Vehículo");
         jLabel4.setText("Modifique la Información del Vehículo");
-        
-        // Llenamos la placa y cambiamos el color a oscuro
+  
         flPlaca.setText(placa);
         flPlaca.setForeground(new java.awt.Color(60, 60, 60));
+      
+        seleccionarItemComboBox(cbxMarcaVehiculo, marca);
         
-        // Llenamos todos los ComboBox
-        cbxTipoVehiculo.setSelectedItem(tipo);
-        cbxMarcaVehiculo.setSelectedItem(marca);
-        cbxModeloVehiculo.setSelectedItem(modelo);
-        cbxColorVehiculo.setSelectedItem(color);
-        cbxEstadoCliente.setSelectedItem(estado);
+      
+        seleccionarItemComboBox(cbxModeloVehiculo, modelo); 
+        seleccionarItemComboBox(cbxTipoVehiculo, tipo);
+        seleccionarItemComboBox(cbxColorVehiculo, color);
+        seleccionarItemComboBox(cbxEstadoCliente, estado);
+    }
+    private void seleccionarItemComboBox(assets.ComboBoxRound combo, String textoBuscar) {
+        if (textoBuscar == null || textoBuscar.trim().isEmpty()) {
+            return; 
+        }
+        
+       
+        String textoLimpio = textoBuscar.trim().toLowerCase(); 
+        
+        for (int i = 0; i < combo.getItemCount(); i++) {
+            Object item = combo.getItemAt(i);
+            
+            if (item != null) {
+                
+                String textoItem = item.toString().trim().toLowerCase();
+                
+                if (textoItem.equals(textoLimpio)) {
+                    combo.setSelectedIndex(i); 
+                    combo.setForeground(new java.awt.Color(60, 60, 60)); 
+                    return; 
+                }
+            }
+        }
     }
     
     private void configurarPlaceholders() {
@@ -438,7 +460,9 @@ public class VehiculosForm extends javax.swing.JDialog {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
         if (esEdicion) {
-            controlador.editar(Integer.parseInt(idVehiculoOriginal));
+            if (controlador.editar(Integer.parseInt(idVehiculoOriginal))) {
+                this.dispose(); 
+            }
             
         } else {
            if (controlador.insertar()) {

@@ -19,7 +19,6 @@ public class VehiculosPanel extends javax.swing.JPanel {
         private String idVehiculoSeleccionado = null;
         private VehiculosForm vista;
         private VehiculosPanel vista2;
-        private vehiculosDAO dao;
         
         private vehiculosControls controlador;
         
@@ -313,13 +312,12 @@ public class VehiculosPanel extends javax.swing.JPanel {
         int fila = tableVehiculos.getTabla().getSelectedRow();
         if (fila == -1) return; // Validación anti-crasheo
 
-        // Extraer los datos de la fila seleccionada (columnas 1 al 6)
-        String placa = tableVehiculos.getTabla().getValueAt(fila, 1).toString();
-        String tipo = tableVehiculos.getTabla().getValueAt(fila, 2).toString();
-        String marca = tableVehiculos.getTabla().getValueAt(fila, 3).toString();
-        String modelo = tableVehiculos.getTabla().getValueAt(fila, 4).toString();
-        String color = tableVehiculos.getTabla().getValueAt(fila, 5).toString();
-        String estado = tableVehiculos.getTabla().getValueAt(fila, 6).toString();
+        String placa = tableVehiculos.getTabla().getValueAt(fila, 1) != null ? tableVehiculos.getTabla().getValueAt(fila, 1).toString() : "";
+        String marca = tableVehiculos.getTabla().getValueAt(fila, 2) != null ? tableVehiculos.getTabla().getValueAt(fila, 2).toString() : "";
+        String modelo = tableVehiculos.getTabla().getValueAt(fila, 3) != null ? tableVehiculos.getTabla().getValueAt(fila, 3).toString() : "";
+        String tipo = tableVehiculos.getTabla().getValueAt(fila, 4) != null ? tableVehiculos.getTabla().getValueAt(fila, 4).toString() : "";
+        String color = tableVehiculos.getTabla().getValueAt(fila, 5) != null ? tableVehiculos.getTabla().getValueAt(fila, 5).toString() : "";
+        String estado = tableVehiculos.getTabla().getValueAt(fila, 6) != null ? tableVehiculos.getTabla().getValueAt(fila, 6).toString() : "Activo";
         
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -369,12 +367,9 @@ public class VehiculosPanel extends javax.swing.JPanel {
         // Si presiona "Sí"
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando vehículo ID: " + idVehiculoSeleccionado);
             int idVehiculo = Integer.parseInt(idVehiculoSeleccionado);
             
             controlador.eliminar(idVehiculo);
-            // Lo eliminamos visualmente
             tableVehiculos.eliminarFila(fila);
             
             // Apagamos los botones porque la selección desapareció

@@ -4,14 +4,12 @@
  */
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+
 import Conexion.conexion;
 import Models.vehiculos;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 //modelos axuliares
 import Models.colores;
@@ -31,7 +29,6 @@ public class vehiculosDAO {
         try{
            con = cn.getConnection();
            ps = con.prepareStatement(sql);
-           //Asignando cada valor del objeto Java a los comodines '?' de la consulta en orden numérico
            ps.setString(1, v.getPlaca());
            ps.setInt(2, v.getIdMarca());
            ps.setInt(3, v.getIdModelo());
@@ -41,49 +38,46 @@ public class vehiculosDAO {
            
            ps.executeUpdate();
            return true;
-              
+             
         }catch(Exception e){
-            System.out.println("error.VehiculosDAO (insetarVehiculos)"+e.toString());
             return false;   
+        }finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                // Silenciado para entorno de producción
+            }
         }
     }
     
 // Método principal para consultar y listar 
 public List<vehiculos>listarVehiculo(){
-    // lista vacía donde iremos guardando cada vehículo 
     List<vehiculos> lista = new ArrayList<>();
-    
-    // CONSULTA MULTITABLA (JOIN): Une la tabla principal de vehículos con tablas secundarias 
-    // para transformar los IDs numéricos en nombres de texto legibles usando alias (AS)
     
     String sql = "SELECT v.id_vehiculo, " +
                 "v.placa, " +
                 "v.fk_id_marca, " +
-                "m.marca AS nombre_marca, " + // Alias temporal para leer el nombre real de la marca
+                "m.marca AS nombre_marca, " + 
                 "v.fk_id_modelo, " +
-                "mo.modelo as nombre_modelo, " + // Alias temporal para leer el nombre real del modelo
+                "mo.modelo as nombre_modelo, " + 
                 "v.fk_id_tipo, " +
-                "t.tipo As nombre_tipo, " + //// Alias temporal para leer el nombre real del tipo
+                "t.tipo As nombre_tipo, " + 
                 "v.fk_id_color, " +
-                "c.color as nombre_color, " + //// Alias temporal para leer el nombre real del color
+                "c.color as nombre_color, " + 
                 "v.estado " +
                 "FROM vehiculos v " +
-                "INNER JOIN marcas_vehiculos m ON v.fk_id_marca = m.id_marca " + //Une la tabla vehículos con marcas usando el ID como enlace
-                "INNER JOIN modelos mo ON v.fk_id_modelo = mo.id_modelo " + // Conecta con su tabla correspondiente
+                "INNER JOIN marcas_vehiculos m ON v.fk_id_marca = m.id_marca " + 
+                "INNER JOIN modelos mo ON v.fk_id_modelo = mo.id_modelo " + 
                 "INNER JOIN tipos t ON v.fk_id_tipo = t.id_tipo " + 
                 "INNER JOIN colores c ON v.fk_id_color = c.id_color " + 
-                "ORDER BY v.id_vehiculo DESC";//Ordena la lista mostrando los registros más nuevos primero
-    
+                "ORDER BY v.id_vehiculo DESC";
 
     try{
-     // Establecemos la conexión con la base de datos
      con = cn.getConnection();
-     // Preparamos la consulta SQL para ser ejecutada
      ps = con.prepareStatement(sql);
-     // Ejecutamos la consulta y guardamos el resultado en el ResultSet (rs)
      rs = ps.executeQuery();
         while(rs.next()){
-            // Instanciamos un nuevo objeto vehículo por cada fila encontrada
             vehiculos v = new vehiculos();
             
             v.setIdVehiculo(rs.getInt("id_vehiculo"));
@@ -102,7 +96,14 @@ public List<vehiculos>listarVehiculo(){
             lista.add(v);  
         }   
     }catch(Exception e){
-        System.out.println("error.vehiculosDAO (listarVehiculos)"+e.toString());
+        // Silenciado
+    }finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
     return lista;
 }
@@ -122,7 +123,13 @@ public List<marcas> listarMarcasActivas() {
             lista.add(m);
         }
     } catch (Exception e) {
-        System.out.println("error.vehiculosDAO (listarMarcas) " + e.toString());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
     return lista;
 }
@@ -138,11 +145,16 @@ public List<modelos> listarModelosActivos() {
             modelos mod = new modelos();
             mod.setId(rs.getInt("id_modelo"));
             mod.setNombreModelo(rs.getString("modelo"));
-            
             lista.add(mod);
         }
     } catch (Exception e) {
-        System.out.println("error.vehiculosDAO (listarModelos) " + e.toString());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
     return lista;
 }
@@ -158,11 +170,16 @@ public List<tipos> listarTiposActivos() {
             tipos t = new tipos();
             t.setId(rs.getInt("id_tipo"));
             t.setNombreTipo(rs.getString("tipo"));
-            
             lista.add(t);
         }
     } catch (Exception e) {
-        System.out.println("error.vehiculosDAO (listarTipos) " + e.toString());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
     return lista;
 }
@@ -178,38 +195,46 @@ public List<colores> listarColoresActivos() {
             colores c = new colores();
             c.setId_color(rs.getInt("id_color"));
             c.setNombreColor(rs.getString("color"));
-            
             lista.add(c);
         }
     } catch (Exception e) {
-        System.out.println("error.vehiculosDAO (listarColores) " + e.toString());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
     return lista;
 }
 
 //metodo para conectar marcas con modelos de vehiculos
 public List<modelos> listarModelosMarcas(int idMarca){
-    List<modelos> lista = new ArrayList<>();
+  List<modelos> lista = new ArrayList<>();
   String sql = "SELECT * FROM modelos WHERE fk_id_marca = ? AND estado = 'activo'";
   try{
       con = cn.getConnection();
-      ps=con.prepareStatement(sql);
-      ps.setInt(1, idMarca );
-      rs=ps.executeQuery();
+      ps = con.prepareStatement(sql);
+      ps.setInt(1, idMarca);
+      rs = ps.executeQuery();
       while(rs.next()){
           modelos mod = new modelos();
           mod.setId(rs.getInt("id_modelo"));
           mod.setFk_id_marca(rs.getInt("fk_id_marca"));
-          
           mod.setModelo(rs.getString("modelo"));
           mod.setEstado(rs.getString("estado"));
           mod.setNombreModelo(rs.getString("modelo"));
           lista.add(mod);
       }
-      
   }catch(Exception e){
-      System.out.println("error.vehiculosDAO (listarModelosMarcas) "+e.toString());
-      
+  } finally {
+      try {
+          if (rs != null) rs.close();
+          if (ps != null) ps.close();
+          if (con != null) con.close();
+      } catch (SQLException e) {
+      }
   }
   return lista;
 }
@@ -217,20 +242,47 @@ public List<modelos> listarModelosMarcas(int idMarca){
 //validacion si ya exite la placa en la Db
 public boolean existePlaca(String placa) {
     boolean existe = false;
-    String sql = "SELECT * FROM vehiculos WHERE placa = ?"; // Cambia 'vehiculos' por el nombre de tu tabla si es diferente
+    String sql = "SELECT * FROM vehiculos WHERE placa = ?"; 
     try {
-        con=cn.getConnection();
-        ps=con.prepareStatement(sql);
-        // Reemplaza el '?' con la placa que pasamos por parámetro
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
         ps.setString(1, placa);
-        // Ejecuta la consulta y guarda el resultado 
         rs = ps.executeQuery();
-        // Si 'rs.next()' encuentra al menos una fila, significa que la placa ya está registrada
         if (rs.next()) {
-            existe = true; // Si encuentra un resultado, significa que la placa ya existe
+            existe = true; 
         }
     } catch (Exception e) {
-        System.out.println("Error al verificar placa: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
+    }
+    return existe;
+}
+public boolean existePlacaAlEditar(String placa, int idVehiculo) {
+    boolean existe = false;
+    // Buscamos la placa, pero le decimos que NO busque en el vehículo que estamos editando (!=)
+    String sql = "SELECT * FROM vehiculos WHERE placa = ? AND id_vehiculo != ?"; 
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, placa);
+        ps.setInt(2, idVehiculo); // Le pasamos el ID actual
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            existe = true; 
+        }
+    } catch (Exception e) {
+        System.out.println("Error al verificar placa al editar: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) { }
     }
     return existe;
 }
@@ -239,19 +291,21 @@ public boolean existePlaca(String placa) {
 public boolean eliminarVehiculo(int idVehiculo){
     String sql="DELETE FROM vehiculos WHERE id_vehiculo=?";
     try{
-        con=cn.getConnection();
-        ps=con.prepareStatement(sql);
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
         ps.setInt(1, idVehiculo);
-        
         ps.executeUpdate();
         return true;
-        
     }catch(Exception e){
-        System.out.println("error.vehiculosDAO (eliminarVehiculos)"+e.toString());
         return false;
+    }finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
 }
-
 
 public boolean editarVehiculo(vehiculos v){
     String sql = "UPDATE vehiculos SET "
@@ -277,14 +331,15 @@ public boolean editarVehiculo(vehiculos v){
         ps.executeUpdate();
         return true;
 
-    }catch(Exception e){
-        System.out.println("error.VehiculosDAO (editarVehiculo)"+e.toString());
+    }catch(SQLException e){
         return false;
+    }finally {
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
     }
 }
-
-
-
-
 
 }

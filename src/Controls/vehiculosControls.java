@@ -47,25 +47,7 @@ public class vehiculosControls {
             cbxMarcaVehiculo.addItem(m);
         }
 
-    cbxMarcaVehiculo.setSelectedIndex(-1);
-    mostrarTabla();
-
         cbxMarcaVehiculo.setSelectedIndex(-1); 
-        mostrarTabla();
-
-     }
-    
-    public void cargarModelos(JComboBox<Object> cbxModeloVehiculo){
-        cbxModeloVehiculo.removeAllItems();
-        for (modelos mod : dao.listarModelosActivos()){
-            cbxModeloVehiculo.addItem(mod);
-        }
-
-    cbxModeloVehiculo.setSelectedIndex(-1);
-    mostrarTabla();
-
-        cbxModeloVehiculo.setSelectedIndex(-1); 
-        mostrarTabla();
 
      }
     
@@ -75,11 +57,8 @@ public class vehiculosControls {
             cbxTipoVehiculo.addItem(t);
         }
 
-    cbxTipoVehiculo.setSelectedIndex(-1);
-    mostrarTabla();
 
         cbxTipoVehiculo.setSelectedIndex(-1); 
-        mostrarTabla();
 
      }
     
@@ -88,28 +67,17 @@ public class vehiculosControls {
         for (colores c : dao.listarColoresActivos()){
             cbxColorVehiculo.addItem(c);
         }
-
-    cbxColorVehiculo.setSelectedIndex(-1);
-    mostrarTabla();
-
         cbxColorVehiculo.setSelectedIndex(-1); 
-        mostrarTabla();
-
      }
     
     
     //metodo para caragar modelos por marcas 
     public void cargarModeloPorMarcas(JComboBox cbxModeloVehiculo , int idMarca){
-        //mensajes para comprobar
-        System.out.println("ID de marca recibido en controlador: " + idMarca);
         
         // Limpia el combo de modelos antes de cargar los nuevos
         cbxModeloVehiculo.removeAllItems();
         //// Pide a la base de datos solo los modelos que pertenecen a esa marca
         List<modelos> modelosFiltrados = dao.listarModelosMarcas(idMarca);
-        
-        //mensajes para comprobar
-        System.out.println("Cantidad de modelos encontrados: " + modelosFiltrados.size());
         
         //// Llena el ComboBox con cada modelo encontrado
         for(modelos mod : modelosFiltrados){
@@ -238,28 +206,63 @@ public void mostrarTabla(){
 
 
 
-public void editar(int idVehiculos){
+public boolean editar(int idVehiculos){
+    vehiculos v = new vehiculos();
+    v.setIdVehiculo(idVehiculos);
 
-            vehiculos v = new vehiculos();
-            v.setIdVehiculo(idVehiculos);
-            v.setPlaca(vista.flPlaca.getText());
-            // CASTING DE LAS RELACIONES MULTITABLA: 
-            // Como el ComboBox guarda objetos completos (marcas, modelos, tipos, colores), 
-            // aquí obligamos a Java a convertir (hacer casting) el ítem seleccionado 
-            // a su clase respectiva para poder extraer únicamente su ID numérico y actualizarlo.
-            v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-            v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
-            v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
-            v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+    String placa = vista.flPlaca.getText().trim().toUpperCase();
+    
+    if (placa.isEmpty() ||
+        vista.cbxMarcaVehiculo.getSelectedItem() == null || 
+        vista.cbxModeloVehiculo.getSelectedItem() == null || 
+        vista.cbxTipoVehiculo.getSelectedItem() == null || 
+        vista.cbxColorVehiculo.getSelectedItem() == null || 
+        vista.cbxEstadoCliente.getSelectedItem() == null) {
+        
+        JOptionPane.showMessageDialog(
+            vista, 
+            "Por favor, complete todos los campos obligatorios.", 
+            "Campos Incompletos", 
+            JOptionPane.WARNING_MESSAGE
+        );
+        return false; 
+    }
+    
+    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
+    v.setIdModelo(((modelos) vista.cbxModeloVehiculo.getSelectedItem()).getId());
+    v.setIdTipo(((tipos) vista.cbxTipoVehiculo.getSelectedItem()).getId());
+    v.setIdColor(((colores) vista.cbxColorVehiculo.getSelectedItem()).getId());
+    v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
+    
+    if (!placa.matches("^[A-Z]{3}-\\d{3,4}$")) {
+        JOptionPane.showMessageDialog(
+            vista, 
+            "Formato de placa inválido.\n", 
+            "Error de Formato", 
+            JOptionPane.ERROR_MESSAGE
+        );
+        return false; 
+    }
+    if (dao.existePlacaAlEditar(placa, v.getIdVehiculo())) {
+        JOptionPane.showMessageDialog(
+            vista, 
+            "La placa '" + placa + "' ya se encuentra registrada en otro vehículo.", 
+            "Placa Duplicada", 
+            JOptionPane.WARNING_MESSAGE
+        );
+        return false; // Detiene el guardado
+    }
+    v.setPlaca(placa);
 
-            v.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
-            if(dao.editarVehiculo(v)){
-                JOptionPane.showMessageDialog(null, "Vehículo actualizado exitosamente");
-                mostrarTabla();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar el vehículo");
-            }
-
+    // Ejecutar el update
+    if(dao.editarVehiculo(v)){
+        JOptionPane.showMessageDialog(null, "Vehículo actualizado exitosamente");
+        mostrarTabla();
+        return true;
+    } else {
+        JOptionPane.showMessageDialog(null, "Error al actualizar el vehículo");
+        return false;
+    }
        
             
 
