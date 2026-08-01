@@ -39,88 +39,94 @@ public class vehiculosControls {
     }
     
     //cargar en los comboBox 
-    public void cargarMarcas(JComboBox cbxMarcaVehiculo){
+    public void cargarMarcas(JComboBox<Object> cbxMarcaVehiculo){
         cbxMarcaVehiculo.removeAllItems();
         for (marcas m : dao.listarMarcasActivas()){
             cbxMarcaVehiculo.addItem(m);
         }
-    mostrarTabla();
+        cbxMarcaVehiculo.setSelectedIndex(-1); 
+        mostrarTabla();
      }
     
-    public void cargarModelos(JComboBox cbxModeloVehiculo){
+    public void cargarModelos(JComboBox<Object> cbxModeloVehiculo){
         cbxModeloVehiculo.removeAllItems();
         for (modelos mod : dao.listarModelosActivos()){
             cbxModeloVehiculo.addItem(mod);
         }
-    mostrarTabla();
+        cbxModeloVehiculo.setSelectedIndex(-1); 
+        mostrarTabla();
      }
     
-    public void cargarTipos(JComboBox cbxTipoVehiculo){
+    public void cargarTipos(JComboBox<Object> cbxTipoVehiculo){
         cbxTipoVehiculo.removeAllItems();
         for (tipos t : dao.listarTiposActivos()){
             cbxTipoVehiculo.addItem(t);
         }
-    mostrarTabla();
+        cbxTipoVehiculo.setSelectedIndex(-1); 
+        mostrarTabla();
      }
     
-    public void cargarColores(JComboBox cbxColorVehiculo){
+    public void cargarColores(JComboBox<Object> cbxColorVehiculo){
         cbxColorVehiculo.removeAllItems();
         for (colores c : dao.listarColoresActivos()){
             cbxColorVehiculo.addItem(c);
         }
-    mostrarTabla();
+        cbxColorVehiculo.setSelectedIndex(-1); 
+        mostrarTabla();
      }
 
-public void insertar(){
+public boolean insertar(){
     vehiculos v = new vehiculos();
-    v.setPlaca(vista.flPlaca.getText());
-    
-    // CASGING (Conversión de tipos): Extrae el objeto seleccionado del ComboBox y hace un casting forzado 
-    // a la clase 'marcas' para poder invocar su método getId() y obtener la llave foránea numérica.
-    v.setIdMarca(((marcas) vista.cbxMarcaVehiculo.getSelectedItem()).getId());
-    
-    //Revisa que el combobox no este vacio
-    //evitando una excepción de tipo NullPointerException si el usuario no seleccionó nada.
-    if (vista.cbxModeloVehiculo.getSelectedItem() != null) {
-    modelos modeloSeleccionado = (modelos) vista.cbxModeloVehiculo.getSelectedItem();
-    v.setIdModelo(modeloSeleccionado.getId());
-    } else {
-    JOptionPane.showMessageDialog(vista, "Por favor, seleccione un modelo de vehículo.");
-    return; // Detiene la ejecución para evitar el error
-    }
-   
-        if (vista.cbxTipoVehiculo.getSelectedItem() != null) {
-        tipos tipoSeleccionado = (tipos) vista.cbxTipoVehiculo.getSelectedItem();
-        v.setIdTipo(tipoSeleccionado.getId());
+        v.setPlaca(vista.flPlaca.getText());
+        
+        if (vista.cbxMarcaVehiculo.getSelectedItem() != null) {
+            marcas marcaSeleccionada = (marcas) vista.cbxMarcaVehiculo.getSelectedItem();
+            v.setIdMarca(marcaSeleccionada.getId());
         } else {
-        JOptionPane.showMessageDialog(vista, "Por favor, seleccione un tipo de vehículo.");
-        return;// Detiene el proceso para evitar que la aplicación falle
+            JOptionPane.showMessageDialog(vista, "Por favor, seleccione una marca.");
+            return false; 
+        }
+        
+        if (vista.cbxModeloVehiculo.getSelectedItem() != null) {
+            modelos modeloSeleccionado = (modelos) vista.cbxModeloVehiculo.getSelectedItem();
+            v.setIdModelo(modeloSeleccionado.getId());
+        } else {
+            JOptionPane.showMessageDialog(vista, "Por favor, seleccione un modelo de vehículo.");
+            return false; 
+        }
+       
+        if (vista.cbxTipoVehiculo.getSelectedItem() != null) {
+            tipos tipoSeleccionado = (tipos) vista.cbxTipoVehiculo.getSelectedItem();
+            v.setIdTipo(tipoSeleccionado.getId());
+        } else {
+            JOptionPane.showMessageDialog(vista, "Por favor, seleccione un tipo de vehículo.");
+            return false; 
         } 
 
-            if (vista.cbxColorVehiculo.getSelectedItem() != null) {
+        if (vista.cbxColorVehiculo.getSelectedItem() != null) {
             colores colorSeleccionado = (colores) vista.cbxColorVehiculo.getSelectedItem();
             v.setIdColor(colorSeleccionado.getId());
-            } else {
+        } else {
             JOptionPane.showMessageDialog(vista, "Por favor, seleccione un color.");
-            return;
-            }
+            return false;
+        }
 
- 
-                if (vista.cbxEstadoCliente.getSelectedItem() != null) {
-                   String valor = vista.cbxEstadoCliente.getSelectedItem().toString();
-                   v.setEstado(valor);    
-                   } else {
-                   JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.");
-                   return;
-                   }
+        if (vista.cbxEstadoCliente.getSelectedItem() != null) {
+            String valor = vista.cbxEstadoCliente.getSelectedItem().toString();
+            v.setEstado(valor);    
+        } else {
+            JOptionPane.showMessageDialog(vista, "Por favor, complete todos los campos obligatorios.");
+            return false;
+        }
                 
-  
-if(dao.insertarVehiculo(v)){
-     JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
-      mostrarTabla();
-}else{
-      JOptionPane.showMessageDialog(null,"Error");
-}
+        if(dao.insertarVehiculo(v)){
+             JOptionPane.showMessageDialog(null,"Vehiculo Registrado");
+             mostrarTabla();
+             return true;
+        } else {
+             JOptionPane.showMessageDialog(null,"Error");
+             return false;
+        }
     
 }
 

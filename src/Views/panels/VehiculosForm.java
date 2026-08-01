@@ -436,13 +436,13 @@ public class VehiculosForm extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (esEdicion) {
             controlador.editar(Integer.parseInt(idVehiculoOriginal));
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
+            
         } else {
-           controlador.insertar();
-            System.out.println("Guardando nuevo cliente");
+           if (controlador.insertar()) {
+                this.dispose(); 
+            }
+           
         }
-        controlador.mostrarTabla();
-        this.dispose(); // Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
