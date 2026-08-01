@@ -80,28 +80,42 @@ public class vehiculosControls {
     
     //metodo para caragar modelos por marcas 
     public void cargarModeloPorMarcas(JComboBox cbxModeloVehiculo , int idMarca){
+        //mensajes para comprobar
         System.out.println("ID de marca recibido en controlador: " + idMarca);
+        
+        // Limpia el combo de modelos antes de cargar los nuevos
         cbxModeloVehiculo.removeAllItems();
+        //// Pide a la base de datos solo los modelos que pertenecen a esa marca
         List<modelos> modelosFiltrados = dao.listarModelosMarcas(idMarca);
+        
+        //mensajes para comprobar
         System.out.println("Cantidad de modelos encontrados: " + modelosFiltrados.size());
+        
+        //// Llena el ComboBox con cada modelo encontrado
         for(modelos mod : modelosFiltrados){
             cbxModeloVehiculo.addItem(mod);
         }
+        //// Des selecciona cualquier opción para que empiece en blanco
         cbxModeloVehiculo.setSelectedIndex(-1);
     
     }
     
     //controlar el compartimienteo dinamico entre lo comboxBox marca y modelos
     public void initEvents(){
+        //// El combo de modelos empieza bloqueado hasta que elijan una marca
         vista.cbxModeloVehiculo.setEnabled(false);
         
+        //// Detecta cuando el usuario cambia la marca seleccionada
         vista.cbxMarcaVehiculo.addActionListener(e ->{
             Object selectedItem = vista.cbxMarcaVehiculo.getSelectedItem();
         
+            //// Si seleccionó una marca válida, busca sus modelos y desbloquea el combo
         if (selectedItem instanceof marcas) {
             int idMarca = ((marcas) selectedItem).getId();
             cargarModeloPorMarcas(vista.cbxModeloVehiculo, idMarca);
             vista.cbxModeloVehiculo.setEnabled(true);
+            
+            //// Si desmarcó o no hay nada válido, limpia y vuelve a bloquear el combo
         } else {
             vista.cbxModeloVehiculo.removeAllItems();
             vista.cbxModeloVehiculo.setEnabled(false);
@@ -144,7 +158,7 @@ public void insertar(){
     if (!placa.matches("^[A-Z]{3}-\\d{3,4}$")) {
         JOptionPane.showMessageDialog(
             vista, 
-            "Formato de placa inválido.\nO campo vacio", 
+            "Formato de placa inválido.\n", 
             "Error de Formato", 
             JOptionPane.ERROR_MESSAGE
         );
