@@ -13,6 +13,7 @@ public class marcas {
     private int id;
     private String marca;
     private String estado;
+    private String nombreMarca;
     
      public marcas() {
         
@@ -42,6 +43,19 @@ public class marcas {
         return estado;
     }
 
-   
+    public String getNombreMarca() {
+        return nombreMarca;
+    }
+
+    public void setNombreMarca(String nombreMarca) {
+        this.nombreMarca = nombreMarca;
+    }
+
     
+    
+  @Override
+public String toString() {
+    return this.nombreMarca; // Asegúrate de que esta variable sea la que almacena el texto
+}
+
 }

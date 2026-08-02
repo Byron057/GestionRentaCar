@@ -11,10 +11,20 @@ package Models;
 public class tipos {
     private int id;
     private String tipo;
+    private String estado;
+    //cambio o borrar si esta mal
+    private String nombreTipo;
 
-    public tipos(int id, String tipo) {
-        this.id = id;
-        this.tipo = tipo;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public tipos() {
+        
     }
 
     public void setId(int id) {
@@ -32,5 +42,19 @@ public class tipos {
     public String getTipo() {
         return tipo;
     }
+
+    public String getNombreTipo() {
+        return nombreTipo;
+    }
+
+    public void setNombreTipo(String nombreTipo) {
+        this.nombreTipo = nombreTipo;
+    }
     
+    
+    
+      @Override
+public String toString() {
+    return this.nombreTipo; 
+}
 }

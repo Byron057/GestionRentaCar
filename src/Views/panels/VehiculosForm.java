@@ -4,25 +4,40 @@
  */
 package Views.panels;
 
+import Controls.vehiculosControls;
 import java.awt.Color;
 import java.awt.Cursor;
 
+import Views.panels.VehiculosPanel;
 
 /**
  *
  * @author PC
  */
 public class VehiculosForm extends javax.swing.JDialog {
+    private vehiculosControls controlador;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VehiculosForm.class.getName());
     private boolean esEdicion = false;
     private String idVehiculoOriginal = "";
+
     /**
      * Creates new form ClientesForm
      */
-    public VehiculosForm(java.awt.Frame parent, boolean modal) {
+    public VehiculosForm(java.awt.Frame parent, boolean modal,Views.panels.VehiculosPanel vistaPanel) {
         super(parent, modal);
         initComponents();
+        //borrar en caso de error:
+        // Inicializas el controlador pasándole la vista actual y el panel principal
+        this.controlador = new vehiculosControls(this, vistaPanel);
+        
+        // ¡Llamar a los métodos para llenar los ComboBox aquí!
+        controlador.cargarMarcas(cbxMarcaVehiculo);
+        controlador.cargarTipos(cbxTipoVehiculo);
+        controlador.cargarColores(cbxColorVehiculo);
+        
+        controlador.initEvents();
+    
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
@@ -37,24 +52,47 @@ public class VehiculosForm extends javax.swing.JDialog {
         this.esEdicion = true;
         this.idVehiculoOriginal = id;
         
-        // Cambiamos el título visual
         jLabel3.setText("Editar Vehículo");
         jLabel4.setText("Modifique la Información del Vehículo");
-        
-        // Llenamos la placa y cambiamos el color a oscuro
+  
         flPlaca.setText(placa);
         flPlaca.setForeground(new java.awt.Color(60, 60, 60));
+      
+        seleccionarItemComboBox(cbxMarcaVehiculo, marca);
         
-        // Llenamos todos los ComboBox
-        cbxTipoVehiculo.setSelectedItem(tipo);
-        cbxMarcaVehiculo.setSelectedItem(marca);
-        cbxModeloVehiculo.setSelectedItem(modelo);
-        cbxColorVehiculo.setSelectedItem(color);
-        cbxEstadoCliente.setSelectedItem(estado);
+      
+        seleccionarItemComboBox(cbxModeloVehiculo, modelo); 
+        seleccionarItemComboBox(cbxTipoVehiculo, tipo);
+        seleccionarItemComboBox(cbxColorVehiculo, color);
+        seleccionarItemComboBox(cbxEstadoCliente, estado);
+    }
+    private void seleccionarItemComboBox(assets.ComboBoxRound combo, String textoBuscar) {
+        if (textoBuscar == null || textoBuscar.trim().isEmpty()) {
+            return; 
+        }
+        
+       
+        String textoLimpio = textoBuscar.trim().toLowerCase(); 
+        
+        for (int i = 0; i < combo.getItemCount(); i++) {
+            Object item = combo.getItemAt(i);
+            
+            if (item != null) {
+                
+                String textoItem = item.toString().trim().toLowerCase();
+                
+                if (textoItem.equals(textoLimpio)) {
+                    combo.setSelectedIndex(i); 
+                    combo.setForeground(new java.awt.Color(60, 60, 60)); 
+                    return; 
+                }
+            }
+        }
     }
     
     private void configurarPlaceholders() {
-        aplicarPlaceholder(flPlaca, "Ingrese la Placa");
+        aplicarPlaceholder(flPlaca, "Ingrese la Placa"
+                + " Ej: ABC-1234");
         
         aplicarPlaceholderComboBox(cbxTipoVehiculo);
         aplicarPlaceholderComboBox(cbxMarcaVehiculo);
@@ -301,14 +339,14 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         flPlaca.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        flPlaca.setForeground(new java.awt.Color(204, 204, 204));
-        flPlaca.setText("jTextField1");
+        flPlaca.setText("formato: ABC-1234");
         flPlaca.setBorder(null);
         flPlaca.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 flPlacaMouseClicked(evt);
             }
         });
+        flPlaca.addActionListener(this::flPlacaActionPerformed);
         panelRound11.add(flPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 10, 220, 20));
 
         panelRound1.add(panelRound11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 250, 40));
@@ -422,14 +460,16 @@ public class VehiculosForm extends javax.swing.JDialog {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
         if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
+            if (controlador.editar(Integer.parseInt(idVehiculoOriginal))) {
+                this.dispose(); 
+            }
+            
         } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
+           if (controlador.insertar()) {
+                this.dispose(); 
+            }
+           
         }
-        
-        this.dispose(); // Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -445,6 +485,10 @@ public class VehiculosForm extends javax.swing.JDialog {
     private void flPlacaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flPlacaMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_flPlacaMouseClicked
+
+    private void flPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flPlacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_flPlacaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -471,7 +515,7 @@ public class VehiculosForm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                VehiculosForm dialog = new VehiculosForm(new javax.swing.JFrame(), true);
+                VehiculosForm dialog = new VehiculosForm(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -483,15 +527,17 @@ public class VehiculosForm extends javax.swing.JDialog {
         });
     }
 
+    //borrar en caso de daño
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxColorVehiculo;
-    private assets.ComboBoxRound cbxEstadoCliente;
-    private assets.ComboBoxRound cbxMarcaVehiculo;
-    private assets.ComboBoxRound cbxModeloVehiculo;
-    private assets.ComboBoxRound cbxTipoVehiculo;
-    private javax.swing.JTextField flPlaca;
+    public assets.ComboBoxRound cbxColorVehiculo;
+    public assets.ComboBoxRound cbxEstadoCliente;
+    public assets.ComboBoxRound cbxMarcaVehiculo;
+    public assets.ComboBoxRound cbxModeloVehiculo;
+    public assets.ComboBoxRound cbxTipoVehiculo;
+    public javax.swing.JTextField flPlaca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
