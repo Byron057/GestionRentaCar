@@ -9,5 +9,12 @@ package Models;
  * @author Nikholov
  */
 public class alquileres {
+    private int idAlquiler;
+    private int fkIdCliente;
+    private int fkIdVehiculo;
+    private String fechaAlquiler;
+    private double total;
+    private String estado;
+    private int dias;
     
 }
