@@ -331,6 +331,7 @@ public class RentasForm extends javax.swing.JDialog {
 
         cbxAlquilerVehiculo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxAlquilerVehiculo.setOpciones("Activo\nInactivo\n");
+        cbxAlquilerVehiculo.addActionListener(this::cbxAlquilerVehiculoActionPerformed);
         panelRound12.add(cbxAlquilerVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 250, 40));
@@ -429,40 +430,46 @@ public class RentasForm extends javax.swing.JDialog {
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
          try {
 
-            alquileres a = new alquileres();
+        alquileres a = new alquileres();
 
-            a.setFkIdCliente(Integer.parseInt(cbxAlquilerCliente.getSelectedItem().toString()));
-            a.setFkIdVehiculo(Integer.parseInt(cbxAlquilerVehiculo.getSelectedItem().toString()));
-            a.setFechaAlquiler(flFecha.getText());
-            a.setTotal(Double.parseDouble(flTotal.getText()));
-            a.setDias(Integer.parseInt(flDias.getText()) );
-            a.setEstado(cbxEstadoCliente.getSelectedItem().toString());
-            alquileresDAO dao = new alquileresDAO();
-            if (esEdicion) {
-                a.setIdAlquiler(Integer.parseInt(idVehiculoOriginal) );
-                if (dao.actualizarAlquiler(a)) {
-                    JOptionPane.showMessageDialog(this,"Alquiler actualizado correctamente" );
-                    dispose();
-                } else {
+        // TEMPORAL: usa IDs fijos mientras arreglas los ComboBox
+        a.setFkIdCliente(1);
+        a.setFkIdVehiculo(1);
 
-                    JOptionPane.showMessageDialog(this, "Error al actualizar");
-                }
+        a.setFechaAlquiler(flFecha.getText());
+        a.setTotal(Double.parseDouble(flTotal.getText()));
+        a.setDias(Integer.parseInt(flDias.getText()));
+        a.setEstado(cbxEstadoCliente.getSelectedItem().toString());
 
+        alquileresDAO dao = new alquileresDAO();
+
+        if (esEdicion) {
+
+            a.setIdAlquiler(Integer.parseInt(idVehiculoOriginal));
+
+            if (dao.actualizarAlquiler(a)) {
+                JOptionPane.showMessageDialog(this, "Alquiler actualizado");
+                dispose();
             } else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar");
+            }
 
-                if (dao.insertarAlquiler(a)) {
+        } else {
 
-                    JOptionPane.showMessageDialog(this,"Alquiler registrado correctamente");
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog( this, "Error al registrar" );
-                }
+            if (dao.insertarAlquiler(a)) {
+                JOptionPane.showMessageDialog(this, "Alquiler registrado");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar");
+            }
+
         }
-    } catch (HeadlessException | NumberFormatException e) {
 
-        JOptionPane.showMessageDialog( this,"Error: " + e.getMessage());
+    } catch (Exception e) {
 
-        }
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+
+    }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -478,6 +485,10 @@ public class RentasForm extends javax.swing.JDialog {
     private void cbxAlquilerClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAlquilerClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxAlquilerClienteActionPerformed
+
+    private void cbxAlquilerVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAlquilerVehiculoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxAlquilerVehiculoActionPerformed
 
     /**
      * @param args the command line arguments
