@@ -37,7 +37,7 @@ public class clientesController {
         cl.setEstado(vista.cbxsEstadoCliente.getSelectedItem().toString());
         if(dao.insertarCliente(cl)!= null){
             JOptionPane.showMessageDialog(null, "Cliente  registrado");
-            listar();
+           
         }
         else{
             JOptionPane.showMessageDialog(null, "error");
@@ -66,6 +66,29 @@ public class clientesController {
     }
 
     System.out.println("listando terminado");
+    }
+    public void editar(int id) {
+
+    clientes cl = new clientes();
+
+    cl.setId_cliente(id);
+    cl.setCedula(vista.flCedula.getText());
+    cl.setNombre(vista.flNombreCliente.getText());
+    cl.setApellido(vista.flApellidoCliente.getText());
+    cl.setTelefono(vista.flTelefonoCliente.getText());
+    cl.setDireccion(vista.flDireccionCliente.getText());
+    cl.setEstado(vista.cbxsEstadoCliente.getSelectedItem().toString());
+
+    if (dao.editarCliente(cl)) {
+
+        JOptionPane.showMessageDialog(null, "Cliente actualizado correctamente");
+
+    } else {
+
+        JOptionPane.showMessageDialog(null, "Error al actualizar");
+
+    }
+
 }
     
 

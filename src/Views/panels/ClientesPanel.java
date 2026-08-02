@@ -269,6 +269,8 @@ public class ClientesPanel extends javax.swing.JPanel {
         modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
         
         modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
+        clientesController controladorPanel = new clientesController(this);
+        controladorPanel.listar();
 
         //SApagamos el fondo oscuro cuando se cierra el JDialog
         fondoOscuro.setVisible(false);
@@ -307,6 +309,8 @@ public class ClientesPanel extends javax.swing.JPanel {
 
     private void btnEditarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarClienteMouseClicked
         if (idClienteSeleccionado == null) return;
+        clientesController cl = new clientesController(this);
+        cl.editar(WIDTH);
 
         // Obtenemos la fila
         int fila = tableClientes.getTabla().getSelectedRow();

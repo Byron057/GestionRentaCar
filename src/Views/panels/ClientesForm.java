@@ -449,8 +449,8 @@ public class ClientesForm extends javax.swing.JDialog {
             System.out.println("Guardando nuevo cliente");
             clientesController cl = new clientesController(this);
             cl.insertar();
-            this.dispose();
         }
+        
         
         this.dispose(); // Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked

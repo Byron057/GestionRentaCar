@@ -66,6 +66,36 @@ public class clientesDAO {
         }
         return listaCli;
     }
+    public Boolean editarCliente(clientes cli) {
+
+    String sql = "UPDATE clientes SET cedula=?, nombre=?, apellido=?, telefono=?, direccion=?, estado=? WHERE id_cliente=?";
+
+    try {
+
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+
+        ps.setString(1, cli.getCedula());
+        ps.setString(2, cli.getNombre());
+        ps.setString(3, cli.getApellido());
+        ps.setString(4, cli.getTelefono());
+        ps.setString(5, cli.getDireccion());
+        ps.setString(6, cli.getEstado());
+        ps.setInt(7, cli.getId_cliente());
+
+        ps.executeUpdate();
+
+        return true;
+
+    } catch (Exception e) {
+
+        System.out.println("error " + e.toString());
+        return false;
+
+    }
+
+}    
+        
 
 
 }
