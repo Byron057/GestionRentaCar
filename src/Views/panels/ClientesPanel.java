@@ -309,7 +309,6 @@ public class ClientesPanel extends javax.swing.JPanel {
 
     private void btnEditarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarClienteMouseClicked
         if (idClienteSeleccionado == null) return;
-        clientesController cl = new clientesController(this);
         
 
         // Obtenemos la fila
@@ -349,7 +348,8 @@ public class ClientesPanel extends javax.swing.JPanel {
         
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
-
+        clientesController controladorPanel = new clientesController(this);
+        controladorPanel.listar();
         fondoOscuro.setVisible(false);
     }//GEN-LAST:event_btnEditarClienteMouseClicked
 
