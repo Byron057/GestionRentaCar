@@ -54,8 +54,8 @@ public class alquileresDAO {
 
     String sql =
         "SELECT a.id_alquiler, " +
-        "c.nombre_cli, " +
-        "v.nombre_veh, " +
+        "CONCAT(c.nombre,' ',c.apellido) AS cliente, " +
+        "v.placa, " +
         "a.fecha_alquiler, " +
         "a.total, " +
         "a.dias, " +
@@ -74,8 +74,8 @@ public class alquileresDAO {
 
             lista.add(new Object[]{
                 rs.getInt("id_alquiler"),
-                rs.getString("nombre_cli"),
-                rs.getString("nombre_veh"),
+                rs.getString("cliente"),
+                rs.getString("placa"),
                 rs.getString("fecha_alquiler"),
                 rs.getDouble("total"),
                 rs.getInt("dias"),
