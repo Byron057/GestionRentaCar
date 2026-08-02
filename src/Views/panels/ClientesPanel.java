@@ -356,7 +356,8 @@ public class ClientesPanel extends javax.swing.JPanel {
     private void btnEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarClienteMouseClicked
         // TODO add your handling code here:
         if (idClienteSeleccionado == null) return;
-
+        int fila = tableClientes.getTabla().getSelectedRow();
+        if(fila ==-1)return ;
         // 1. Mostrar ventana de confirmación
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
             this, 
@@ -370,15 +371,17 @@ public class ClientesPanel extends javax.swing.JPanel {
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
             // AQUÍ IRÁ TU LÓGICA SQL (DELETE FROM clientes WHERE id = ...)
-            System.out.println("Eliminando de la BD al cliente ID: " + idClienteSeleccionado);
-             clientesController cl = new clientesController(this);
-             cl.desactivarCliente(idClienteSeleccionado);
+            int idCliente = Integer.parseInt(idClienteSeleccionado);
+            clientesController cl =  new clientesController(this);
+            cl.desactivarCliente(idCliente);
             // 3. Lo eliminamos visualmente de la tabla
-            int fila = tableClientes.getTabla().getSelectedRow();
             tableClientes.eliminarFila(fila);
             
             // 4. Como ya se eliminó, apagamos los botones de nuevo
             activarBotonesAccion(false);
+        }else{
+           clientesController cli =  new clientesController(this);
+           cli.listar();
         }
     }//GEN-LAST:event_btnEliminarClienteMouseClicked
 
