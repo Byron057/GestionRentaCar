@@ -46,5 +46,34 @@ public class alquileres {
     public int getDias() {
         return dias;
     }
+    //setters
+
+    public void setIdAlquiler(int idAlquiler) {
+        this.idAlquiler = idAlquiler;
+    }
+
+    public void setFkIdCliente(int fkIdCliente) {
+        this.fkIdCliente = fkIdCliente;
+    }
+
+    public void setFkIdVehiculo(int fkIdVehiculo) {
+        this.fkIdVehiculo = fkIdVehiculo;
+    }
+
+    public void setFechaAlquiler(String fechaAlquiler) {
+        this.fechaAlquiler = fechaAlquiler;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setDias(int dias) {
+        this.dias = dias;
+    }
     
 }
