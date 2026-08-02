@@ -308,6 +308,7 @@ public class RentasForm extends javax.swing.JDialog {
 
         cbxAlquilerCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxAlquilerCliente.setOpciones("Activo\nInactivo\n");
+        cbxAlquilerCliente.addActionListener(this::cbxAlquilerClienteActionPerformed);
         panelRound11.add(cbxAlquilerCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 250, 40));
@@ -445,6 +446,10 @@ public class RentasForm extends javax.swing.JDialog {
         btnGuardar.setBackground(new Color(255,153,0));
     }//GEN-LAST:event_btnGuardarMouseExited
 
+    private void cbxAlquilerClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxAlquilerClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxAlquilerClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -485,12 +490,12 @@ public class RentasForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxAlquilerCliente;
-    private assets.ComboBoxRound cbxAlquilerVehiculo;
-    private assets.ComboBoxRound cbxEstadoCliente;
-    private javax.swing.JTextField flDias;
-    private javax.swing.JTextField flFecha;
-    private javax.swing.JTextField flTotal;
+    public assets.ComboBoxRound cbxAlquilerCliente;
+    public assets.ComboBoxRound cbxAlquilerVehiculo;
+    public assets.ComboBoxRound cbxEstadoCliente;
+    public javax.swing.JTextField flDias;
+    public javax.swing.JTextField flFecha;
+    public javax.swing.JTextField flTotal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

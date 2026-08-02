@@ -79,5 +79,9 @@ public class alquileres {
     public void setDias(int dias) {
         this.dias = dias;
     }
+
+    public void getFkIdCliente(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

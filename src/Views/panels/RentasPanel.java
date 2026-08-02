@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+import Controls.alquileresController;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
@@ -20,7 +21,8 @@ public class RentasPanel extends javax.swing.JPanel {
      */
     public RentasPanel() {
         initComponents();
-        tableClientes.agregarFila(new Object[]{"2", "0987654321", "María", "Gómez", "0991122334", "Norte", "Inactivo"});
+        alquileresController controller = new alquileresController(this);
+        controller.listar();
         activarBotonesAccion(false);
         
 
