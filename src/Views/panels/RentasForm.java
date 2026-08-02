@@ -24,16 +24,17 @@ public class RentasForm extends javax.swing.JDialog {
     /**
      * Creates new form ClientesForm
      */
+    alquileresDAO dao = new alquileresDAO();
     public RentasForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
+        cargarClientes();
+        cargarVehiculos();
     }
-    alquileresDAO dao = new alquileresDAO();
-
-public void cargarClientes(){
+    private void cargarClientes(){
 
     cbxAlquilerCliente.removeAllItems();
 
@@ -42,12 +43,12 @@ public void cargarClientes(){
     for(Object[] dato : lista){
 
         cbxAlquilerCliente.addItem(
-            dato[0] + " - " + dato[1]
+                dato[0] + " - " + dato[1]
         );
 
     }
 }
-public void cargarVehiculos(){
+    private void cargarVehiculos(){
 
     cbxAlquilerVehiculo.removeAllItems();
 
@@ -56,7 +57,7 @@ public void cargarVehiculos(){
     for(Object[] dato : lista){
 
         cbxAlquilerVehiculo.addItem(
-            dato[0] + " - " + dato[1]
+                dato[0] + " - " + dato[1]
         );
 
     }
