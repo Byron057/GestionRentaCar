@@ -13,5 +13,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class alquiledesDAO {
+    conexion cn = new conexion();
+    Connection con;
+    PreparedStatement ps;
+    ResultSet rs;
+
+    // INSERTAR
+    public boolean insertarAlquiler(alquileres a) {
+
+        String sql = "INSERT INTO alquileres (fk_id_cliente, fk_id_vehiculo, fecha_alquiler, total, estado, dias) VALUES (?,?,?,?,?,?)";
+
+        try {
+
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, a.getFkIdCliente());
+            ps.setInt(2, a.getFkIdVehiculo());
+            ps.setString(3, a.getFechaAlquiler());
+            ps.setDouble(4, a.getTotal());
+            ps.setString(5, a.getEstado());
+            ps.setInt(6, a.getDias());
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error: " + e.toString());
+            return false;
+
+        }
+    }
     
 }
