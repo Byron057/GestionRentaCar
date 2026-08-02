@@ -18,4 +18,26 @@ public class alquileresController {
         dao=new alquileresDAO();
 
     }
+    //listar
+    public void listar(){
+
+    vista.tableClientes.limpiarTabla();
+
+    for(alquileres a : dao.listarAlquileres()){
+
+        vista.tableClientes.agregarFila(new Object[]{
+
+            a.getIdAlquiler(),
+            a.getFkIdCliente(),
+            a.getFkIdVehiculo(),
+            a.getFechaAlquiler(),
+            a.getTotal(),
+            a.getDias(),
+            a.getEstado()
+
+        });
+
+    }
+
+}
 }

@@ -387,7 +387,7 @@ public class RentasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
-    private assets.TableRow tableClientes;
+    public assets.TableRow tableClientes;
     private javax.swing.JLabel txtEditarAlquiler;
     private javax.swing.JLabel txtEliminarAlquiler;
     // End of variables declaration//GEN-END:variables
