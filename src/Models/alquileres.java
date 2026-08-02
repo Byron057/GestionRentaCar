@@ -17,4 +17,34 @@ public class alquileres {
     private String estado;
     private int dias;
     
+    //get
+
+    public int getIdAlquiler() {
+        return idAlquiler;
+    }
+
+    public int getFkIdCliente() {
+        return fkIdCliente;
+    }
+
+    public int getFkIdVehiculo() {
+        return fkIdVehiculo;
+    }
+
+    public String getFechaAlquiler() {
+        return fechaAlquiler;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public int getDias() {
+        return dias;
+    }
+    
 }
