@@ -47,6 +47,7 @@ public class clientesController {
                 "Todos los campos son obligatorios.",
                 "Campos incompletos",
                 JOptionPane.WARNING_MESSAGE);
+        
         return false;
     }
 
@@ -56,6 +57,7 @@ public class clientesController {
                 "La cédula debe tener 10 dígitos numéricos.",
                 "Formato inválido",
                 JOptionPane.ERROR_MESSAGE);
+        
         return false;
     }
 

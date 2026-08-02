@@ -441,22 +441,24 @@ public class ClientesForm extends javax.swing.JDialog {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        clientesController cl = new clientesController(this);
         // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idClienteOriginal);
-        if (esEdicion) { clientesController cl = new clientesController(this);
+        if (esEdicion) { 
             if(cl.editar(Integer.parseInt(idClienteOriginal))){
-                this.dispose();
+              this.dispose();
             }
             
         } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
-            clientesController cl = new clientesController(this);
-            cl.insertar();
+           
+          if(cl.insertar()){
+             
+              this.dispose();
+              
+          }
         }
         
         
-        this.dispose(); // Cierra el modal al finalizar
+       // Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
