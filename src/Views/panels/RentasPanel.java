@@ -8,6 +8,7 @@ import Controls.alquileresController;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -366,18 +367,14 @@ public class RentasPanel extends javax.swing.JPanel {
         );
 
         // 2. Si el usuario presiona "Sí"
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando de la BD el alquiler ID: " + idClienteSeleccionado);
-            
-            // 3. Lo eliminamos visualmente de la tabla
+        alquileresController controller =new alquileresController(this);
+        if (controller.eliminar(Integer.parseInt(idClienteSeleccionado))) {
             tableClientes.eliminarFila(fila);
-            
-            // 4. Como ya se eliminó, apagamos los botones de nuevo
             activarBotonesAccion(false);
-        
-        }
+        } else {
+            JOptionPane.showMessageDialog( this,"No se pudo eliminar el alquiler");
+
+}
     }//GEN-LAST:event_btnEliminarAlquilerMouseClicked
 
 
