@@ -230,8 +230,17 @@ public class ComboBoxRound extends JComboBox<Object> {
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, false);
             
+            
+            // LÓGICA BLINDADA: Verificación segura paso a paso sin usar String.valueOf(null)
+            String textoItem = "";
+            if (value != null) {
+                String valStr = value.toString();
+                if (valStr != null) {
+                    textoItem = valStr.trim();
+                }
+            }
             // LÓGICA: Si no hay valor real seleccionado (está vacío o en -1)
-            if (index == -1 && (value == null || value.toString().trim().isEmpty())) {
+            if (index == -1 && textoItem.isEmpty()) {
                 label.setText(placeholder);
                 label.setForeground(placeholderColor); // Usa la propiedad personalizada del Placeholder
                 label.setFont(placeholderFont);        // Usa la propiedad personalizada del Placeholder
