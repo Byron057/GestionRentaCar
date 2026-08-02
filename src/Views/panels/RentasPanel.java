@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+
 import Controls.alquileresController;
 import java.awt.Color;
 import java.awt.Cursor;

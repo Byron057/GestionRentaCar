@@ -26,47 +26,43 @@ public class alquileresController {
         dao=new alquileresDAO();
 
     }
-     public void insertar() {
-
+    
+    public void insertar() {
+       
         alquileres a = new alquileres();
-
-        a.getFkIdCliente(Integer.parseInt(vista.cbxAlquilerCliente.getSelectedItem().toString()));
+        a.setFkIdCliente(Integer.parseInt(vista.cbxAlquilerCliente.getSelectedItem().toString()));
         a.setFkIdVehiculo(Integer.parseInt(vista.cbxAlquilerVehiculo.getSelectedItem().toString()));
         a.setFechaAlquiler(vista.flFecha.getText());
         a.setTotal(Double.parseDouble(vista.flTotal.getText()));
         a.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
         a.setDias(Integer.parseInt(vista.flDias.getText()));
-
+        
         if (dao.insertarAlquiler(a)) {
             JOptionPane.showMessageDialog(null, "Alquiler registrado");
             listar();
         } else {
             JOptionPane.showMessageDialog(null, "Error al registrar");
         }
-
     }
+
 
     //listar
     public void listar(){
 
-    vistap.tableClientes.limpiarTabla();
+        vistap.tableClientes.limpiarTabla();
 
-    for(alquileres a : dao.listarAlquileres()){
+        for (alquileres a : dao.listarAlquileres()) {
 
-        vistap.tableClientes.agregarFila(new Object[]{
-
-            a.getIdAlquiler(),
-            a.getFkIdCliente(),
-            a.getFkIdVehiculo(),
-            a.getFechaAlquiler(),
-            a.getTotal(),
-            a.getDias(),
-            a.getEstado()
-
+            vistap.tableClientes.agregarFila(new Object[]{
+                a.getIdAlquiler(),
+                a.getFkIdCliente(),
+                a.getFkIdVehiculo(),
+                a.getFechaAlquiler(),
+                a.getTotal(),
+                a.getDias(),
+                a.getEstado()
             });
-
         }
-
     }
     
 }
