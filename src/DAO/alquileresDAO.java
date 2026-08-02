@@ -48,42 +48,48 @@ public class alquileresDAO {
         }
     }
      // LISTAR
-    public List<alquileres> listarAlquileres() {
+    public List<Object[]> listarAlquileres() {
 
-        List<alquileres> lista = new ArrayList<>();
+    List<Object[]> lista = new ArrayList<>();
 
-        String sql = "SELECT * FROM alquileres";
+    String sql =
+        "SELECT a.id_alquiler, " +
+        "c.nombre_cli, " +
+        "v.nombre_veh, " +
+        "a.fecha_alquiler, " +
+        "a.total, " +
+        "a.dias, " +
+        "a.estado " +
+        "FROM alquileres a " +
+        "INNER JOIN clientes c ON a.fk_id_cliente = c.id_cliente " +
+        "INNER JOIN vehiculos v ON a.fk_id_vehiculo = v.id_vehiculo";
 
-        try {
+    try {
 
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
 
-            while (rs.next()) {
+        while (rs.next()) {
 
-                alquileres a = new alquileres();
-
-                a.setIdAlquiler(rs.getInt("id_alquiler"));
-                a.setFkIdCliente(rs.getInt("fk_id_cliente"));
-                a.setFkIdVehiculo(rs.getInt("fk_id_vehiculo"));
-                a.setFechaAlquiler(rs.getString("fecha_alquiler"));
-                a.setTotal(rs.getDouble("total"));
-                a.setEstado(rs.getString("estado"));
-                a.setDias(rs.getInt("dias"));
-
-                lista.add(a);
-
-            }
-
-        } catch (SQLException e) {
-
-            System.out.println("Error: " + e.toString());
+            lista.add(new Object[]{
+                rs.getInt("id_alquiler"),
+                rs.getString("nombre_cli"),
+                rs.getString("nombre_veh"),
+                rs.getString("fecha_alquiler"),
+                rs.getDouble("total"),
+                rs.getInt("dias"),
+                rs.getString("estado")
+            });
 
         }
 
-        return lista;
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.toString());
     }
+
+    return lista;
+}
      // ACTUALIZAR
     public boolean actualizarAlquiler(alquileres a) {
 

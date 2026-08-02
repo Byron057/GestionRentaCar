@@ -47,22 +47,18 @@ public class alquileresController {
 
 
     //listar
-    public void listar(){
+    public void listar() {
 
         vistap.tableClientes.limpiarTabla();
 
-        for (alquileres a : dao.listarAlquileres()) {
-
-            vistap.tableClientes.agregarFila(new Object[]{
-                a.getIdAlquiler(),
-                a.getFkIdCliente(),
-                a.getFkIdVehiculo(),
-                a.getFechaAlquiler(),
-                a.getTotal(),
-                a.getDias(),
-                a.getEstado()
-            });
+        for (Object[] fila : dao.listarAlquileres()) {
+            vistap.tableClientes.agregarFila(fila);
         }
     }
+
+    public boolean eliminar(int id) {
+        return dao.eliminarAlquiler(id);
+    }
+
     
 }
