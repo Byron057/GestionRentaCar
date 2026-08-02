@@ -310,7 +310,7 @@ public class ClientesPanel extends javax.swing.JPanel {
     private void btnEditarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarClienteMouseClicked
         if (idClienteSeleccionado == null) return;
         clientesController cl = new clientesController(this);
-        cl.editar(WIDTH);
+        
 
         // Obtenemos la fila
         int fila = tableClientes.getTabla().getSelectedRow();
@@ -371,7 +371,8 @@ public class ClientesPanel extends javax.swing.JPanel {
             
             // AQUÍ IRÁ TU LÓGICA SQL (DELETE FROM clientes WHERE id = ...)
             System.out.println("Eliminando de la BD al cliente ID: " + idClienteSeleccionado);
-            
+             clientesController cl = new clientesController(this);
+             cl.desactivarCliente(idClienteSeleccionado);
             // 3. Lo eliminamos visualmente de la tabla
             int fila = tableClientes.getTabla().getSelectedRow();
             tableClientes.eliminarFila(fila);
