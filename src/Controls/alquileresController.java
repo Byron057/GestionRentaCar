@@ -11,48 +11,21 @@ import javax.swing.JOptionPane;
 import Views.panels.RentasForm;
 
 public class alquileresController {
-    private RentasForm vista;
+
     private alquileresDAO dao;
-    private RentasPanel vistap;
-     public alquileresController(RentasPanel vistaP){
+    private RentasPanel vista;
 
-        this.vistap=vistaP;
-        dao=new alquileresDAO();
-
-    }
-    public alquileresController(RentasForm vista){
-
-        this.vista=vista;
-        dao=new alquileresDAO();
-
-    }
-    
-    public void insertar() {
-       
-        alquileres a = new alquileres();
-        a.setFkIdCliente(Integer.parseInt(vista.cbxAlquilerCliente.getSelectedItem().toString()));
-        a.setFkIdVehiculo(Integer.parseInt(vista.cbxAlquilerVehiculo.getSelectedItem().toString()));
-        a.setFechaAlquiler(vista.flFecha.getText());
-        a.setTotal(Double.parseDouble(vista.flTotal.getText()));
-        a.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
-        a.setDias(Integer.parseInt(vista.flDias.getText()));
-        
-        if (dao.insertarAlquiler(a)) {
-            JOptionPane.showMessageDialog(null, "Alquiler registrado");
-            listar();
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al registrar");
-        }
+    public alquileresController(RentasPanel vista) {
+        this.vista = vista;
+        this.dao = new alquileresDAO();
     }
 
-
-    //listar
     public void listar() {
 
-        vistap.tableClientes.limpiarTabla();
+        vista.tableClientes.limpiarTabla();
 
         for (Object[] fila : dao.listarAlquileres()) {
-            vistap.tableClientes.agregarFila(fila);
+            vista.tableClientes.agregarFila(fila);
         }
     }
 
@@ -60,5 +33,25 @@ public class alquileresController {
         return dao.eliminarAlquiler(id);
     }
 
-    
+    public boolean insertar(alquileres a) {
+
+        boolean resultado = dao.insertarAlquiler(a);
+
+        if (resultado) {
+            listar();
+        }
+
+        return resultado;
+    }
+
+    public boolean actualizar(alquileres a) {
+
+        boolean resultado = dao.actualizarAlquiler(a);
+
+        if (resultado) {
+            listar();
+        }
+
+        return resultado;
+    }
 }
