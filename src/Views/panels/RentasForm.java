@@ -434,7 +434,7 @@ public class RentasForm extends javax.swing.JDialog {
 
         // TEMPORAL: usa IDs fijos mientras arreglas los ComboBox
         a.setFkIdCliente(1);
-        a.setFkIdVehiculo(1);
+        a.setFkIdVehiculo(5);
 
         a.setFechaAlquiler(flFecha.getText());
         a.setTotal(Double.parseDouble(flTotal.getText()));
