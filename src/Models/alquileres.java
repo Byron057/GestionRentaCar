@@ -16,6 +16,10 @@ public class alquileres {
     private double total;
     private String estado;
     private int dias;
+    //contrsuctor
+
+    public alquileres() {
+    }
     
     //get
 
