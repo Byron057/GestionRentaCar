@@ -6,7 +6,10 @@ package Views.panels;
 
 import java.awt.Color;
 import java.awt.Cursor;
-
+import DAO.alquileresDAO;
+import Models.alquileres;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -424,16 +427,42 @@ public class RentasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
-        if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
-        } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
+         try {
+
+            alquileres a = new alquileres();
+
+            a.setFkIdCliente(Integer.parseInt(cbxAlquilerCliente.getSelectedItem().toString()));
+            a.setFkIdVehiculo(Integer.parseInt(cbxAlquilerVehiculo.getSelectedItem().toString()));
+            a.setFechaAlquiler(flFecha.getText());
+            a.setTotal(Double.parseDouble(flTotal.getText()));
+            a.setDias(Integer.parseInt(flDias.getText()) );
+            a.setEstado(cbxEstadoCliente.getSelectedItem().toString());
+            alquileresDAO dao = new alquileresDAO();
+            if (esEdicion) {
+                a.setIdAlquiler(Integer.parseInt(idVehiculoOriginal) );
+                if (dao.actualizarAlquiler(a)) {
+                    JOptionPane.showMessageDialog(this,"Alquiler actualizado correctamente" );
+                    dispose();
+                } else {
+
+                    JOptionPane.showMessageDialog(this, "Error al actualizar");
+                }
+
+            } else {
+
+                if (dao.insertarAlquiler(a)) {
+
+                    JOptionPane.showMessageDialog(this,"Alquiler registrado correctamente");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog( this, "Error al registrar" );
+                }
         }
-        
-        this.dispose(); // Cierra el modal al finalizar
+    } catch (HeadlessException | NumberFormatException e) {
+
+        JOptionPane.showMessageDialog( this,"Error: " + e.getMessage());
+
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
