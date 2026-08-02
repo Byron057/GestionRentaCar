@@ -113,4 +113,28 @@ public class alquiledesDAO {
 
         }
     }
+    // ELIMINAR
+    public boolean eliminarAlquiler(int id) {
+
+        String sql = "DELETE FROM alquileres WHERE id_alquiler=?";
+
+        try {
+
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+
+            System.out.println("Error: " + e.toString());
+            return false;
+
+        }
+
+    }
 }
