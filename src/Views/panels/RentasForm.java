@@ -9,6 +9,7 @@ import java.awt.Cursor;
 import DAO.alquileresDAO;
 import Models.alquileres;
 import java.awt.HeadlessException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,7 +31,36 @@ public class RentasForm extends javax.swing.JDialog {
         panelRound1.setFocusable(true);
         configurarPlaceholders();
     }
+    alquileresDAO dao = new alquileresDAO();
 
+public void cargarClientes(){
+
+    cbxAlquilerCliente.removeAllItems();
+
+    List<Object[]> lista = dao.cargarClientesActivos();
+
+    for(Object[] dato : lista){
+
+        cbxAlquilerCliente.addItem(
+            dato[0] + " - " + dato[1]
+        );
+
+    }
+}
+public void cargarVehiculos(){
+
+    cbxAlquilerVehiculo.removeAllItems();
+
+    List<Object[]> lista = dao.cargarVehiculosDisponibles();
+
+    for(Object[] dato : lista){
+
+        cbxAlquilerVehiculo.addItem(
+            dato[0] + " - " + dato[1]
+        );
+
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -428,48 +458,90 @@ public class RentasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-         try {
+           try {
 
         alquileres a = new alquileres();
 
-        // TEMPORAL: usa IDs fijos mientras arreglas los ComboBox
-        a.setFkIdCliente(1);
-        a.setFkIdVehiculo(5);
+        // Obtener cliente seleccionado del ComboBox
+        String cliente = cbxAlquilerCliente.getSelectedItem().toString();
 
+        int idCliente = Integer.parseInt(
+                cliente.split(" - ")[0]
+        );
+
+
+        // Obtener vehículo seleccionado del ComboBox
+        String vehiculo = cbxAlquilerVehiculo.getSelectedItem().toString();
+
+        int idVehiculo = Integer.parseInt(
+                vehiculo.split(" - ")[0]
+        );
+
+
+        // Guardar IDs de las claves foráneas
+        a.setFkIdCliente(idCliente);
+        a.setFkIdVehiculo(idVehiculo);
+
+
+        // Datos del alquiler
         a.setFechaAlquiler(flFecha.getText());
         a.setTotal(Double.parseDouble(flTotal.getText()));
         a.setDias(Integer.parseInt(flDias.getText()));
-        a.setEstado(cbxEstadoCliente.getSelectedItem().toString());
+
+        a.setEstado(
+            cbxEstadoCliente.getSelectedItem().toString()
+        );
+
 
         alquileresDAO dao = new alquileresDAO();
+
 
         if (esEdicion) {
 
             a.setIdAlquiler(Integer.parseInt(idVehiculoOriginal));
 
             if (dao.actualizarAlquiler(a)) {
-                JOptionPane.showMessageDialog(this, "Alquiler actualizado");
+
+                JOptionPane.showMessageDialog(this,
+                    "Alquiler actualizado");
+
                 dispose();
+
             } else {
-                JOptionPane.showMessageDialog(this, "Error al actualizar");
+
+                JOptionPane.showMessageDialog(this,
+                    "Error al actualizar");
+
             }
+
 
         } else {
 
+
             if (dao.insertarAlquiler(a)) {
-                JOptionPane.showMessageDialog(this, "Alquiler registrado");
+
+                JOptionPane.showMessageDialog(this,
+                    "Alquiler registrado");
+
                 dispose();
+
             } else {
-                JOptionPane.showMessageDialog(this, "Error al registrar");
+
+                JOptionPane.showMessageDialog(this,
+                    "Error al registrar");
+
             }
 
         }
 
+
     } catch (Exception e) {
 
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(this,
+                "Error: " + e.getMessage());
 
     }
+
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered

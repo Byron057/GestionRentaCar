@@ -18,7 +18,70 @@ public class alquileresDAO {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    //clientes activos
+    public List<Object[]> cargarClientesActivos(){
 
+    List<Object[]> lista = new ArrayList<>();
+
+    String sql = "SELECT id_cliente, CONCAT(nombre,' ',apellido) AS cliente "
+               + "FROM clientes "
+               + "WHERE estado='Activo'";
+
+    try {
+
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+
+            lista.add(new Object[]{
+                rs.getInt("id_cliente"),
+                rs.getString("cliente")
+            });
+
+        }
+
+    } catch(SQLException e){
+
+        System.out.println("Error: " + e.toString());
+
+    }
+
+    return lista;
+}
+    //vehiculos activos 
+    public List<Object[]> cargarVehiculosDisponibles(){
+
+    List<Object[]> lista = new ArrayList<>();
+
+    String sql = "SELECT id_vehiculo, placa "
+               + "FROM vehiculos "
+               + "WHERE estado='Disponible'";
+
+    try {
+
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while(rs.next()){
+
+            lista.add(new Object[]{
+                rs.getInt("id_vehiculo"),
+                rs.getString("placa")
+            });
+
+        }
+
+    } catch(SQLException e){
+
+        System.out.println("Error: " + e.toString());
+
+    }
+
+    return lista;
+}
     // INSERTAR
     public boolean insertarAlquiler(alquileres a) {
 
