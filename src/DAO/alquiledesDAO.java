@@ -84,4 +84,33 @@ public class alquiledesDAO {
 
         return lista;
     }
+     // ACTUALIZAR
+    public boolean actualizarAlquiler(alquileres a) {
+
+        String sql = "UPDATE alquileres SET fk_id_cliente=?, fk_id_vehiculo=?, fecha_alquiler=?, total=?, estado=?, dias=? WHERE id_alquiler=?";
+
+        try {
+
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setInt(1, a.getFkIdCliente());
+            ps.setInt(2, a.getFkIdVehiculo());
+            ps.setString(3, a.getFechaAlquiler());
+            ps.setDouble(4, a.getTotal());
+            ps.setString(5, a.getEstado());
+            ps.setInt(6, a.getDias());
+            ps.setInt(7, a.getIdAlquiler());
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            System.out.println("Error: " + e.toString());
+            return false;
+
+        }
+    }
 }
