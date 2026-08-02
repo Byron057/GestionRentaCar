@@ -9,6 +9,7 @@ import Models.alquileres;
 import Views.panels.RentasPanel;
 import javax.swing.JOptionPane;
 import Views.panels.RentasForm;
+
 public class alquileresController {
     private RentasForm vista;
     private alquileresDAO dao;
