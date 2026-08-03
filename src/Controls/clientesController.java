@@ -61,9 +61,9 @@ public class clientesController {
     }
 
     // 3. Validar teléfono (7-10 dígitos)
-    if (!telefono.matches("\\d{7,10}")) {
+    if (!telefono.matches("\\d{10}")) {
         JOptionPane.showMessageDialog(vista,
-                "El teléfono debe tener entre 7 y 10 dígitos.",
+                "El teléfono debe tener 10 dígitos.",
                 "Formato inválido",
                 JOptionPane.ERROR_MESSAGE);
         return false;
@@ -111,7 +111,6 @@ public class clientesController {
     //LISTAR
     public void listar() {
         if (vistaP == null || vistaP.tableClientes == null) {
-            System.out.println("La vista o la tabla no están inicializadas.");
             return;
         }
         vistaP.tableClientes.limpiarTabla();
@@ -158,9 +157,9 @@ public class clientesController {
         }
 
         // 4. Validar formato de teléfono
-        if (!telefono.matches("\\d{7,10}")) {
+        if (!telefono.matches("\\d{10}")) {
             JOptionPane.showMessageDialog(vista,
-                    "El teléfono debe contener entre 7 y 10 dígitos numéricos.",
+                    "El teléfono debe contener 10 dígitos numéricos.",
                     "Formato inválido",
                     JOptionPane.ERROR_MESSAGE);
             return false;
