@@ -89,7 +89,7 @@ public class clientesController {
         return false;
     }
 
-    // --- GUARDAR ---
+    //GUARDAR
     clientes cl = new clientes();
     cl.setCedula(cedula);
     cl.setNombre(nombre);
@@ -108,7 +108,7 @@ public class clientesController {
     }
 }
 
-    // ---------- LISTAR ----------
+    //LISTAR
     public void listar() {
         if (vistaP == null || vistaP.tableClientes == null) {
             System.out.println("La vista o la tabla no están inicializadas.");
