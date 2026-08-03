@@ -21,13 +21,14 @@ public class RentasPanel extends javax.swing.JPanel {
          private RentasForm vista;
         private RentasPanel vista2;
         
-        private vehiculosControls controlador;
+        private alquileresController controlador;
     /**
      * Creates new form ClientesPanel
      */
     public RentasPanel() {
         initComponents();
-       
+       this.controlador = new alquileresController(null, this);
+        controlador.mostrarTabla();
         
         activarBotonesAccion(false);
         
@@ -270,7 +271,7 @@ public class RentasPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        RentasForm modal = new RentasForm(ventanaPadre, true); 
+        RentasForm modal = new RentasForm(ventanaPadre, true,this); 
         modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
         
         modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
@@ -345,7 +346,7 @@ public class RentasPanel extends javax.swing.JPanel {
         fondoOscuro.setVisible(true);
 
         // ¡IMPORTANTE! Llamamos a RentasForm en lugar de ClientesForm
-        RentasForm modal = new RentasForm(ventanaPadre, true); 
+        RentasForm modal = new RentasForm(ventanaPadre, true,this); 
         
         // Enviamos los datos (asegúrate de que el orden coincida con el método en RentasForm)
         modal.cargarDatosEdicion(idClienteSeleccionado, cliente, vehiculo, fecha, dias, total, estado);

@@ -4,6 +4,7 @@
  */
 package Views.panels;
 
+import Controls.alquileresController;
 import java.awt.Color;
 import java.awt.Cursor;
 import DAO.alquileresDAO;
@@ -22,47 +23,33 @@ public class RentasForm extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RentasForm.class.getName());
     private boolean esEdicion = false;
     private String idVehiculoOriginal = "";
+    private String idAlquilerOriginal = "";
     /**
      * Creates new form ClientesForm
      */
-    alquileresDAO dao = new alquileresDAO();
-    public RentasForm(java.awt.Frame parent, boolean modal) {
+    private alquileresController controlador;
+
+   
+    
+    
+    public RentasForm(java.awt.Frame parent, boolean modal,Views.panels.RentasPanel vistaPanel) {
         super(parent, modal);
         initComponents();
+        
+        
+        
+         this.controlador = new alquileresController(this, vistaPanel);
+        
+        // ¡Llamar a los métodos para llenar los ComboBox aquí!
+        controlador.cargarClientes(cbxAlquilerCliente);
+        controlador.cargarVehiculos(cbxAlquilerVehiculo);
+         controlador.initEvents();
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
-        cargarClientes();
-        cargarVehiculos();
+        
     }
-    private void cargarClientes(){
-
-    cbxAlquilerCliente.removeAllItems();
-
-    List<Object[]> lista = dao.listarClientesActivos();
-
-    for(Object[] dato : lista){
-
-        cbxAlquilerCliente.addItem(
-                dato[0] + " - " + dato[1]
-        );
-
-    }
-}
-    private void cargarVehiculos(){
-
-    cbxAlquilerVehiculo.removeAllItems();
-
-    List<Object[]> lista = dao.listarVehiculosDisponibles();
-
-    for(Object[] dato : lista){
-
-        cbxAlquilerVehiculo.addItem(
-                dato[0] + " - " + dato[1]
-        );
-
-    }
-}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,11 +74,39 @@ public class RentasForm extends javax.swing.JDialog {
         flTotal.setForeground(new java.awt.Color(60, 60, 60));
         
         // Llenamos los ComboBox
-        cbxAlquilerCliente.setSelectedItem(cliente);
-        cbxAlquilerVehiculo.setSelectedItem(vehiculo);
-        cbxEstadoCliente.setSelectedItem(estado);
+        seleccionarItemComboBox(cbxAlquilerCliente,cliente);
+
+        seleccionarItemComboBox(cbxAlquilerVehiculo,vehiculo);
+
+        seleccionarItemComboBox(cbxEstadoCliente,estado);
     }
-    
+    private void seleccionarItemComboBox(assets.ComboBoxRound combo,
+                                     String textoBuscar){
+
+    if(textoBuscar==null)return;
+
+    textoBuscar=textoBuscar.trim().toLowerCase();
+
+    for(int i=0;i<combo.getItemCount();i++){
+
+        Object item=combo.getItemAt(i);
+
+        if(item!=null){
+
+            if(item.toString()
+                   .trim()
+                   .toLowerCase()
+                   .equals(textoBuscar)){
+
+                combo.setSelectedIndex(i);
+
+                combo.setForeground(new Color(60,60,60));
+
+                return;
+            }
+        }
+    }
+}
     private void configurarPlaceholders() {
         aplicarPlaceholder(flFecha, "Ingrese la Fecha");
         aplicarPlaceholder(flDias, "Ingrese los Días");
@@ -460,87 +475,17 @@ public class RentasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-           try {
+           if(esEdicion){
 
-        alquileres a = new alquileres();
-
-        // Obtener cliente seleccionado del ComboBox
-        String cliente = cbxAlquilerCliente.getSelectedItem().toString();
-
-        int idCliente = Integer.parseInt(
-                cliente.split(" - ")[0]
-        );
-
-
-        // Obtener vehículo seleccionado del ComboBox
-        String vehiculo = cbxAlquilerVehiculo.getSelectedItem().toString();
-
-        int idVehiculo = Integer.parseInt(
-                vehiculo.split(" - ")[0]
-        );
-
-
-        // Guardar IDs de las claves foráneas
-        a.setFkIdCliente(idCliente);
-        a.setFkIdVehiculo(idVehiculo);
-
-
-        // Datos del alquiler
-        a.setFechaAlquiler(flFecha.getText());
-        a.setTotal(Double.parseDouble(flTotal.getText()));
-        a.setDias(Integer.parseInt(flDias.getText()));
-
-        a.setEstado(
-            cbxEstadoCliente.getSelectedItem().toString()
-        );
-
-
-        alquileresDAO dao = new alquileresDAO();
-
-
-        if (esEdicion) {
-
-            a.setIdAlquiler(Integer.parseInt(idVehiculoOriginal));
-
-            if (dao.editarAlquiler(a)) {
-
-                JOptionPane.showMessageDialog(this,
-                    "Alquiler actualizado");
-
-                dispose();
-
-            } else {
-
-                JOptionPane.showMessageDialog(this,
-                    "Error al actualizar");
-
-            }
-
-
-        } else {
-
-
-            if (dao.insertarAlquiler(a)) {
-
-                JOptionPane.showMessageDialog(this,
-                    "Alquiler registrado");
-
-                dispose();
-
-            } else {
-
-                JOptionPane.showMessageDialog(this,
-                    "Error al registrar");
-
-            }
-
+        if(controlador.editar(Integer.parseInt(idAlquilerOriginal))){
+            dispose();
         }
 
+    }else{
 
-    } catch (Exception e) {
-
-        JOptionPane.showMessageDialog(this,
-                "Error: " + e.getMessage());
+        if(controlador.insertar()){
+            dispose();
+        }
 
     }
 
@@ -589,7 +534,7 @@ public class RentasForm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                RentasForm dialog = new RentasForm(new javax.swing.JFrame(), true);
+                RentasForm dialog = new RentasForm(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
