@@ -18,7 +18,6 @@ public class clientesController {
     private ClientesPanel vistaP;
     private clientesDAO dao;
 
-    // Constructores (mantengo ambos para no romper compatibilidad)
     public clientesController(ClientesForm vista) {
         this.vista = vista;
         dao = new clientesDAO();
@@ -29,7 +28,7 @@ public class clientesController {
         this.dao = new clientesDAO();
     }
 
-    // ---------- INSERTAR CON VALIDACIONES ----------
+ 
     public boolean insertar() {
     // Obtener datos
     String cedula = vista.flCedula.getText().trim();
@@ -38,7 +37,7 @@ public class clientesController {
     String telefono = vista.flTelefonoCliente.getText().trim();
     String direccion = vista.flDireccionCliente.getText().trim();
 
-    // --- VALIDACIONES ---
+    //VALIDACIONES
 
     // 1. Campos vacíos
     if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || 
@@ -130,7 +129,7 @@ public class clientesController {
         }
     }
 
-    // ---------- EDITAR CON VALIDACIONES ----------
+// editar 
     public boolean editar(int id) {
         // 1. Obtener datos
         String cedula = vista.flCedula.getText().trim();
@@ -198,7 +197,7 @@ public class clientesController {
         }
     }
 
-    // ---------- DESACTIVAR CLIENTE (eliminación lógica) ----------
+    // DESACTIVAR CLIENTE (eliminación lógica)
     public boolean desactivarCliente(int idCliente) {
         // Preguntar confirmación
         int respuesta = JOptionPane.showConfirmDialog(
@@ -233,7 +232,7 @@ public class clientesController {
         return exito;
     }
 
-    // ---------- (Opcional) REACTIVAR CLIENTE ----------
+    //(Opcional) REACTIVAR CLIENTE 
     public boolean activarCliente(int idCliente) {
         boolean exito = dao.cambiarEstadoCliente(idCliente, "Activo");
         if (exito) {
