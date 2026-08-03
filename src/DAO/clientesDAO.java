@@ -20,7 +20,7 @@ public class clientesDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-    // ---------- INSERTAR ----------
+    //INSERTAR
     public boolean insertarCliente(clientes cli) {
         String sql = "INSERT INTO clientes (cedula, nombre, apellido, telefono, direccion, estado) VALUES(?,?,?,?,?,?)";
         try {
@@ -42,7 +42,7 @@ public class clientesDAO {
         }
     }
 
-    // ---------- LISTAR TODOS ----------
+    // LISTAR TODOS
     public List<clientes> listarClientes() {
         List<clientes> listaCli = new ArrayList<>();
         String sql = "SELECT * FROM clientes ORDER BY id_cliente DESC"; // opcional: ordenar
@@ -69,7 +69,7 @@ public class clientesDAO {
         return listaCli;
     }
 
-    // ---------- EDITAR ----------
+    //EDITAR
     public boolean editarCliente(clientes cli) {
         String sql = "UPDATE clientes SET cedula=?, nombre=?, apellido=?, telefono=?, direccion=?, estado=? WHERE id_cliente=?";
         try {
@@ -92,7 +92,7 @@ public class clientesDAO {
         }
     }
 
-    // ---------- CAMBIAR ESTADO (eliminación lógica) ----------
+    //CAMBIAR ESTADO (eliminación lógica)
     public boolean cambiarEstadoCliente(int idCliente, String nuevoEstado) {
         String sql = "UPDATE clientes SET estado = ? WHERE id_cliente = ?";
         try {
@@ -110,7 +110,7 @@ public class clientesDAO {
         }
     }
 
-    // ---------- VALIDACIONES DE CÉDULA DUPLICADA ----------
+    //VALIDACIONES DE CÉDULA DUPLICADA
     public boolean existeCedula(String cedula) {
         boolean existe = false;
         String sql = "SELECT * FROM clientes WHERE cedula = ?";
@@ -150,7 +150,7 @@ public class clientesDAO {
         return existe;
     }
 
-    // ---------- MÉTODO PARA CERRAR RECURSOS (evita repetir código) ----------
+    //MÉTODO PARA CERRAR RECURSOS (evita repetir código
     private void cerrarRecursos() {
         try {
             if (rs != null) rs.close();
