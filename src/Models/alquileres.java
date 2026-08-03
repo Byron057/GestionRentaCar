@@ -16,8 +16,29 @@ public class alquileres {
     private double total;
     private String estado;
     private int dias;
+    //auxiliares
+    private String nombreCliente;
+    private String placa;
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+    
     //contrsuctor
 
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+    
+    
     public alquileres() {
     }
     

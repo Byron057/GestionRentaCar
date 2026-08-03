@@ -38,7 +38,7 @@ public class RentasForm extends javax.swing.JDialog {
 
     cbxAlquilerCliente.removeAllItems();
 
-    List<Object[]> lista = dao.cargarClientesActivos();
+    List<Object[]> lista = dao.listarClientesActivos();
 
     for(Object[] dato : lista){
 
@@ -52,7 +52,7 @@ public class RentasForm extends javax.swing.JDialog {
 
     cbxAlquilerVehiculo.removeAllItems();
 
-    List<Object[]> lista = dao.cargarVehiculosDisponibles();
+    List<Object[]> lista = dao.listarVehiculosDisponibles();
 
     for(Object[] dato : lista){
 
@@ -501,7 +501,7 @@ public class RentasForm extends javax.swing.JDialog {
 
             a.setIdAlquiler(Integer.parseInt(idVehiculoOriginal));
 
-            if (dao.actualizarAlquiler(a)) {
+            if (dao.editarAlquiler(a)) {
 
                 JOptionPane.showMessageDialog(this,
                     "Alquiler actualizado");

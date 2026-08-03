@@ -22,11 +22,7 @@ public class alquileresController {
 
     public void listar() {
 
-        vista.tableClientes.limpiarTabla();
-
-        for (Object[] fila : dao.listarAlquileres()) {
-            vista.tableClientes.agregarFila(fila);
-        }
+       
     }
 
     public boolean eliminar(int id) {
@@ -46,7 +42,7 @@ public class alquileresController {
 
     public boolean actualizar(alquileres a) {
 
-        boolean resultado = dao.actualizarAlquiler(a);
+        boolean resultado = dao.editarAlquiler(a);
 
         if (resultado) {
             listar();
