@@ -36,14 +36,15 @@ public class RentasForm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         
-        
-        
+        // 1. Inicializamos el controlador unificado
          this.controlador = new alquileresController(this, vistaPanel);
         
-        // ¡Llamar a los métodos para llenar los ComboBox aquí!
-        controlador.cargarClientes(cbxAlquilerCliente);
-        controlador.cargarVehiculos(cbxAlquilerVehiculo);
-         controlador.initEvents();
+        // 2. Cargamos los combos (esto ya llama al DAO por dentro)
+        controlador.cargarCombos();
+        
+        // 3. Encendemos los eventos visuales
+        controlador.initEvents();
+        
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
@@ -475,19 +476,15 @@ public class RentasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-           if(esEdicion){
-
-        if(controlador.editar(Integer.parseInt(idAlquilerOriginal))){
-            dispose();
+         if(esEdicion){
+            if(controlador.editar(Integer.parseInt(idAlquilerOriginal))){ 
+                dispose(); // Solo se cierra si se editó correctamente
+            }
+        }else{
+            if(controlador.insertar()){
+                dispose(); // Solo se cierra si se guardó correctamente
+            }
         }
-
-    }else{
-
-        if(controlador.insertar()){
-            dispose();
-        }
-
-    }
 
     }//GEN-LAST:event_btnGuardarMouseClicked
 
