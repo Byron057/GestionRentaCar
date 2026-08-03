@@ -1,53 +1,347 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controls;
+
 
 import DAO.alquileresDAO;
 import Models.alquileres;
-import Views.panels.RentasPanel;
-import javax.swing.JOptionPane;
 import Views.panels.RentasForm;
+
+import javax.swing.JOptionPane;
+
 
 public class alquileresController {
 
+
+    private RentasForm vista;
     private alquileresDAO dao;
-    private RentasPanel vista;
 
-    public alquileresController(RentasPanel vista) {
+
+
+    public alquileresController(RentasForm vista){
+
         this.vista = vista;
-        this.dao = new alquileresDAO();
+        dao = new alquileresDAO();
+
+        cargarCombos();
+
     }
 
-    public void listar() {
 
-       
+
+
+    // =========================================
+    // CARGAR COMBOS
+    // =========================================
+
+    public void cargarCombos(){
+
+    vista.cbxAlquilerCliente.removeAllItems();
+
+    for(Object[] dato : dao.listarClientesActivos()){
+        vista.cbxAlquilerCliente.addItem(
+                dato[0]+" - "+dato[1]
+        );
     }
 
-    public boolean eliminar(int id) {
-        return dao.eliminarAlquiler(id);
+    vista.cbxAlquilerVehiculo.removeAllItems();
+
+    System.out.println("Vehiculos:");
+
+    for(Object[] dato : dao.listarVehiculosDisponibles()){
+
+        System.out.println(dato[0]+" - "+dato[1]);
+
+        vista.cbxAlquilerVehiculo.addItem(
+                dato[0]+" - "+dato[1]
+        );
     }
 
-    public boolean insertar(alquileres a) {
+    System.out.println("Items cargados: "
+            + vista.cbxAlquilerVehiculo.getItemCount());
+}
 
-        boolean resultado = dao.insertarAlquiler(a);
 
-        if (resultado) {
-            listar();
+
+
+
+    // =========================================
+    // INSERTAR
+    // =========================================
+
+    public boolean insertar(){
+
+
+        try{
+
+
+            alquileres a = new alquileres();
+
+
+
+            if(vista.cbxAlquilerCliente.getSelectedItem()==null ||
+               vista.cbxAlquilerVehiculo.getSelectedItem()==null){
+
+
+                JOptionPane.showMessageDialog(
+                    vista,
+                    "Seleccione cliente y vehículo"
+                );
+
+                return false;
+
+            }
+
+
+
+            String cliente =
+                    vista.cbxAlquilerCliente
+                    .getSelectedItem()
+                    .toString();
+
+
+
+            String vehiculo =
+                    vista.cbxAlquilerVehiculo
+                    .getSelectedItem()
+                    .toString();
+
+
+
+
+            a.setFkIdCliente(
+                Integer.parseInt(
+                    cliente.split(" - ")[0]
+                )
+            );
+
+
+
+            a.setFkIdVehiculo(
+                Integer.parseInt(
+                    vehiculo.split(" - ")[0]
+                )
+            );
+
+
+
+            a.setFechaAlquiler(
+                    vista.flFecha.getText()
+            );
+
+
+
+            a.setDias(
+                Integer.parseInt(
+                    vista.flDias.getText()
+                )
+            );
+
+
+
+            a.setTotal(
+                Double.parseDouble(
+                    vista.flTotal.getText()
+                )
+            );
+
+
+
+            a.setEstado(
+                vista.cbxEstadoCliente
+                .getSelectedItem()
+                .toString()
+            );
+
+
+
+
+
+            if(dao.insertarAlquiler(a)){
+
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Alquiler registrado"
+                );
+
+
+                return true;
+
+
+            }else{
+
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Error al registrar"
+                );
+
+
+                return false;
+
+            }
+
+
+
+
+        }catch(Exception e){
+
+
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "Error: "+e.getMessage()
+            );
+
+
+            return false;
+
         }
 
-        return resultado;
+
+
     }
 
-    public boolean actualizar(alquileres a) {
 
-        boolean resultado = dao.editarAlquiler(a);
 
-        if (resultado) {
-            listar();
+
+
+
+    // =========================================
+    // EDITAR
+    // =========================================
+
+    public boolean editar(int idAlquiler){
+
+
+        try{
+
+
+            alquileres a = new alquileres();
+
+
+            a.setIdAlquiler(idAlquiler);
+
+
+
+            String cliente =
+                vista.cbxAlquilerCliente
+                .getSelectedItem()
+                .toString();
+
+
+
+            String vehiculo =
+                vista.cbxAlquilerVehiculo
+                .getSelectedItem()
+                .toString();
+
+
+
+
+            a.setFkIdCliente(
+                Integer.parseInt(
+                    cliente.split(" - ")[0]
+                )
+            );
+
+
+
+            a.setFkIdVehiculo(
+                Integer.parseInt(
+                    vehiculo.split(" - ")[0]
+                )
+            );
+
+
+
+            a.setFechaAlquiler(
+                    vista.flFecha.getText()
+            );
+
+
+            a.setDias(
+                Integer.parseInt(
+                    vista.flDias.getText()
+                )
+            );
+
+
+
+            a.setTotal(
+                Double.parseDouble(
+                    vista.flTotal.getText()
+                )
+            );
+
+
+
+            a.setEstado(
+                    vista.cbxEstadoCliente
+                    .getSelectedItem()
+                    .toString()
+            );
+
+
+
+
+            if(dao.editarAlquiler(a)){
+
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Alquiler actualizado"
+                );
+
+
+                return true;
+
+
+            }else{
+
+
+                return false;
+
+            }
+
+
+
+
+        }catch(Exception e){
+
+            JOptionPane.showMessageDialog(
+                    vista,
+                    e.getMessage()
+            );
+
+            return false;
+
         }
 
-        return resultado;
     }
+
+
+
+
+
+
+    // =========================================
+    // ELIMINAR
+    // =========================================
+
+    public boolean eliminar(int idAlquiler){
+
+
+    if(dao.eliminarAlquiler(idAlquiler)){
+
+        return true;
+
+    }else{
+
+        return false;
+
+    }
+
+}
+
+
+
 }

@@ -5,11 +5,12 @@
 package Views.panels;
 
 import Controls.alquileresController;
+import Controls.vehiculosControls;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
+import DAO.alquileresDAO;
 
 /**
  *
@@ -17,14 +18,17 @@ import javax.swing.JOptionPane;
  */
 public class RentasPanel extends javax.swing.JPanel {
         private String idClienteSeleccionado = null;
-
+         private RentasForm vista;
+        private RentasPanel vista2;
+        
+        private vehiculosControls controlador;
     /**
      * Creates new form ClientesPanel
      */
     public RentasPanel() {
         initComponents();
-        alquileresController controller = new alquileresController(this);
-        controller.listar();
+       
+        
         activarBotonesAccion(false);
         
 
@@ -297,6 +301,7 @@ public class RentasPanel extends javax.swing.JPanel {
                 idClienteSeleccionado = id.toString();
                 activarBotonesAccion(true);
             } else {
+                
                 // Si hace clic en una fila de relleno vacía, los apagamos
                 activarBotonesAccion(false);
             }
@@ -367,14 +372,18 @@ public class RentasPanel extends javax.swing.JPanel {
         );
 
         // 2. Si el usuario presiona "Sí"
-        alquileresController controller =new alquileresController(this);
-        if (controller.eliminar(Integer.parseInt(idClienteSeleccionado))) {
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            
+            int idCliente = Integer.parseInt(idClienteSeleccionado);
+            
+            controlador.eliminar(idCliente);
             tableClientes.eliminarFila(fila);
+            
+            // Apagamos los botones porque la selección desapareció
             activarBotonesAccion(false);
-        } else {
-            JOptionPane.showMessageDialog( this,"No se pudo eliminar el alquiler");
-
-}
+        }else{
+            controlador.mostrarTabla();
+        }
     }//GEN-LAST:event_btnEliminarAlquilerMouseClicked
 
 
