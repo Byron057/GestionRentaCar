@@ -11,7 +11,7 @@ import Models.alquileres;
 import java.awt.HeadlessException;
 import java.util.List;
 import javax.swing.JOptionPane;
-import Views.panels.RentasPanel;
+
 
 /**
  *

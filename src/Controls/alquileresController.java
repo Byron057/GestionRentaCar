@@ -1,347 +1,260 @@
 package Controls;
 
-
 import DAO.alquileresDAO;
 import Models.alquileres;
 import Views.panels.RentasForm;
 
 import javax.swing.JOptionPane;
 
-
 public class alquileresController {
-
 
     private RentasForm vista;
     private alquileresDAO dao;
-
-
 
     public alquileresController(RentasForm vista){
 
         this.vista = vista;
         dao = new alquileresDAO();
 
-        cargarCombos();
-
+        if(this.vista != null){
+            cargarCombos();
+        }
     }
 
-
-
-
-    // =========================================
+    //=========================================
     // CARGAR COMBOS
-    // =========================================
+    //=========================================
 
     public void cargarCombos(){
 
-    vista.cbxAlquilerCliente.removeAllItems();
+        vista.cbxAlquilerCliente.removeAllItems();
 
-    for(Object[] dato : dao.listarClientesActivos()){
-        vista.cbxAlquilerCliente.addItem(
-                dato[0]+" - "+dato[1]
-        );
+        for(Object[] dato : dao.listarClientesActivos()){
+            vista.cbxAlquilerCliente.addItem(
+                    dato[0] + " - " + dato[1]
+            );
+        }
+
+        vista.cbxAlquilerVehiculo.removeAllItems();
+
+        for(Object[] dato : dao.listarVehiculosDisponibles()){
+            vista.cbxAlquilerVehiculo.addItem(
+                    dato[0] + " - " + dato[1]
+            );
+        }
+
+        vista.cbxAlquilerCliente.setSelectedIndex(-1);
+        vista.cbxAlquilerVehiculo.setSelectedIndex(-1);
     }
 
-    vista.cbxAlquilerVehiculo.removeAllItems();
-
-    System.out.println("Vehiculos:");
-
-    for(Object[] dato : dao.listarVehiculosDisponibles()){
-
-        System.out.println(dato[0]+" - "+dato[1]);
-
-        vista.cbxAlquilerVehiculo.addItem(
-                dato[0]+" - "+dato[1]
-        );
-    }
-
-    System.out.println("Items cargados: "
-            + vista.cbxAlquilerVehiculo.getItemCount());
-}
-
-
-
-
-
-    // =========================================
+    //=========================================
     // INSERTAR
-    // =========================================
+    //=========================================
 
     public boolean insertar(){
 
+        alquileres a = new alquileres();
+
+        if(vista.cbxAlquilerCliente.getSelectedItem() == null ||
+           vista.cbxAlquilerVehiculo.getSelectedItem() == null ||
+           vista.flFecha.getText().trim().isEmpty() ||
+           vista.flDias.getText().trim().isEmpty() ||
+           vista.flTotal.getText().trim().isEmpty() ||
+           vista.cbxEstadoCliente.getSelectedItem() == null){
+
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "Complete todos los campos obligatorios.",
+                    "Campos incompletos",
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            return false;
+        }
 
         try{
 
+            String cliente = vista.cbxAlquilerCliente.getSelectedItem().toString();
+            String vehiculo = vista.cbxAlquilerVehiculo.getSelectedItem().toString();
 
-            alquileres a = new alquileres();
+            int dias = Integer.parseInt(vista.flDias.getText().trim());
+            double total = Double.parseDouble(vista.flTotal.getText().trim());
 
-
-
-            if(vista.cbxAlquilerCliente.getSelectedItem()==null ||
-               vista.cbxAlquilerVehiculo.getSelectedItem()==null){
-
+            if(dias <= 0){
 
                 JOptionPane.showMessageDialog(
-                    vista,
-                    "Seleccione cliente y vehículo"
+                        vista,
+                        "Los días deben ser mayores a cero.",
+                        "Dato inválido",
+                        JOptionPane.WARNING_MESSAGE
                 );
 
                 return false;
-
             }
 
+            if(total <= 0){
 
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "El total debe ser mayor a cero.",
+                        "Dato inválido",
+                        JOptionPane.WARNING_MESSAGE
+                );
 
-            String cliente =
-                    vista.cbxAlquilerCliente
-                    .getSelectedItem()
-                    .toString();
+                return false;
+            }
 
-
-
-            String vehiculo =
-                    vista.cbxAlquilerVehiculo
-                    .getSelectedItem()
-                    .toString();
-
-
-
-
-            a.setFkIdCliente(
-                Integer.parseInt(
-                    cliente.split(" - ")[0]
-                )
-            );
-
-
-
-            a.setFkIdVehiculo(
-                Integer.parseInt(
-                    vehiculo.split(" - ")[0]
-                )
-            );
-
-
-
-            a.setFechaAlquiler(
-                    vista.flFecha.getText()
-            );
-
-
-
-            a.setDias(
-                Integer.parseInt(
-                    vista.flDias.getText()
-                )
-            );
-
-
-
-            a.setTotal(
-                Double.parseDouble(
-                    vista.flTotal.getText()
-                )
-            );
-
-
-
-            a.setEstado(
-                vista.cbxEstadoCliente
-                .getSelectedItem()
-                .toString()
-            );
-
-
-
-
+            a.setFkIdCliente(Integer.parseInt(cliente.split(" - ")[0]));
+            a.setFkIdVehiculo(Integer.parseInt(vehiculo.split(" - ")[0]));
+            a.setFechaAlquiler(vista.flFecha.getText().trim());
+            a.setDias(dias);
+            a.setTotal(total);
+            a.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
 
             if(dao.insertarAlquiler(a)){
 
-
                 JOptionPane.showMessageDialog(
                         vista,
-                        "Alquiler registrado"
+                        "Alquiler registrado correctamente."
                 );
-
 
                 return true;
 
-
             }else{
-
 
                 JOptionPane.showMessageDialog(
                         vista,
-                        "Error al registrar"
+                        "Error al registrar el alquiler."
                 );
 
-
                 return false;
-
             }
 
-
-
-
-        }catch(Exception e){
-
+        }catch(NumberFormatException e){
 
             JOptionPane.showMessageDialog(
                     vista,
-                    "Error: "+e.getMessage()
+                    "Los campos Días y Total deben contener valores numéricos.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
             );
 
-
             return false;
-
         }
-
-
-
     }
 
-
-
-
-
-
-    // =========================================
+    //=========================================
     // EDITAR
-    // =========================================
+    //=========================================
 
     public boolean editar(int idAlquiler){
 
+        alquileres a = new alquileres();
+        a.setIdAlquiler(idAlquiler);
 
-        try{
-
-
-            alquileres a = new alquileres();
-
-
-            a.setIdAlquiler(idAlquiler);
-
-
-
-            String cliente =
-                vista.cbxAlquilerCliente
-                .getSelectedItem()
-                .toString();
-
-
-
-            String vehiculo =
-                vista.cbxAlquilerVehiculo
-                .getSelectedItem()
-                .toString();
-
-
-
-
-            a.setFkIdCliente(
-                Integer.parseInt(
-                    cliente.split(" - ")[0]
-                )
-            );
-
-
-
-            a.setFkIdVehiculo(
-                Integer.parseInt(
-                    vehiculo.split(" - ")[0]
-                )
-            );
-
-
-
-            a.setFechaAlquiler(
-                    vista.flFecha.getText()
-            );
-
-
-            a.setDias(
-                Integer.parseInt(
-                    vista.flDias.getText()
-                )
-            );
-
-
-
-            a.setTotal(
-                Double.parseDouble(
-                    vista.flTotal.getText()
-                )
-            );
-
-
-
-            a.setEstado(
-                    vista.cbxEstadoCliente
-                    .getSelectedItem()
-                    .toString()
-            );
-
-
-
-
-            if(dao.editarAlquiler(a)){
-
-
-                JOptionPane.showMessageDialog(
-                        vista,
-                        "Alquiler actualizado"
-                );
-
-
-                return true;
-
-
-            }else{
-
-
-                return false;
-
-            }
-
-
-
-
-        }catch(Exception e){
+        if(vista.cbxAlquilerCliente.getSelectedItem() == null ||
+           vista.cbxAlquilerVehiculo.getSelectedItem() == null ||
+           vista.flFecha.getText().trim().isEmpty() ||
+           vista.flDias.getText().trim().isEmpty() ||
+           vista.flTotal.getText().trim().isEmpty() ||
+           vista.cbxEstadoCliente.getSelectedItem() == null){
 
             JOptionPane.showMessageDialog(
                     vista,
-                    e.getMessage()
+                    "Complete todos los campos obligatorios.",
+                    "Campos incompletos",
+                    JOptionPane.WARNING_MESSAGE
             );
 
             return false;
-
         }
 
+        try{
+
+            String cliente = vista.cbxAlquilerCliente.getSelectedItem().toString();
+            String vehiculo = vista.cbxAlquilerVehiculo.getSelectedItem().toString();
+
+            int dias = Integer.parseInt(vista.flDias.getText().trim());
+            double total = Double.parseDouble(vista.flTotal.getText().trim());
+
+            if(dias <= 0){
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Los días deben ser mayores a cero."
+                );
+
+                return false;
+            }
+
+            if(total <= 0){
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "El total debe ser mayor a cero."
+                );
+
+                return false;
+            }
+
+            a.setFkIdCliente(Integer.parseInt(cliente.split(" - ")[0]));
+            a.setFkIdVehiculo(Integer.parseInt(vehiculo.split(" - ")[0]));
+            a.setFechaAlquiler(vista.flFecha.getText().trim());
+            a.setDias(dias);
+            a.setTotal(total);
+            a.setEstado(vista.cbxEstadoCliente.getSelectedItem().toString());
+
+            if(dao.editarAlquiler(a)){
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Alquiler actualizado correctamente."
+                );
+
+                return true;
+
+            }else{
+
+                JOptionPane.showMessageDialog(
+                        vista,
+                        "Error al actualizar el alquiler."
+                );
+
+                return false;
+            }
+
+        }catch(NumberFormatException e){
+
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "Los campos Días y Total deben contener valores numéricos.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return false;
+        }
     }
 
-
-
-
-
-
-    // =========================================
+    //=========================================
     // ELIMINAR
-    // =========================================
+    //=========================================
 
-    public boolean eliminar(int idAlquiler){
+    public void eliminar(int idAlquiler){
 
+        if(dao.eliminarAlquiler(idAlquiler)){
 
-    if(dao.eliminarAlquiler(idAlquiler)){
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "Alquiler eliminado correctamente."
+            );
 
-        return true;
+        }else{
 
-    }else{
-
-        return false;
-
+            JOptionPane.showMessageDialog(
+                    vista,
+                    "No se pudo eliminar el alquiler."
+            );
+        }
     }
-
-}
-
-
-
 }
