@@ -26,6 +26,7 @@ public class catalogoController {
     public catalogoController(TiposPanel panel){
         this.panel = panel;
         dao = new catalogoDAO();
+        listarTipo(panel); // Carga automática al instanciar el panel
     }
     
     public catalogoController(ColoresForm vista){
@@ -35,26 +36,37 @@ public class catalogoController {
     public catalogoController(ColoresPanel panel){
         this.panelColores = panel;
         dao = new catalogoDAO();
+        listarColores(panel); // Carga automática al instanciar el panel
     }
     
     // ================= TIPOS =================
     
     public void insertarTipo(TiposForm form){
-        tipos t = new tipos();
+        String tipoTexto = form.flTipo.getText().trim();
         
-        // Usamos el 'form' recibido por parámetro de forma segura
-        t.setTipo(form.flTipo.getText());
+        if(tipoTexto.isEmpty() || tipoTexto.equals("Ingrese el Tipo")){
+            JOptionPane.showMessageDialog(form, "Por favor, ingresa el nombre del tipo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(form.cbxTipo.getSelectedIndex() == -1 || form.cbxTipo.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        tipos t = new tipos();
+        t.setTipo(tipoTexto);
         t.setEstado(form.cbxTipo.getSelectedItem().toString());
          
         if (dao.guardarTipos(t)){
-            JOptionPane.showMessageDialog(null, "Tipo registrado correctamente");
+            JOptionPane.showMessageDialog(form, "Tipo registrado correctamente");
         }else{
-            JOptionPane.showMessageDialog(null, "Error al registrar tipo");
+            JOptionPane.showMessageDialog(form, "Error al registrar tipo", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    public void listarTipo(TiposPanel panel){
-        DefaultTableModel modelo = (DefaultTableModel) panel.tableMarcas.getTabla().getModel();
+    public void listarTipo(TiposPanel panelTipos){
+        DefaultTableModel modelo = (DefaultTableModel) panelTipos.tableMarcas.getTabla().getModel();
         modelo.setRowCount(0);
         
         List<tipos> lista = dao.listarTipos();
@@ -68,19 +80,28 @@ public class catalogoController {
         }
     }
     
-    // Renombrado a editarTipo para evitar confusiones
     public void editarTipo(TiposForm form, int id){
-        tipos t = new tipos();
+        String tipoTexto = form.flTipo.getText().trim();
         
+        if(tipoTexto.isEmpty() || tipoTexto.equals("Ingrese el Tipo")){
+            JOptionPane.showMessageDialog(form, "El campo del tipo no puede estar vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(form.cbxTipo.getSelectedIndex() == -1 || form.cbxTipo.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        tipos t = new tipos();
         t.setId(id);
-        t.setTipo(form.flTipo.getText());
+        t.setTipo(tipoTexto);
         t.setEstado(form.cbxTipo.getSelectedItem().toString());
         
         if(dao.editarTipos(t)){
-            JOptionPane.showMessageDialog(null, "Tipo actualizado correctamente");
-            form.dispose();
+            JOptionPane.showMessageDialog(form, "Tipo actualizado correctamente");
         }else{
-            JOptionPane.showMessageDialog(null, "Error al actualizar tipo");
+            JOptionPane.showMessageDialog(form, "Error al actualizar tipo", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -93,9 +114,9 @@ public class catalogoController {
 
         if (opc == JOptionPane.YES_OPTION) {
             if (dao.eliminarTipos(id)) {
-                JOptionPane.showMessageDialog(null, "Tipo eliminado");
+                JOptionPane.showMessageDialog(null, "Tipo eliminado correctamente");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar");
+                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -103,21 +124,31 @@ public class catalogoController {
     // ================= COLORES =================
         
     public void insertarColor(ColoresForm form){
-        colores c = new colores();
+        String colorTexto = form.flColores.getText().trim();
         
-        // Usamos el 'form' recibido por parámetro de forma segura
-        c.setColor(form.flColores.getText());
+        if(colorTexto.isEmpty() || colorTexto.equals("Ingrese el Color")){
+            JOptionPane.showMessageDialog(form, "Por favor, ingresa el nombre del color.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(form.cbxColores.getSelectedIndex() == -1 || form.cbxColores.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        colores c = new colores();
+        c.setColor(colorTexto);
         c.setEstado(form.cbxColores.getSelectedItem().toString());
         
         if (dao.guardarColores(c)){
-            JOptionPane.showMessageDialog(null, "Color registrado correctamente");
+            JOptionPane.showMessageDialog(form, "Color registrado correctamente");
         }else{
-            JOptionPane.showMessageDialog(null, "Error al registrar color");
+            JOptionPane.showMessageDialog(form, "Error al registrar color", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    public void listarColores(ColoresPanel panel){
-        DefaultTableModel modelo = (DefaultTableModel) panel.tableMarcas.getTabla().getModel();
+    public void listarColores(ColoresPanel panelColoresRef){
+        DefaultTableModel modelo = (DefaultTableModel) panelColoresRef.tableColores.getTabla().getModel();
         modelo.setRowCount(0);
         
         List<colores> lista = dao.listarColores();
@@ -131,19 +162,28 @@ public class catalogoController {
         }
     }
     
-    // Renombrado a editarColor para evitar confusiones
     public void editarColor(ColoresForm form, int id){
-        colores c = new colores();
+        String colorTexto = form.flColores.getText().trim();
         
+        if(colorTexto.isEmpty() || colorTexto.equals("Ingrese el Color")){
+            JOptionPane.showMessageDialog(form, "El campo del color no puede estar vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if(form.cbxColores.getSelectedIndex() == -1 || form.cbxColores.getSelectedItem() == null){
+            JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        colores c = new colores();
         c.setId_color(id);
-        c.setColor(form.flColores.getText());
+        c.setColor(colorTexto);
         c.setEstado(form.cbxColores.getSelectedItem().toString());
         
         if(dao.editarColores(c)){
-            JOptionPane.showMessageDialog(null, "Color actualizado correctamente");
-            form.dispose();
+            JOptionPane.showMessageDialog(form, "Color actualizado correctamente");
         }else{
-            JOptionPane.showMessageDialog(null, "Error al actualizar color");
+            JOptionPane.showMessageDialog(form, "Error al actualizar color", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -156,9 +196,9 @@ public class catalogoController {
 
         if (opc == JOptionPane.YES_OPTION) {
             if (dao.eliminarColores(id)) {
-                JOptionPane.showMessageDialog(null, "Color eliminado");
+                JOptionPane.showMessageDialog(null, "Color eliminado correctamente");
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar");
+                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

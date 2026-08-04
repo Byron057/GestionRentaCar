@@ -25,8 +25,9 @@ public class ColoresPanel extends javax.swing.JPanel {
     private boolean isCuatroSelected = false;
     public ColoresPanel() {
         initComponents();
+        
         catalogoController controller = new catalogoController(this);
-        controller.listarColores(this);
+        
         activarBotonesAccion(false);
         isCuatroSelected = true;
         btnCuatro.setBackground(new Color(253, 239, 222));
@@ -86,7 +87,7 @@ public class ColoresPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         panelRound1 = new assets.PanelRound();
-        tableMarcas = new assets.TableRow();
+        tableColores = new assets.TableRow();
         btnEditar = new assets.PanelRound();
         iconEditarAlquiler = new javax.swing.JLabel();
         txtEditarAlquiler = new javax.swing.JLabel();
@@ -117,10 +118,10 @@ public class ColoresPanel extends javax.swing.JPanel {
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
 
-        tableMarcas.setNombresColumnas("ID, Colores,Estado");
-        tableMarcas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableColores.setNombresColumnas("ID, Colores,Estado");
+        tableColores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMarcasMouseClicked(evt);
+                tableColoresMouseClicked(evt);
             }
         });
 
@@ -130,14 +131,14 @@ public class ColoresPanel extends javax.swing.JPanel {
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableMarcas, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                .addComponent(tableColores, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableMarcas, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(tableColores, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -470,11 +471,11 @@ public class ColoresPanel extends javax.swing.JPanel {
         btnAgregar.setBackground(new Color(255,153,0));
     }//GEN-LAST:event_btnAgregarMouseExited
 
-    private void tableMarcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMarcasMouseClicked
-      int filaSeleccionada = tableMarcas.getTabla().getSelectedRow();
+    private void tableColoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableColoresMouseClicked
+      int filaSeleccionada = tableColores.getTabla().getSelectedRow();
 
         if (filaSeleccionada != -1) {
-            Object id = tableMarcas.getTabla().getValueAt(filaSeleccionada, 0);
+            Object id = tableColores.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
                 // Guardamos el ID y encendemos los botones
@@ -488,15 +489,15 @@ public class ColoresPanel extends javax.swing.JPanel {
             // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
             activarBotonesAccion(false);
         }
-    }//GEN-LAST:event_tableMarcasMouseClicked
+    }//GEN-LAST:event_tableColoresMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         if (idClienteSeleccionado == null) return;
 
-        int fila = tableMarcas.getTabla().getSelectedRow();
+        int fila = tableColores.getTabla().getSelectedRow();
         if (fila == -1) return;
 
-        String color = tableMarcas.getTabla().getValueAt(fila, 1).toString();
+        String color = tableColores.getTabla().getValueAt(fila, 1).toString();
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
@@ -527,12 +528,12 @@ public class ColoresPanel extends javax.swing.JPanel {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         if (idClienteSeleccionado == null) return;
         
-        int fila = tableMarcas.getTabla().getSelectedRow();
+        int fila = tableColores.getTabla().getSelectedRow();
         if (fila == -1) return;
 
         int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
             this, 
-            "¿Está seguro que desea eliminar el color " + tableMarcas.getTabla().getValueAt(fila, 1).toString() + "?", 
+            "¿Está seguro que desea eliminar el color " + tableColores.getTabla().getValueAt(fila, 1).toString() + "?", 
             "Confirmar Eliminación", 
             javax.swing.JOptionPane.YES_NO_OPTION,
             javax.swing.JOptionPane.WARNING_MESSAGE
@@ -655,7 +656,7 @@ public class ColoresPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
     private assets.PanelRound panelRound2;
-    public assets.TableRow tableMarcas;
+    public assets.TableRow tableColores;
     private javax.swing.JLabel txtCuatro;
     private javax.swing.JLabel txtDos;
     private javax.swing.JLabel txtEditarAlquiler;
