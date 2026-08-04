@@ -17,7 +17,7 @@ import DAO.alquileresDAO;
  * @author PC
  */
 public class RentasPanel extends javax.swing.JPanel {
-        private String idClienteSeleccionado = null;
+        private String idRentaSeleccionado = null;
          private RentasForm vista;
         private RentasPanel vista2;
         
@@ -55,7 +55,7 @@ public class RentasPanel extends javax.swing.JPanel {
             btnEliminarAlquiler.setBackground(new Color(245, 245, 245)); 
             txtEliminarAlquiler.setForeground(new Color(170, 170, 170)); 
             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
-            idClienteSeleccionado = null;
+            idRentaSeleccionado = null;
         }
     }
 
@@ -299,7 +299,7 @@ public class RentasPanel extends javax.swing.JPanel {
             
             if (id != null && !id.toString().trim().isEmpty()) {
                 // Guardamos el ID y encendemos los botones
-                idClienteSeleccionado = id.toString();
+                idRentaSeleccionado = id.toString();
                 activarBotonesAccion(true);
             } else {
                 
@@ -313,20 +313,20 @@ public class RentasPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tableClientesMouseClicked
 
     private void btnEditarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarAlquilerMouseClicked
-     if (idClienteSeleccionado == null) return;
+        if (idRentaSeleccionado == null) return;
 
-        // Obtenemos la fila
         int fila = tableClientes.getTabla().getSelectedRow();
-        
-        // Evitamos que el código continúe si se perdió la selección visual
         if (fila == -1) return;
 
-        // Extraer los datos basándonos en tu tabla: ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado
+        // ORDEN EXACTO DE TU TABLA: ID(0), Cliente(1), Vehiculo(2), Fecha(3), Total(4), Dias(5), Estado(6)
         String cliente = tableClientes.getTabla().getValueAt(fila, 1).toString();
         String vehiculo = tableClientes.getTabla().getValueAt(fila, 2).toString();
         String fecha = tableClientes.getTabla().getValueAt(fila, 3).toString();
-        String total = tableClientes.getTabla().getValueAt(fila, 4).toString();
+        
+        // CORREGIDO: El índice 4 es Total y el índice 5 son Días
+        String total = tableClientes.getTabla().getValueAt(fila, 4).toString().replace("$", "").trim();
         String dias = tableClientes.getTabla().getValueAt(fila, 5).toString();
+        
         String estado = tableClientes.getTabla().getValueAt(fila, 6).toString();
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -345,11 +345,10 @@ public class RentasPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        // ¡IMPORTANTE! Llamamos a RentasForm en lugar de ClientesForm
-        RentasForm modal = new RentasForm(ventanaPadre, true,this); 
+        RentasForm modal = new RentasForm(ventanaPadre, true, this); 
         
-        // Enviamos los datos (asegúrate de que el orden coincida con el método en RentasForm)
-        modal.cargarDatosEdicion(idClienteSeleccionado, cliente, vehiculo, fecha, dias, total, estado);
+        // Respetamos el mismo orden: id, cliente, vehiculo, fecha, dias, total, estado
+        modal.cargarDatosEdicion(idRentaSeleccionado, cliente, vehiculo, fecha, total, dias, estado);
         
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
@@ -358,7 +357,7 @@ public class RentasPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditarAlquilerMouseClicked
 
     private void btnEliminarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAlquilerMouseClicked
-       if (idClienteSeleccionado == null) return;
+       if (idRentaSeleccionado == null) return;
         
         int fila = tableClientes.getTabla().getSelectedRow();
         if (fila == -1) return;
@@ -372,10 +371,10 @@ public class RentasPanel extends javax.swing.JPanel {
             javax.swing.JOptionPane.WARNING_MESSAGE
         );
 
-        // 2. Si el usuario presiona "Sí"
+        
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
-            int idCliente = Integer.parseInt(idClienteSeleccionado);
+            int idCliente = Integer.parseInt(idRentaSeleccionado);
             
             controlador.eliminar(idCliente);
             tableClientes.eliminarFila(fila);
