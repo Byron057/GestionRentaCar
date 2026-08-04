@@ -245,27 +245,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_flUsuarioActionPerformed
 
     private void btnIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseClicked
-        // TODO add your handling code here:
-         String usuario = flUsuario.getText();
-    String contraseña = String.valueOf(flContraseña.getPassword());
+        String usuario = flUsuario.getText().trim();
+        String contraseña = String.valueOf(flContraseña.getPassword());
 
-    loginController controlador = new loginController();
+        loginController controlador = new loginController();
 
-    if(controlador.iniciarSesion(usuario, contraseña)){
-
-        JOptionPane.showMessageDialog(this, "Bienvenido");
-
-        Dashboard dashboard = new Dashboard();
-        dashboard.setVisible(true);
-        this.dispose();
-
-    }else{
-
-        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
-
-    }
-
-
+        // El controlador ya valida campos, consulta la BD y muestra los JOptionPane necesarios
+        if (controlador.iniciarSesion(usuario, contraseña)) {
+            // Si es true, abrimos el Dashboard y cerramos el Login
+            Dashboard dashboard = new Dashboard();
+            dashboard.setVisible(true);
+            this.dispose();
+        } 
+        // Si es false, el controlador ya mostró el mensaje de error, por lo que aquí no hace falta poner nada más.
     }//GEN-LAST:event_btnIniciarSesionMouseClicked
 
     /**
