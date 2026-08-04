@@ -58,28 +58,27 @@ public class RentasForm extends javax.swing.JDialog {
      */
     public void cargarDatosEdicion(String id, String cliente, String vehiculo, String fecha, String dias, String total, String estado) {
         this.esEdicion = true;
-        this.idVehiculoOriginal = id;
-        
-        // Cambiamos el título visual
-        jLabel3.setText("Editar Alquiler");
-        jLabel4.setText("Modifique la Información del Alquiler");
-        
-        // Llenamos los campos de texto y cambiamos el color a oscuro
-        flFecha.setText(fecha);
-        flFecha.setForeground(new java.awt.Color(60, 60, 60));
-        
-        flDias.setText(dias);
-        flDias.setForeground(new java.awt.Color(60, 60, 60));
-        
-        flTotal.setText(total);
-        flTotal.setForeground(new java.awt.Color(60, 60, 60));
-        
-        // Llenamos los ComboBox
-        seleccionarItemComboBox(cbxAlquilerCliente,cliente);
-
-        seleccionarItemComboBox(cbxAlquilerVehiculo,vehiculo);
-
-        seleccionarItemComboBox(cbxEstadoCliente,estado);
+    this.idAlquilerOriginal = id; // <-- Asigna el ID del alquiler aquí
+    this.idVehiculoOriginal = id; 
+    
+    // Títulos
+    jLabel3.setText("Editar Alquiler");
+    jLabel4.setText("Modifique la Información del Alquiler");
+    
+    // TextFields
+    flFecha.setText(fecha);
+    flFecha.setForeground(new java.awt.Color(60, 60, 60));
+    
+    flDias.setText(dias);
+    flDias.setForeground(new java.awt.Color(60, 60, 60));
+    
+    flTotal.setText(total);
+    flTotal.setForeground(new java.awt.Color(60, 60, 60));
+    
+    // ComboBoxes
+    seleccionarItemComboBox(cbxAlquilerCliente, cliente);
+    seleccionarItemComboBox(cbxAlquilerVehiculo, vehiculo);
+    seleccionarItemComboBox(cbxEstadoCliente, estado);
     }
     private void seleccionarItemComboBox(assets.ComboBoxRound combo,
                                      String textoBuscar){
@@ -476,15 +475,35 @@ public class RentasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-         if(esEdicion){
-            if(controlador.editar(Integer.parseInt(idAlquilerOriginal))){ 
-                dispose(); // Solo se cierra si se editó correctamente
-            }
-        }else{
-            if(controlador.insertar()){
-                dispose(); // Solo se cierra si se guardó correctamente
-            }
+         if (esEdicion) {
+        // 1. Validar que tengamos un ID de alquiler válido
+        if (idAlquilerOriginal == null || idAlquilerOriginal.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "No se pudo obtener el ID del alquiler a editar.", 
+                "Error de Edición", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        try {
+            int idAlquiler = Integer.parseInt(idAlquilerOriginal.trim());
+            
+            // 2. Intentar la actualización a través del controlador
+            if (controlador.editar(idAlquiler)) { 
+                dispose(); // Se cierra únicamente si la edición en BD fue exitosa
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "El ID del alquiler no es un número entero válido: " + idAlquilerOriginal, 
+                "Error de Formato", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        // 3. Crear nuevo registro
+        if (controlador.insertar()) {
+            dispose(); // Se cierra únicamente si el registro fue exitoso
+        }
+    }
 
     }//GEN-LAST:event_btnGuardarMouseClicked
 

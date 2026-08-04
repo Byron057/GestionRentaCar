@@ -315,46 +315,46 @@ public class RentasPanel extends javax.swing.JPanel {
     private void btnEditarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarAlquilerMouseClicked
      if (idClienteSeleccionado == null) return;
 
-        // Obtenemos la fila
-        int fila = tableClientes.getTabla().getSelectedRow();
-        
-        // Evitamos que el código continúe si se perdió la selección visual
-        if (fila == -1) return;
+    // Obtenemos la fila seleccionada
+    int fila = tableClientes.getTabla().getSelectedRow();
+    if (fila == -1) return;
 
-        // Extraer los datos basándonos en tu tabla: ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado
-        String cliente = tableClientes.getTabla().getValueAt(fila, 1).toString();
-        String vehiculo = tableClientes.getTabla().getValueAt(fila, 2).toString();
-        String fecha = tableClientes.getTabla().getValueAt(fila, 3).toString();
-        String total = tableClientes.getTabla().getValueAt(fila, 4).toString();
-        String dias = tableClientes.getTabla().getValueAt(fila, 5).toString();
-        String estado = tableClientes.getTabla().getValueAt(fila, 6).toString();
+    // Extraer los datos de la tabla de acuerdo a las columnas:
+    // Columnas: ID(0), Cliente(1), Vehiculo(2), Fecha(3), Total(4), Dias(5), Estado(6)
+    String idAlquiler = idClienteSeleccionado; // O tableClientes.getTabla().getValueAt(fila, 0).toString();
+    String cliente   = tableClientes.getTabla().getValueAt(fila, 1).toString();
+    String vehiculo  = tableClientes.getTabla().getValueAt(fila, 2).toString();
+    String fecha     = tableClientes.getTabla().getValueAt(fila, 3).toString();
+    String dias      = tableClientes.getTabla().getValueAt(fila, 4).toString();
+    String total     = tableClientes.getTabla().getValueAt(fila, 5).toString();
+    String estado    = tableClientes.getTabla().getValueAt(fila, 6).toString();
 
-        javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-        
-        javax.swing.JPanel fondoOscuro = new javax.swing.JPanel() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                super.paintComponent(g);
-                g.setColor(new java.awt.Color(0, 0, 0, 150));
-                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-        };
-        fondoOscuro.setOpaque(false);
-        fondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {});
+    javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+    
+    // Transparencia de fondo
+    javax.swing.JPanel fondoOscuro = new javax.swing.JPanel() {
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            super.paintComponent(g);
+            g.setColor(new java.awt.Color(0, 0, 0, 150));
+            g.fillRect(0, 0, getWidth(), getHeight());
+        }
+    };
+    fondoOscuro.setOpaque(false);
+    fondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {});
 
-        ventanaPadre.setGlassPane(fondoOscuro);
-        fondoOscuro.setVisible(true);
+    ventanaPadre.setGlassPane(fondoOscuro);
+    fondoOscuro.setVisible(true);
 
-        // ¡IMPORTANTE! Llamamos a RentasForm en lugar de ClientesForm
-        RentasForm modal = new RentasForm(ventanaPadre, true,this); 
-        
-        // Enviamos los datos (asegúrate de que el orden coincida con el método en RentasForm)
-        modal.cargarDatosEdicion(idClienteSeleccionado, cliente, vehiculo, fecha, dias, total, estado);
-        
-        modal.setLocationRelativeTo(ventanaPadre);
-        modal.setVisible(true);
+    RentasForm modal = new RentasForm(ventanaPadre, true, this); 
+    
+    // ORDEN CORRECTO: (id, cliente, vehiculo, fecha, dias, total, estado)
+    modal.cargarDatosEdicion(idAlquiler, cliente, vehiculo, fecha, dias, total, estado);
+    
+    modal.setLocationRelativeTo(ventanaPadre);
+    modal.setVisible(true);
 
-        fondoOscuro.setVisible(false);
+    fondoOscuro.setVisible(false);
     }//GEN-LAST:event_btnEditarAlquilerMouseClicked
 
     private void btnEliminarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAlquilerMouseClicked
