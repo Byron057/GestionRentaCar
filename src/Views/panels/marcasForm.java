@@ -6,6 +6,7 @@ package Views.panels;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import Views.panels.MarcasForm;
 
 
 /**
@@ -16,13 +17,15 @@ public class MarcasForm extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MarcasForm.class.getName());
     private boolean esEdicion = false;
-    private String idVehiculoOriginal = "";
+    private String idMarcaOriginal = "";
+    private MarcasPanel panelMarcas;
     /**
      * Creates new form ClientesForm
      */
-    public MarcasForm(java.awt.Frame parent, boolean modal) {
+    public MarcasForm(java.awt.Frame parent, boolean modal, MarcasPanel panel) {
         super(parent, modal);
         initComponents();
+        this.panelMarcas = panel;
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
@@ -36,7 +39,7 @@ public class MarcasForm extends javax.swing.JDialog {
      */
     public void cargarDatosEdicion(String id, String marca, String estado) {
         this.esEdicion = true;
-        this.idVehiculoOriginal = id;
+        this.idMarcaOriginal = id;
         
         // Cambiamos el título visual
         jLabel3.setText("Editar Marca");
@@ -282,16 +285,27 @@ public class MarcasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        boolean operacionExitosa = false;
+        
         if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
+            // Intentamos editar la marca
+            operacionExitosa = controller.editarMarca(this, Integer.parseInt(idMarcaOriginal));
         } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
+            // Intentamos insertar la marca
+            operacionExitosa = controller.insertarMarca(this);
         }
         
-        this.dispose(); // Cierra el modal al finalizar
+        // Si la operación de base de datos fue exitosa
+        if (operacionExitosa) {
+            if(panelMarcas != null){
+                Controls.catalogoController c = new Controls.catalogoController(panelMarcas);
+                c.listarMarcas(panelMarcas);
+            }
+            
+            // Cerramos la ventana modal correctamente
+            this.dispose(); 
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -333,7 +347,7 @@ public class MarcasForm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MarcasForm dialog = new MarcasForm(new javax.swing.JFrame(), true);
+                MarcasForm dialog = new MarcasForm(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -348,8 +362,8 @@ public class MarcasForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxMarca;
-    private javax.swing.JTextField flMarca;
+    public assets.ComboBoxRound cbxMarca;
+    public javax.swing.JTextField flMarca;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

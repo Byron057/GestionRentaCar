@@ -4,9 +4,7 @@
  */
 package DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import Conexion.conexion;
 import Models.tipos;
 import java.util.ArrayList;
@@ -232,6 +230,117 @@ public class catalogoDAO {
     
     public boolean eliminarColores(int id){
         String sql = "DELETE FROM colores WHERE id_color=?";
+        
+        try{
+            
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+            
+        }catch(Exception e ){
+            return false;
+        }finally {
+
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    }
+    public List<marcas> listarMarcas() {
+        List<marcas> lista = new ArrayList<>();
+        String sql = "SELECT * FROM marcas_vehiculos ";
+        
+        try{
+            
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                marcas m = new marcas();
+                m.setId(rs.getInt("id_marca"));
+                m.setMarca(rs.getString("marca"));
+                m.setEstado(rs.getString("estado"));
+                lista.add(m);
+            }
+            
+        }catch(Exception e){
+            
+        }finally {
+            try{
+                if(rs != null)rs.close();
+                if(ps != null)ps.close();
+                if(con != null)con.close();
+                
+            }catch(Exception e){     
+            }
+        } 
+        return lista;
+    }
+   
+   public boolean guardarMarcas(marcas m){
+        String sql = "INSERT INTO marcas_vehiculos(marca,estado) VALUES(?,?)";
+        try{
+            
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setString(1, m.getMarca());
+            ps.setString(2, m.getEstado());
+            
+            ps.executeUpdate();
+            
+            return true;
+            
+        }catch(Exception e){
+            return false;
+        }finally {
+
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+
+            } 
+        }
+    }
+    
+    public boolean editarMarcas(marcas m){
+        String sql = "UPDATE marcas_vehiculos SET marca=?, estado=? WHERE id_marca=?";
+        try{
+            
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            
+            ps.setString(1, m.getMarca());
+            ps.setString(2, m.getEstado());
+            ps.setInt(3, m.getId());
+            
+            ps.executeUpdate();
+            return true;
+            
+        }catch(Exception e){
+            return false;
+        }finally {
+
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+
+            } catch (Exception e) {
+
+            }
+        }    
+    
+    }
+    
+    public boolean eliminarMarcas(int id){
+        String sql = "DELETE FROM marcas_vehiculos WHERE id_marca=?";
         
         try{
             

@@ -291,13 +291,11 @@ public class ColoresForm extends javax.swing.JDialog {
             // Intentamos editar; si el controlador devuelve true, la operación fue exitosa
             operacionExitosa = controller.editarColor(this, Integer.parseInt(idColorOriginal));
         } else {
-            // Intentamos insertar; si el controlador devuelve true, la operación fue exitosa
             operacionExitosa = controller.insertarColor(this);
         }
         
         // Si la operación de base de datos fue exitosa
         if (operacionExitosa) {
-            // Actualizamos la tabla en el panel si existe referencia
             if(panelColores != null){
                 catalogoController c = new catalogoController(panelColores);
                 c.listarColores(panelColores);
