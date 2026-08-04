@@ -72,7 +72,7 @@ public class InicioPanel extends javax.swing.JPanel {
         panelRound6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCarBlack.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconGroupGreen.png"))); // NOI18N
         panelRound6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 40, 50));
 
         panelRound1.add(panelRound6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
@@ -101,7 +101,7 @@ public class InicioPanel extends javax.swing.JPanel {
         panelRound7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCarBlack.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconListPurple.png"))); // NOI18N
         panelRound7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 40, 50));
 
         panelRound2.add(panelRound7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
