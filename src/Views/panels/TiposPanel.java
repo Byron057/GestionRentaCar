@@ -6,6 +6,9 @@ package Views.panels;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
+import Controls.catalogoController;
+import java.util.ArrayList;
+
 
 
 /**
@@ -24,13 +27,32 @@ public class TiposPanel extends javax.swing.JPanel {
     private boolean isCuatroSelected = false;
     public TiposPanel() {
         initComponents();
-        tableMarcas.agregarFila(new Object[]{"2", "Toyota"});
+        catalogoController controller = new catalogoController(this);
+        controller.listarTipo(this);
+        tableMarcas.agregarFila(new Object[]{});
+        tableMarcas.agregarFila(new Object[]{});
+        tableMarcas.agregarFila(new Object[]{});
+        tableMarcas.agregarFila(new Object[]{});
+        tableMarcas.agregarFila(new Object[]{});
+
         activarBotonesAccion(false);
         isTresSelected = true;
         btnTres.setBackground(new Color(253, 239, 222));
         txtTres.setForeground(new Color(251, 124, 20));
         
 
+    }
+        
+
+    public void cargarTabla(){
+        tableMarcas.getTabla().setModel(
+            new javax.swing.table.DefaultTableModel()
+        );
+
+        tableMarcas.setNombresColumnas("ID, Tipo, Estado");
+
+        catalogoController controller = new catalogoController(this);
+        controller.listarTipo(this);
     }
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
     private void activarBotonesAccion(boolean activar) {
@@ -450,7 +472,9 @@ public class TiposPanel extends javax.swing.JPanel {
         TiposForm modal = new TiposForm(ventanaPadre, true); 
         modal.setLocationRelativeTo(ventanaPadre); 
         modal.setVisible(true); 
-
+        catalogoController controller = new catalogoController(this);
+        controller.listarTipo(this);
+        
         fondoOscuro.setVisible(false);
        
     }//GEN-LAST:event_btnAgregarMouseClicked
@@ -515,7 +539,9 @@ public class TiposPanel extends javax.swing.JPanel {
         
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
-
+        catalogoController controller = new catalogoController(this);
+        controller.listarTipo(this);
+        
         fondoOscuro.setVisible(false);
     }//GEN-LAST:event_btnEditarMouseClicked
 
@@ -534,12 +560,16 @@ public class TiposPanel extends javax.swing.JPanel {
         );
 
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            System.out.println("Eliminando de la BD el tipo ID: " + idClienteSeleccionado);
-            
-            tableMarcas.eliminarFila(fila);
+
+            catalogoController controller = new catalogoController(this);
+
+            controller.eliminarTipos(Integer.parseInt(idClienteSeleccionado));
+
+            controller.listarTipo(this);
+
             activarBotonesAccion(false);
         }
+        
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnUnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnoMouseClicked
@@ -631,7 +661,10 @@ public class TiposPanel extends javax.swing.JPanel {
             txtCuatro.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_btnCuatroMouseExited
-
+    public assets.TableRow getTableMarcas(){
+    return tableMarcas;
+}
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnAgregar;
@@ -647,7 +680,7 @@ public class TiposPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
     private assets.PanelRound panelRound2;
-    private assets.TableRow tableMarcas;
+    public assets.TableRow tableMarcas;
     private javax.swing.JLabel txtCuatro;
     private javax.swing.JLabel txtDos;
     private javax.swing.JLabel txtEditarAlquiler;

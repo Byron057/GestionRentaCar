@@ -4,10 +4,7 @@
  */
 package Models;
 
-/**
- *
- * @author USER
- */
+
 public class tipos {
     private int id;
     private String tipo;

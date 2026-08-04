@@ -6,6 +6,7 @@ package Views.panels;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import Controls.catalogoController;
 
 
 /**
@@ -280,12 +281,13 @@ public class TiposForm extends javax.swing.JDialog {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
+        catalogoController controller = new catalogoController(this);
         if (esEdicion) {
             // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
+            controller.editar(this, Integer.parseInt(idVehiculoOriginal));
         } else {
             // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
+            controller.insertarTipo(this);
         }
         
         this.dispose(); // Cierra el modal al finalizar
@@ -341,12 +343,19 @@ public class TiposForm extends javax.swing.JDialog {
             }
         });
     }
+    public String getTipo(){
+    return flTipo.getText();
+    }
+
+    public String getEstado(){
+    return cbxTipo.getSelectedItem().toString();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxTipo;
-    private javax.swing.JTextField flTipo;
+    public assets.ComboBoxRound cbxTipo;
+    public javax.swing.JTextField flTipo;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

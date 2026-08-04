@@ -65,9 +65,9 @@ public class CatalogosPanel extends javax.swing.JPanel {
         contentCatalogoLayout.setVerticalGroup(
             contentCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentCatalogoLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(389, 389, 389)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

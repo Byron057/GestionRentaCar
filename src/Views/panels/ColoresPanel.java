@@ -6,6 +6,7 @@ package Views.panels;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
+import Controls.catalogoController;
 
 
 /**
@@ -24,7 +25,11 @@ public class ColoresPanel extends javax.swing.JPanel {
     private boolean isCuatroSelected = false;
     public ColoresPanel() {
         initComponents();
-        tableMarcas.agregarFila(new Object[]{"2", "Toyota"});
+        catalogoController controller = new catalogoController(this);
+        controller.listarColores(this);
+        tableMarcas.agregarFila(new Object[]{"new"});
+        tableMarcas.agregarFila(new Object[]{});
+        tableMarcas.agregarFila(new Object[]{});
         activarBotonesAccion(false);
         isCuatroSelected = true;
         btnCuatro.setBackground(new Color(253, 239, 222));
@@ -447,9 +452,12 @@ public class ColoresPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        ColoresForm modal = new ColoresForm(ventanaPadre, true); 
+        ColoresForm modal = new ColoresForm(ventanaPadre, true, this); 
         modal.setLocationRelativeTo(ventanaPadre); 
         modal.setVisible(true); 
+        //despues de cerrar el formulario actualiza la tabla
+        catalogoController controller = new catalogoController(this);
+        controller.listarColores(this);
 
         fondoOscuro.setVisible(false);
        
@@ -509,10 +517,12 @@ public class ColoresPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        ColoresForm modal = new ColoresForm(ventanaPadre, true); 
+        ColoresForm modal = new ColoresForm(ventanaPadre, true, this); 
         modal.cargarDatosEdicion(idClienteSeleccionado, color, "Activo");
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
+        catalogoController controller = new catalogoController(this);
+        controller.listarColores(this);
 
         fondoOscuro.setVisible(false);
     }//GEN-LAST:event_btnEditarMouseClicked
@@ -532,8 +542,13 @@ public class ColoresPanel extends javax.swing.JPanel {
         );
 
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            System.out.println("Eliminando de la BD el color ID: " + idClienteSeleccionado);
-            tableMarcas.eliminarFila(fila);
+
+            catalogoController controller = new catalogoController(this);
+
+            controller.eliminarColor(Integer.parseInt(idClienteSeleccionado));
+
+            controller.listarColores(this);
+
             activarBotonesAccion(false);
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
@@ -643,7 +658,7 @@ public class ColoresPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
     private assets.PanelRound panelRound2;
-    private assets.TableRow tableMarcas;
+    public assets.TableRow tableMarcas;
     private javax.swing.JLabel txtCuatro;
     private javax.swing.JLabel txtDos;
     private javax.swing.JLabel txtEditarAlquiler;
@@ -651,4 +666,6 @@ public class ColoresPanel extends javax.swing.JPanel {
     private javax.swing.JLabel txtTres;
     private javax.swing.JLabel txtUno;
     // End of variables declaration//GEN-END:variables
+
+    
 }

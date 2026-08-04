@@ -13,10 +13,8 @@ public class colores {
     private String color;
     private String estado;
 
-    public colores(int id, String color, String estado) {
-        this.id = id;
-        this.color = color;
-        this.estado = estado;
+    public colores() {
+        
     }
 
     public void setId_color(int id) {
@@ -31,7 +29,7 @@ public class colores {
         this.estado = estado;
     }
 
-    public int getId() {
+    public int getId_color() {
         return id;
     }
 
