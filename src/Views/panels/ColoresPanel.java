@@ -27,9 +27,6 @@ public class ColoresPanel extends javax.swing.JPanel {
         initComponents();
         catalogoController controller = new catalogoController(this);
         controller.listarColores(this);
-        tableMarcas.agregarFila(new Object[]{"new"});
-        tableMarcas.agregarFila(new Object[]{});
-        tableMarcas.agregarFila(new Object[]{});
         activarBotonesAccion(false);
         isCuatroSelected = true;
         btnCuatro.setBackground(new Color(253, 239, 222));

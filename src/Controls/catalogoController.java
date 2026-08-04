@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controls;
 
 import DAO.catalogoDAO;
@@ -14,10 +10,6 @@ import Views.panels.TiposPanel;
 import javax.swing.table.DefaultTableModel;
 import Views.panels.ColoresForm;
 import Views.panels.ColoresPanel;
-
-
-
-
 
 public class catalogoController {
     
@@ -45,15 +37,15 @@ public class catalogoController {
         dao = new catalogoDAO();
     }
     
+    // ================= TIPOS =================
     
     public void insertarTipo(TiposForm form){
-        
         tipos t = new tipos();
         
-        t.setTipo(vista.flTipo.getText());
-        t.setEstado(vista.cbxTipo.getSelectedItem().toString());
+        // Usamos el 'form' recibido por parámetro de forma segura
+        t.setTipo(form.flTipo.getText());
+        t.setEstado(form.cbxTipo.getSelectedItem().toString());
          
-        
         if (dao.guardarTipos(t)){
             JOptionPane.showMessageDialog(null, "Tipo registrado correctamente");
         }else{
@@ -63,35 +55,30 @@ public class catalogoController {
     
     public void listarTipo(TiposPanel panel){
         DefaultTableModel modelo = (DefaultTableModel) panel.tableMarcas.getTabla().getModel();
-        
         modelo.setRowCount(0);
         
         List<tipos> lista = dao.listarTipos();
-        
         
         for(tipos t : lista){
             modelo.addRow(new Object[]{
                 t.getId(),
                 t.getTipo(),
                 t.getEstado()
-            
             });
         }
     }
     
-    public void editar(TiposForm form, int id){
-        
+    // Renombrado a editarTipo para evitar confusiones
+    public void editarTipo(TiposForm form, int id){
         tipos t = new tipos();
         
         t.setId(id);
-        t.setTipo(vista.flTipo.getText());
-        t.setEstado(vista.cbxTipo.getSelectedItem().toString());
+        t.setTipo(form.flTipo.getText());
+        t.setEstado(form.cbxTipo.getSelectedItem().toString());
         
         if(dao.editarTipos(t)){
-            
-            JOptionPane.showMessageDialog(null, "tipo actualizado correctamente");
-            vista.dispose();
-            
+            JOptionPane.showMessageDialog(null, "Tipo actualizado correctamente");
+            form.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Error al actualizar tipo");
         }
@@ -105,26 +92,22 @@ public class catalogoController {
                 JOptionPane.YES_NO_OPTION);
 
         if (opc == JOptionPane.YES_OPTION) {
-
             if (dao.eliminarTipos(id)) {
                 JOptionPane.showMessageDialog(null, "Tipo eliminado");
             } else {
                 JOptionPane.showMessageDialog(null, "Error al eliminar");
             }
-
         }
-        
-
     }
     
-    //COLORES
+    // ================= COLORES =================
         
     public void insertarColor(ColoresForm form){
-        
         colores c = new colores();
         
-        c.setColor(vistaColores.flColores.getText());
-        c.setEstado(vistaColores.cbxColores.getSelectedItem().toString());
+        // Usamos el 'form' recibido por parámetro de forma segura
+        c.setColor(form.flColores.getText());
+        c.setEstado(form.cbxColores.getSelectedItem().toString());
         
         if (dao.guardarColores(c)){
             JOptionPane.showMessageDialog(null, "Color registrado correctamente");
@@ -135,35 +118,30 @@ public class catalogoController {
     
     public void listarColores(ColoresPanel panel){
         DefaultTableModel modelo = (DefaultTableModel) panel.tableMarcas.getTabla().getModel();
-        
         modelo.setRowCount(0);
         
         List<colores> lista = dao.listarColores();
-        
         
         for(colores c : lista){
             modelo.addRow(new Object[]{
                 c.getId_color(),
                 c.getColor(),
                 c.getEstado()
-            
             });
         }
     }
     
-    public void editar(ColoresForm form, int id){
-        
+    // Renombrado a editarColor para evitar confusiones
+    public void editarColor(ColoresForm form, int id){
         colores c = new colores();
         
         c.setId_color(id);
-        c.setColor(vistaColores.flColores.getText());
-        c.setEstado(vistaColores.cbxColores.getSelectedItem().toString());
+        c.setColor(form.flColores.getText());
+        c.setEstado(form.cbxColores.getSelectedItem().toString());
         
         if(dao.editarColores(c)){
-            
-            JOptionPane.showMessageDialog(null, "color actualizado correctamente");
-            vistaColores.dispose();
-            
+            JOptionPane.showMessageDialog(null, "Color actualizado correctamente");
+            form.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "Error al actualizar color");
         }
@@ -177,17 +155,11 @@ public class catalogoController {
                 JOptionPane.YES_NO_OPTION);
 
         if (opc == JOptionPane.YES_OPTION) {
-
             if (dao.eliminarColores(id)) {
                 JOptionPane.showMessageDialog(null, "Color eliminado");
             } else {
                 JOptionPane.showMessageDialog(null, "Error al eliminar");
-             
-
             }
-           
         }
-        
     }
-    
 }

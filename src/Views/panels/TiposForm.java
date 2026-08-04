@@ -280,17 +280,16 @@ public class TiposForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
         catalogoController controller = new catalogoController(this);
         if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            controller.editar(this, Integer.parseInt(idVehiculoOriginal));
+            // CAMBIA 'controller.editar' por 'controller.editarTipo'
+            controller.editarTipo(this, Integer.parseInt(idVehiculoOriginal));
         } else {
-            // Lógica para INSERT en la base de datos SQLite
+            // Lógica para INSERT en la base de datos
             controller.insertarTipo(this);
         }
         
-        this.dispose(); // Cierra el modal al finalizar
+        this.dispose(); // Cierra el modal al finalizarCierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
