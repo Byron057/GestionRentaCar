@@ -3,10 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+
+import Controls.alquileresController;
+import Controls.vehiculosControls;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
-
+import javax.swing.JOptionPane;
+import DAO.alquileresDAO;
 
 /**
  *
@@ -14,13 +18,18 @@ import javax.swing.ImageIcon;
  */
 public class RentasPanel extends javax.swing.JPanel {
         private String idClienteSeleccionado = null;
-
+         private RentasForm vista;
+        private RentasPanel vista2;
+        
+        private alquileresController controlador;
     /**
      * Creates new form ClientesPanel
      */
     public RentasPanel() {
         initComponents();
-        tableClientes.agregarFila(new Object[]{"2", "0987654321", "María", "Gómez", "0991122334", "Norte", "Inactivo"});
+       this.controlador = new alquileresController(null, this);
+        controlador.mostrarTabla();
+        
         activarBotonesAccion(false);
         
 
@@ -262,7 +271,7 @@ public class RentasPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        RentasForm modal = new RentasForm(ventanaPadre, true); 
+        RentasForm modal = new RentasForm(ventanaPadre, true,this); 
         modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
         
         modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
@@ -293,6 +302,7 @@ public class RentasPanel extends javax.swing.JPanel {
                 idClienteSeleccionado = id.toString();
                 activarBotonesAccion(true);
             } else {
+                
                 // Si hace clic en una fila de relleno vacía, los apagamos
                 activarBotonesAccion(false);
             }
@@ -336,7 +346,7 @@ public class RentasPanel extends javax.swing.JPanel {
         fondoOscuro.setVisible(true);
 
         // ¡IMPORTANTE! Llamamos a RentasForm en lugar de ClientesForm
-        RentasForm modal = new RentasForm(ventanaPadre, true); 
+        RentasForm modal = new RentasForm(ventanaPadre, true,this); 
         
         // Enviamos los datos (asegúrate de que el orden coincida con el método en RentasForm)
         modal.cargarDatosEdicion(idClienteSeleccionado, cliente, vehiculo, fecha, dias, total, estado);
@@ -365,15 +375,15 @@ public class RentasPanel extends javax.swing.JPanel {
         // 2. Si el usuario presiona "Sí"
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando de la BD el alquiler ID: " + idClienteSeleccionado);
+            int idCliente = Integer.parseInt(idClienteSeleccionado);
             
-            // 3. Lo eliminamos visualmente de la tabla
+            controlador.eliminar(idCliente);
             tableClientes.eliminarFila(fila);
             
-            // 4. Como ya se eliminó, apagamos los botones de nuevo
+            // Apagamos los botones porque la selección desapareció
             activarBotonesAccion(false);
-        
+        }else{
+            controlador.mostrarTabla();
         }
     }//GEN-LAST:event_btnEliminarAlquilerMouseClicked
 
@@ -387,7 +397,7 @@ public class RentasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
-    private assets.TableRow tableClientes;
+    public assets.TableRow tableClientes;
     private javax.swing.JLabel txtEditarAlquiler;
     private javax.swing.JLabel txtEliminarAlquiler;
     // End of variables declaration//GEN-END:variables

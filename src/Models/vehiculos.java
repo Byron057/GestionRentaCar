@@ -113,6 +113,10 @@ public class vehiculos {
     public void setNombreColor(String nombreColor) {
         this.nombreColor = nombreColor;
     }
+    @Override
+    public String toString() {
+        return this.placa + " - " + this.nombreMarca + " " + this.nombreModelo;
+    }
     
     
 }
