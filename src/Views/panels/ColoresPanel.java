@@ -531,24 +531,11 @@ public class ColoresPanel extends javax.swing.JPanel {
         int fila = tableColores.getTabla().getSelectedRow();
         if (fila == -1) return;
 
-        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-            this, 
-            "¿Está seguro que desea eliminar el color " + tableColores.getTabla().getValueAt(fila, 1).toString() + "?", 
-            "Confirmar Eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-        );
-
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-
-            catalogoController controller = new catalogoController(this);
-
-            controller.eliminarColor(Integer.parseInt(idClienteSeleccionado));
-
-            controller.listarColores(this);
-
-            activarBotonesAccion(false);
-        }
+        catalogoController controller = new catalogoController(this);
+        controller.eliminarColor(Integer.parseInt(idClienteSeleccionado));
+        
+        controller.listarColores(this);
+        activarBotonesAccion(false);
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnUnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnoMouseClicked

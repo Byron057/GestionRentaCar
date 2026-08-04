@@ -17,7 +17,8 @@ public class TiposForm extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TiposForm.class.getName());
     private boolean esEdicion = false;
-    private String idVehiculoOriginal = "";
+    private String idTipoOriginal = "";
+    private TiposPanel panelTipos;
     /**
      * Creates new form ClientesForm
      */
@@ -36,7 +37,7 @@ public class TiposForm extends javax.swing.JDialog {
      */
     public void cargarDatosEdicion(String id, String tipo, String estado) {
         this.esEdicion = true;
-        this.idVehiculoOriginal = id;
+        this.idTipoOriginal = id;
         
         jLabel3.setText("Editar Tipo");
         
@@ -281,15 +282,24 @@ public class TiposForm extends javax.swing.JDialog {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         catalogoController controller = new catalogoController(this);
+        boolean operacionExitosa = false;
+        
         if (esEdicion) {
-            // CAMBIA 'controller.editar' por 'controller.editarTipo'
-            controller.editarTipo(this, Integer.parseInt(idVehiculoOriginal));
+            // Llamamos al método correcto para editar tipos
+            operacionExitosa = controller.editarTipo(this, Integer.parseInt(idTipoOriginal));
         } else {
-            // Lógica para INSERT en la base de datos
-            controller.insertarTipo(this);
+            // Llamamos al método correcto para insertar tipos
+            operacionExitosa = controller.insertarTipo(this);
         }
         
-        this.dispose(); // Cierra el modal al finalizarCierra el modal al finalizar
+        // Si la operación fue exitosa, actualizamos la tabla del panel y cerramos
+        if (operacionExitosa) {
+            if(panelTipos != null){
+                catalogoController c = new catalogoController(panelTipos);
+                c.listarTipo(panelTipos);
+            }
+            this.dispose(); 
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered

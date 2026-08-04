@@ -284,24 +284,28 @@ public class ColoresForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
         catalogoController controller = new catalogoController(this);
+        boolean operacionExitosa = false;
         
         if (esEdicion) {
-            // Lógica para UPDATE en la base de datos (corregido a editarColor)
-            controller.editarColor(this, Integer.parseInt(idColorOriginal));
+            // Intentamos editar; si el controlador devuelve true, la operación fue exitosa
+            operacionExitosa = controller.editarColor(this, Integer.parseInt(idColorOriginal));
         } else {
-            // Lógica para INSERT en la base de datos
-            controller.insertarColor(this);
+            // Intentamos insertar; si el controlador devuelve true, la operación fue exitosa
+            operacionExitosa = controller.insertarColor(this);
         }
         
-        // Actualizamos la tabla en el panel si existe referencia
-        if(panelColores != null){
-            catalogoController c = new catalogoController(panelColores);
-            c.listarColores(panelColores);
+        // Si la operación de base de datos fue exitosa
+        if (operacionExitosa) {
+            // Actualizamos la tabla en el panel si existe referencia
+            if(panelColores != null){
+                catalogoController c = new catalogoController(panelColores);
+                c.listarColores(panelColores);
+            }
+            
+            // Cerramos la ventana modal correctamente
+            this.dispose(); 
         }
-        
-        this.dispose(); // Cierra el moda Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered

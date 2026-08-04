@@ -3,13 +3,13 @@ package Controls;
 import DAO.catalogoDAO;
 import Models.colores;
 import Models.tipos;
-import java.util.List;
-import javax.swing.JOptionPane;
-import Views.panels.TiposForm;
-import Views.panels.TiposPanel;
-import javax.swing.table.DefaultTableModel;
 import Views.panels.ColoresForm;
 import Views.panels.ColoresPanel;
+import Views.panels.TiposForm;
+import Views.panels.TiposPanel;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class catalogoController {
     
@@ -26,7 +26,7 @@ public class catalogoController {
     public catalogoController(TiposPanel panel){
         this.panel = panel;
         dao = new catalogoDAO();
-        listarTipo(panel); // Carga automática al instanciar el panel
+        listarTipo(panel);
     }
     
     public catalogoController(ColoresForm vista){
@@ -36,22 +36,22 @@ public class catalogoController {
     public catalogoController(ColoresPanel panel){
         this.panelColores = panel;
         dao = new catalogoDAO();
-        listarColores(panel); // Carga automática al instanciar el panel
+        listarColores(panel);
     }
     
     // ================= TIPOS =================
     
-    public void insertarTipo(TiposForm form){
+    public boolean insertarTipo(TiposForm form){
         String tipoTexto = form.flTipo.getText().trim();
         
         if(tipoTexto.isEmpty() || tipoTexto.equals("Ingrese el Tipo")){
             JOptionPane.showMessageDialog(form, "Por favor, ingresa el nombre del tipo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         if(form.cbxTipo.getSelectedIndex() == -1 || form.cbxTipo.getSelectedItem() == null){
             JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         tipos t = new tipos();
@@ -60,37 +60,40 @@ public class catalogoController {
          
         if (dao.guardarTipos(t)){
             JOptionPane.showMessageDialog(form, "Tipo registrado correctamente");
+            return true;
         }else{
             JOptionPane.showMessageDialog(form, "Error al registrar tipo", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
     
     public void listarTipo(TiposPanel panelTipos){
-        DefaultTableModel modelo = (DefaultTableModel) panelTipos.tableMarcas.getTabla().getModel();
-        modelo.setRowCount(0);
-        
-        List<tipos> lista = dao.listarTipos();
-        
-        for(tipos t : lista){
-            modelo.addRow(new Object[]{
-                t.getId(),
-                t.getTipo(),
-                t.getEstado()
-            });
+        if (panelTipos != null && panelTipos.tableTipos != null) {
+            panelTipos.tableTipos.limpiarTabla();
+            
+            List<tipos> lista = dao.listarTipos();
+            
+            for(tipos t : lista){
+                panelTipos.tableTipos.agregarFila(new Object[]{
+                    t.getId(),
+                    t.getTipo(),
+                    t.getEstado()
+                });
+            }
         }
     }
     
-    public void editarTipo(TiposForm form, int id){
+    public boolean editarTipo(TiposForm form, int id){
         String tipoTexto = form.flTipo.getText().trim();
         
         if(tipoTexto.isEmpty() || tipoTexto.equals("Ingrese el Tipo")){
             JOptionPane.showMessageDialog(form, "El campo del tipo no puede estar vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         if(form.cbxTipo.getSelectedIndex() == -1 || form.cbxTipo.getSelectedItem() == null){
             JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         tipos t = new tipos();
@@ -100,8 +103,10 @@ public class catalogoController {
         
         if(dao.editarTipos(t)){
             JOptionPane.showMessageDialog(form, "Tipo actualizado correctamente");
+            return true;
         }else{
             JOptionPane.showMessageDialog(form, "Error al actualizar tipo", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
     
@@ -123,17 +128,17 @@ public class catalogoController {
     
     // ================= COLORES =================
         
-    public void insertarColor(ColoresForm form){
+    public boolean insertarColor(ColoresForm form){
         String colorTexto = form.flColores.getText().trim();
         
         if(colorTexto.isEmpty() || colorTexto.equals("Ingrese el Color")){
             JOptionPane.showMessageDialog(form, "Por favor, ingresa el nombre del color.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         if(form.cbxColores.getSelectedIndex() == -1 || form.cbxColores.getSelectedItem() == null){
             JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         colores c = new colores();
@@ -142,37 +147,41 @@ public class catalogoController {
         
         if (dao.guardarColores(c)){
             JOptionPane.showMessageDialog(form, "Color registrado correctamente");
+            return true;
         }else{
             JOptionPane.showMessageDialog(form, "Error al registrar color", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
     
     public void listarColores(ColoresPanel panelColoresRef){
-        DefaultTableModel modelo = (DefaultTableModel) panelColoresRef.tableColores.getTabla().getModel();
-        modelo.setRowCount(0);
-        
-        List<colores> lista = dao.listarColores();
-        
-        for(colores c : lista){
-            modelo.addRow(new Object[]{
-                c.getId_color(),
-                c.getColor(),
-                c.getEstado()
-            });
+   
+        if (panelColoresRef != null && panelColoresRef.tableColores != null) {
+            panelColoresRef.tableColores.limpiarTabla();
+            
+            List<colores> lista = dao.listarColores();
+            
+            for(colores c : lista){
+                panelColoresRef.tableColores.agregarFila(new Object[]{
+                    c.getId_color(),
+                    c.getColor(),
+                    c.getEstado()
+                });
+            }
         }
     }
     
-    public void editarColor(ColoresForm form, int id){
+    public boolean editarColor(ColoresForm form, int id){
         String colorTexto = form.flColores.getText().trim();
         
         if(colorTexto.isEmpty() || colorTexto.equals("Ingrese el Color")){
             JOptionPane.showMessageDialog(form, "El campo del color no puede estar vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         if(form.cbxColores.getSelectedIndex() == -1 || form.cbxColores.getSelectedItem() == null){
             JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
         
         colores c = new colores();
@@ -182,8 +191,10 @@ public class catalogoController {
         
         if(dao.editarColores(c)){
             JOptionPane.showMessageDialog(form, "Color actualizado correctamente");
+            return true;
         }else{
             JOptionPane.showMessageDialog(form, "Error al actualizar color", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
     
