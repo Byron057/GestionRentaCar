@@ -4,6 +4,8 @@
  */
 package Views.frames;
 import Views.frames.Dashboard;
+import Controls.loginController;
+import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Cursor;
 
@@ -129,7 +131,6 @@ public class Login extends javax.swing.JFrame {
         panelUsuario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 37, -1));
 
         flUsuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        flUsuario.setForeground(new java.awt.Color(204, 204, 204));
         flUsuario.setText("Ingrese su Usuario");
         flUsuario.setBorder(null);
         flUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -157,7 +158,6 @@ public class Login extends javax.swing.JFrame {
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconLockOrange.png"))); // NOI18N
         panelContraseña.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
 
-        flContraseña.setForeground(new java.awt.Color(204, 204, 204));
         flContraseña.setText("********");
         flContraseña.setBorder(null);
         flContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -246,9 +246,26 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseClicked
         // TODO add your handling code here:
+         String usuario = flUsuario.getText();
+    String contraseña = String.valueOf(flContraseña.getPassword());
+
+    loginController controlador = new loginController();
+
+    if(controlador.iniciarSesion(usuario, contraseña)){
+
+        JOptionPane.showMessageDialog(this, "Bienvenido");
+
         Dashboard dashboard = new Dashboard();
         dashboard.setVisible(true);
         this.dispose();
+
+    }else{
+
+        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+
+    }
+
+
     }//GEN-LAST:event_btnIniciarSesionMouseClicked
 
     /**
