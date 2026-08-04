@@ -48,8 +48,8 @@ public class alquileresController {
                     x.getNombreCliente(),
                     x.getPlaca(),
                     x.getFechaAlquiler(),
+                    "$"+x.getTotal(),
                     x.getDias(),
-                    x.getTotal(),
                     x.getEstado()
                 });
             }
