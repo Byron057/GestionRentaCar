@@ -3,9 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package Views.panels;
+import Controls.vehiculosControls;
+import DAO.vehiculosDAO;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.ImageIcon;
+
 
 
 /**
@@ -14,13 +17,15 @@ import javax.swing.ImageIcon;
  */
 public class VehiculosPanel extends javax.swing.JPanel {
         private String idVehiculoSeleccionado = null;
-
-    /**
-     * Creates new form ClientesPanel
-     */
+        private VehiculosForm vista;
+        private VehiculosPanel vista2;
+        
+        private vehiculosControls controlador;
+        
     public VehiculosPanel() {
         initComponents();
-        tableVehiculos.agregarFila(new Object[]{"1", "PBA-1234", "Sedán", "Toyota", "Corolla", "Activo", "Activo"});
+        this.controlador = new vehiculosControls(null, this);
+        controlador.mostrarTabla();
         activarBotonesAccion(false);
         
 
@@ -262,7 +267,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        VehiculosForm modal = new VehiculosForm(ventanaPadre, true); 
+        VehiculosForm modal = new VehiculosForm(ventanaPadre, true, this); 
         modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
         
         modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
@@ -307,13 +312,13 @@ public class VehiculosPanel extends javax.swing.JPanel {
         int fila = tableVehiculos.getTabla().getSelectedRow();
         if (fila == -1) return; // Validación anti-crasheo
 
-        // Extraer los datos de la fila seleccionada (columnas 1 al 6)
-        String placa = tableVehiculos.getTabla().getValueAt(fila, 1).toString();
-        String tipo = tableVehiculos.getTabla().getValueAt(fila, 2).toString();
-        String marca = tableVehiculos.getTabla().getValueAt(fila, 3).toString();
-        String modelo = tableVehiculos.getTabla().getValueAt(fila, 4).toString();
-        String color = tableVehiculos.getTabla().getValueAt(fila, 5).toString();
-        String estado = tableVehiculos.getTabla().getValueAt(fila, 6).toString();
+        String placa = tableVehiculos.getTabla().getValueAt(fila, 1) != null ? tableVehiculos.getTabla().getValueAt(fila, 1).toString() : "";
+        String marca = tableVehiculos.getTabla().getValueAt(fila, 2) != null ? tableVehiculos.getTabla().getValueAt(fila, 2).toString() : "";
+        String modelo = tableVehiculos.getTabla().getValueAt(fila, 3) != null ? tableVehiculos.getTabla().getValueAt(fila, 3).toString() : "";
+        String tipo = tableVehiculos.getTabla().getValueAt(fila, 4) != null ? tableVehiculos.getTabla().getValueAt(fila, 4).toString() : "";
+        String color = tableVehiculos.getTabla().getValueAt(fila, 5) != null ? tableVehiculos.getTabla().getValueAt(fila, 5).toString() : "";
+        String estado = tableVehiculos.getTabla().getValueAt(fila, 6) != null ? tableVehiculos.getTabla().getValueAt(fila, 6).toString() : "Activo";
+        
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
@@ -333,7 +338,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
         fondoOscuro.setVisible(true);
 
         // Abrimos el formulario de Vehículos
-        VehiculosForm modal = new VehiculosForm(ventanaPadre, true); 
+        VehiculosForm modal = new VehiculosForm(ventanaPadre, true,this); 
         
         // AQUÍ INYECTAMOS LOS DATOS
         modal.cargarDatosEdicion(idVehiculoSeleccionado, placa, tipo, marca, modelo, color, estado);
@@ -362,16 +367,18 @@ public class VehiculosPanel extends javax.swing.JPanel {
         // Si presiona "Sí"
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando vehículo ID: " + idVehiculoSeleccionado);
+            int idVehiculo = Integer.parseInt(idVehiculoSeleccionado);
             
-            // Lo eliminamos visualmente
+            controlador.eliminar(idVehiculo);
             tableVehiculos.eliminarFila(fila);
             
             // Apagamos los botones porque la selección desapareció
             activarBotonesAccion(false);
+        }else{
+            controlador.mostrarTabla();
         }
     }//GEN-LAST:event_btnEliminarVehiculosMouseClicked
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,7 +390,7 @@ public class VehiculosPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
-    private assets.TableRow tableVehiculos;
+    public assets.TableRow tableVehiculos;
     private javax.swing.JLabel txtEditarCliente;
     private javax.swing.JLabel txtEliminarCliente;
     // End of variables declaration//GEN-END:variables
