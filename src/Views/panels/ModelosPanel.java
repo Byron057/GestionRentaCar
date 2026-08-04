@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class ModelosPanel extends javax.swing.JPanel {
         private String idClienteSeleccionado = null;
-        private Controls.prueba modeloController = new Controls.prueba();
+       
 
     /**
      * Creates new form ClientesPanel
@@ -45,34 +45,11 @@ public class ModelosPanel extends javax.swing.JPanel {
         // 2. Leemos cuál es la marca que quedó seleccionada por defecto (Ej: "Toyota")
         String marcaInicial = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
         
-        // 3. Carga inicial de datos en la tabla filtrados por esa primera marca
-        cargarDatosTabla(marcaInicial);
-
-        // 4. Evento en tiempo real para el filtro de búsqueda
-        cbxMarca.addActionListener(e -> {
-            String marcaSeleccionada = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
-            // Filtra directamente por la marca seleccionada sin condiciones extra
-            cargarDatosTabla(marcaSeleccionada); 
-        });
+       
     }
 
     // Método que se conecta a tu controlador 'Controls.prueba' para llenar la tabla
-    private void cargarDatosTabla(String filtroMarca) {
-     
-        tableMarcas.limpiarTabla();
-    
-        // Invocamos el método de tu clase 'prueba' que retorna el ArrayList de objetos
-        java.util.List<Controls.prueba.ModeloDTO> lista = modeloController.obtenerModelosDesdeBD();
-        
-        for (Controls.prueba.ModeloDTO item : lista) {
-            // Aplicamos el filtro estricto: solo agrega si coincide con la marca seleccionada
-            if (item.getMarca().equalsIgnoreCase(filtroMarca)) {
-                tableMarcas.agregarFila(new Object[]{item.getId(), item.getMarca(), item.getModelo(), item.getEstado()});
-            }
-        }
-        
-        activarBotonesAccion(false);
-    }
+  
     
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
     private void activarBotonesAccion(boolean activar) {
