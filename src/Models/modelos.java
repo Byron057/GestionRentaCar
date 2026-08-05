@@ -58,7 +58,10 @@ public class modelos {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
+    @Override
+   public String toString(){
+       return modelo;
+   }
     
     
     

@@ -40,4 +40,8 @@ public class colores {
     public String getEstado() {
         return estado;
     }
+    @Override
+   public String toString(){
+       return color;
+   }
 }

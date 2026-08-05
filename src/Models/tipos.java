@@ -37,5 +37,9 @@ public class tipos {
     public String getTipo() {
         return tipo;
     }
+    @Override
+   public String toString(){
+       return tipo;
+   }
     
 }
