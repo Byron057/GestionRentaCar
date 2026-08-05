@@ -42,6 +42,9 @@ public class marcas {
         return estado;
     }
 
-   
+   @Override
+   public String toString(){
+       return marca;
+   }
     
 }

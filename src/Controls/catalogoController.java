@@ -4,10 +4,13 @@ import DAO.catalogoDAO;
 import Models.colores;
 import Models.tipos;
 import Models.marcas;
+import Models.modelos;
 import Views.panels.ColoresForm;
 import Views.panels.ColoresPanel;
 import Views.panels.MarcasForm;
 import Views.panels.MarcasPanel;
+import Views.panels.ModelosForm;
+import Views.panels.ModelosPanel;
 import Views.panels.TiposForm;
 import Views.panels.TiposPanel;
 import java.util.List;
@@ -23,6 +26,8 @@ public class catalogoController {
     private ColoresPanel panelColores;
     private MarcasPanel panelMarcas;
     private MarcasForm vistaMarcas;
+    private ModelosPanel panelModelos;
+    private ModelosForm vistaModelos;
     
     public catalogoController(TiposForm vista){
         this.vista = vista;
@@ -51,6 +56,15 @@ public class catalogoController {
         this.panelMarcas = panel;
         dao = new catalogoDAO();
         listarMarcas(panel);
+    }
+    public catalogoController(ModelosPanel panel){
+        this.panelModelos = panel;
+        dao = new catalogoDAO();
+    }
+
+    public catalogoController(ModelosForm vista){
+        this.vistaModelos = vista;
+        dao = new catalogoDAO();
     }
     
     // ================= TIPOS =================
@@ -310,5 +324,134 @@ public class catalogoController {
                 JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+    public void cargarMarcasEnCombo(assets.ComboBoxRound cbx) {
+        List<marcas> marcas = dao.listarMarcasActivas();
+        StringBuilder sb = new StringBuilder();
+        for (marcas m : marcas) {
+            sb.append(m.getMarca()).append("\n");
+        }
+        if (sb.length() > 0) {
+            cbx.setOpciones(sb.toString());
+        }
+    }
+    public void listarModelos(ModelosPanel panelModelosRef, String filtroMarca) {
+        if (panelModelosRef != null && panelModelosRef.tableModelos != null) {
+            panelModelosRef.tableModelos.limpiarTabla();
+            
+            List<modelos> lista = dao.listarModelosConMarca();
+            
+            for (modelos m : lista) {
+                if (m.getMarca() != null && m.getMarca().equalsIgnoreCase(filtroMarca)) {
+                    panelModelosRef.tableModelos.agregarFila(new Object[]{
+                        m.getId(),
+                        m.getMarca(),
+                        m.getModelo(),
+                        m.getEstado()
+                    });
+                }
+            }
+        }
+    }
+    public boolean insertarModelo(ModelosForm form, String nombreMarcaSeleccionada) {
+        String modeloTexto = form.flMarca.getText().trim();
+        
+        if (modeloTexto.isEmpty() || modeloTexto.equals("Ingrese el Modelo")) {
+            JOptionPane.showMessageDialog(form, "Por favor, ingresa el nombre del modelo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        if (form.cbxModelo.getSelectedIndex() == -1 || form.cbxModelo.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        List<marcas> marcas = dao.listarMarcasActivas();
+        int idMarca = 0;
+        for (marcas m : marcas) {
+            if (m.getMarca().equalsIgnoreCase(nombreMarcaSeleccionada)) {
+                idMarca = m.getId();
+                break;
+            }
+        }
+        
+        if (idMarca == 0) {
+            JOptionPane.showMessageDialog(form, "Error: No se pudo identificar la marca seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        modelos m = new modelos();
+        m.setFk_id_marca(idMarca);
+        m.setModelo(modeloTexto);
+        m.setEstado(form.cbxModelo.getSelectedItem().toString());
+        
+        if (dao.guardarModelo(m)) {
+            JOptionPane.showMessageDialog(form, "Modelo registrado correctamente");
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(form, "Error al registrar modelo", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    public boolean editarModelo(ModelosForm form, int idModelo, String nombreMarcaSeleccionada) {
+        String modeloTexto = form.flMarca.getText().trim();
+        
+        if (modeloTexto.isEmpty() || modeloTexto.equals("Ingrese el Modelo")) {
+            JOptionPane.showMessageDialog(form, "El campo del modelo no puede estar vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        if (form.cbxModelo.getSelectedIndex() == -1 || form.cbxModelo.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(form, "Por favor, selecciona un estado válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        List<marcas> marcas = dao.listarMarcasActivas();
+        int idMarca = 0;
+        for (marcas m : marcas) {
+            if (m.getMarca().equalsIgnoreCase(nombreMarcaSeleccionada)) {
+                idMarca = m.getId();
+                break;
+            }
+        }
+        
+        if (idMarca == 0) {
+            JOptionPane.showMessageDialog(form, "Error: No se pudo identificar la marca seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        modelos m = new modelos();
+        m.setId(idModelo);
+        m.setFk_id_marca(idMarca);
+        m.setModelo(modeloTexto);
+        m.setEstado(form.cbxModelo.getSelectedItem().toString());
+        
+        if (dao.editarModelo(m)) {
+            JOptionPane.showMessageDialog(form, "Modelo actualizado correctamente");
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(form, "Error al actualizar modelo", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    public boolean eliminarModelo(int id) {
+        int opc = JOptionPane.showConfirmDialog(
+                null,
+                "¿Desea eliminar este registro?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opc == JOptionPane.YES_OPTION) {
+            if (dao.eliminarModelo(id)) {
+                JOptionPane.showMessageDialog(null, "Modelo eliminado correctamente");
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return false;
     }
 }

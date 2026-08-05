@@ -11,8 +11,17 @@ package Models;
 public class modelos {
     private int id;
     private int fk_id_marca;
+    private String marca;
     private String modelo;
     private String estado;
+
+    public int getFk_id_marca() {
+        return fk_id_marca;
+    }
+
+    public void setFk_id_marca(int fk_id_marca) {
+        this.fk_id_marca = fk_id_marca;
+    }
     
     public modelos() {
         
@@ -22,8 +31,8 @@ public class modelos {
         return id;
     }
 
-    public int getFk_id_marca() {
-        return fk_id_marca;
+    public String getMarca() {
+        return marca;
     }
 
     public String getModelo() {
@@ -38,8 +47,8 @@ public class modelos {
         this.id = id;
     }
 
-    public void setFk_id_marca(int fk_id_marca) {
-        this.fk_id_marca = fk_id_marca;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public void setModelo(String modelo) {

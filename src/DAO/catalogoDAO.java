@@ -363,4 +363,119 @@ public class catalogoDAO {
         }
     }
     
+    public List<modelos> listarModelosConMarca() {
+        List<modelos> lista = new ArrayList<>();
+        String sql = "SELECT mo.id_modelo, mo.fk_id_marca, ma.marca, mo.modelo, mo.estado " +
+                     "FROM modelos mo " +
+                     "INNER JOIN marcas_vehiculos ma ON mo.fk_id_marca = ma.id_marca";
+        
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                modelos m = new modelos();
+                m.setId(rs.getInt("id_modelo"));
+                m.setFk_id_marca(rs.getInt("fk_id_marca"));
+                m.setMarca(rs.getString("marca")); 
+                m.setModelo(rs.getString("modelo"));
+                m.setEstado(rs.getString("estado"));
+                lista.add(m);
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {}
+        }
+        return lista;
+    }
+    public List<marcas> listarMarcasActivas() {
+        List<marcas> lista = new ArrayList<>();
+        String sql = "SELECT id_marca, marca, estado FROM marcas_vehiculos WHERE estado = 'Activo'";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                marcas m = new marcas();
+                m.setId(rs.getInt("id_marca"));
+                m.setMarca(rs.getString("marca"));
+                m.setEstado(rs.getString("estado"));
+                lista.add(m);
+            }
+        } catch (Exception e) {
+            System.out.println("Error al listar marcas activas con ID: " + e.toString());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {}
+        }
+        return lista;
+    }
+    public boolean guardarModelo(modelos m) {
+        String sql = "INSERT INTO modelos(fk_id_marca, modelo, estado) VALUES(?,?,?)";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, m.getFk_id_marca());
+            ps.setString(2, m.getModelo());
+            ps.setString(3, m.getEstado());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {}
+        }
+    }
+
+    public boolean editarModelo(modelos m) {
+        String sql = "UPDATE modelos SET fk_id_marca=?, modelo=?, estado=? WHERE id_modelo=?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, m.getFk_id_marca());
+            ps.setString(2, m.getModelo());
+            ps.setString(3, m.getEstado());
+            ps.setInt(4, m.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {}
+        }
+    }
+
+    public boolean eliminarModelo(int id) {
+        String sql = "DELETE FROM modelos WHERE id_modelo=?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {}
+        }
+    }
+    
+    
 }
