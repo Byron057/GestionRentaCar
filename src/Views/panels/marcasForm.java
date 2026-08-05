@@ -11,8 +11,7 @@ import Views.panels.MarcasForm;
 
 /**
  *
- * @author PC
- */
+ * @author PC */
 public class MarcasForm extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MarcasForm.class.getName());
