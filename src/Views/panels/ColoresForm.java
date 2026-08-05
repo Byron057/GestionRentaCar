@@ -6,7 +6,8 @@ package Views.panels;
 
 import java.awt.Color;
 import java.awt.Cursor;
-
+import Controls.catalogoController;
+import Views.panels.ColoresPanel;
 
 /**
  *
@@ -16,13 +17,16 @@ public class ColoresForm extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ColoresForm.class.getName());
     private boolean esEdicion = false;
-    private String idVehiculoOriginal = "";
+    private String idColorOriginal = "";
+    private ColoresPanel panelColores;
     /**
      * Creates new form ClientesForm
      */
-    public ColoresForm(java.awt.Frame parent, boolean modal) {
+    public ColoresForm(java.awt.Frame parent, boolean modal, ColoresPanel panel) {
         super(parent, modal);
         initComponents();
+        
+        this.panelColores = panel;
         this.setBackground(new java.awt.Color(0, 0, 0, 0));
         panelRound1.setFocusable(true);
         configurarPlaceholders();
@@ -35,18 +39,18 @@ public class ColoresForm extends javax.swing.JDialog {
      */
     public void cargarDatosEdicion(String id, String color, String estado) {
         this.esEdicion = true;
-        this.idVehiculoOriginal = id;
+        this.idColorOriginal = id;
         
         jLabel3.setText("Editar Color");
         
-        flMarca.setText(color);
-        flMarca.setForeground(new java.awt.Color(60, 60, 60));
+        flColores.setText(color);
+        flColores.setForeground(new java.awt.Color(60, 60, 60));
         
-        cbxMarca.setSelectedItem(estado);
+        cbxColores.setSelectedItem(estado);
     }
     
     private void configurarPlaceholders() {
-        aplicarPlaceholder(flMarca, "Ingrese el Color");
+        aplicarPlaceholder(flColores, "Ingrese el Color");
     }
 
     private void aplicarPlaceholder(javax.swing.JTextField campo, String textoGuia) {
@@ -111,9 +115,9 @@ public class ColoresForm extends javax.swing.JDialog {
         panelRound3 = new assets.PanelRound();
         jLabel3 = new javax.swing.JLabel();
         panelRound15 = new assets.PanelRound();
-        cbxMarca = new assets.ComboBoxRound();
+        cbxColores = new assets.ComboBoxRound();
         panelRound11 = new assets.PanelRound();
-        flMarca = new javax.swing.JTextField();
+        flColores = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -218,9 +222,9 @@ public class ColoresForm extends javax.swing.JDialog {
         panelRound15.setRoundTopRight(20);
         panelRound15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbxMarca.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxMarca.setOpciones("Activo\nInactivo\n");
-        panelRound15.add(cbxMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
+        cbxColores.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxColores.setOpciones("Activo\nInactivo\n");
+        panelRound15.add(cbxColores, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound15, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 250, 40));
 
@@ -233,16 +237,16 @@ public class ColoresForm extends javax.swing.JDialog {
         panelRound11.setRoundTopRight(20);
         panelRound11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        flMarca.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        flMarca.setForeground(new java.awt.Color(204, 204, 204));
-        flMarca.setText("jTextField1");
-        flMarca.setBorder(null);
-        flMarca.addMouseListener(new java.awt.event.MouseAdapter() {
+        flColores.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        flColores.setForeground(new java.awt.Color(204, 204, 204));
+        flColores.setText("jTextField1");
+        flColores.setBorder(null);
+        flColores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                flMarcaMouseClicked(evt);
+                flColoresMouseClicked(evt);
             }
         });
-        panelRound11.add(flMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 10, 220, 20));
+        panelRound11.add(flColores, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 10, 220, 20));
 
         panelRound1.add(panelRound11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 250, 40));
 
@@ -265,6 +269,7 @@ public class ColoresForm extends javax.swing.JDialog {
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         // TODO add your handling code here:
+        
         this.dispose();
     }//GEN-LAST:event_btnCancelarMouseClicked
 
@@ -279,16 +284,26 @@ public class ColoresForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        // TODO add your handling code here:
+        catalogoController controller = new catalogoController(this);
+        boolean operacionExitosa = false;
+        
         if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
+            // Intentamos editar; si el controlador devuelve true, la operación fue exitosa
+            operacionExitosa = controller.editarColor(this, Integer.parseInt(idColorOriginal));
         } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
+            operacionExitosa = controller.insertarColor(this);
         }
         
-        this.dispose(); // Cierra el modal al finalizar
+        // Si la operación de base de datos fue exitosa
+        if (operacionExitosa) {
+            if(panelColores != null){
+                catalogoController c = new catalogoController(panelColores);
+                c.listarColores(panelColores);
+            }
+            
+            // Cerramos la ventana modal correctamente
+            this.dispose(); 
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -301,9 +316,9 @@ public class ColoresForm extends javax.swing.JDialog {
         btnGuardar.setBackground(new Color(255,153,0));
     }//GEN-LAST:event_btnGuardarMouseExited
 
-    private void flMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flMarcaMouseClicked
+    private void flColoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flColoresMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_flMarcaMouseClicked
+    }//GEN-LAST:event_flColoresMouseClicked
 
     /**
      * @param args the command line arguments
@@ -330,7 +345,7 @@ public class ColoresForm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                ColoresForm dialog = new ColoresForm(new javax.swing.JFrame(), true);
+                ColoresForm dialog = new ColoresForm(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -345,8 +360,8 @@ public class ColoresForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxMarca;
-    private javax.swing.JTextField flMarca;
+    public assets.ComboBoxRound cbxColores;
+    public javax.swing.JTextField flColores;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

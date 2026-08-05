@@ -323,10 +323,12 @@ public class RentasPanel extends javax.swing.JPanel {
         String vehiculo = tableClientes.getTabla().getValueAt(fila, 2).toString();
         String fecha = tableClientes.getTabla().getValueAt(fila, 3).toString();
         
+
         // CORREGIDO: El índice 4 es Total y el índice 5 son Días
         String total = tableClientes.getTabla().getValueAt(fila, 4).toString().replace("$", "").trim();
         String dias = tableClientes.getTabla().getValueAt(fila, 5).toString();
         
+
         String estado = tableClientes.getTabla().getValueAt(fila, 6).toString();
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
@@ -354,6 +356,7 @@ public class RentasPanel extends javax.swing.JPanel {
         modal.setVisible(true);
 
         fondoOscuro.setVisible(false);
+
     }//GEN-LAST:event_btnEditarAlquilerMouseClicked
 
     private void btnEliminarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAlquilerMouseClicked

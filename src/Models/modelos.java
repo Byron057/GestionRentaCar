@@ -11,8 +11,17 @@ package Models;
 public class modelos {
     private int id;
     private int fk_id_marca;
+    private String marca;
     private String modelo;
     private String estado;
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
     
     //cambio o borrar
     private String nombreModelo;
@@ -61,14 +70,10 @@ public class modelos {
         this.nombreModelo = nombreModelo;
     }
     
-    
-    
-    
-
-  @Override
-public String toString() {
-    return this.modelo; 
-}    
+    @Override
+        public String toString() {
+        return this.modelo; 
+    }    
     
     
 }

@@ -79,6 +79,7 @@ public class RentasForm extends javax.swing.JDialog {
         seleccionarItemComboBox(cbxAlquilerVehiculo, vehiculo);
         seleccionarItemComboBox(cbxEstadoCliente, estado);
     }
+
     private void seleccionarItemComboBox(assets.ComboBoxRound combo,String textoBuscar){
         if(textoBuscar == null || textoBuscar.trim().isEmpty()) return;
         
@@ -466,13 +467,19 @@ public class RentasForm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarMouseExited
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-         if(esEdicion){
-            if(controlador.editar(Integer.parseInt(idAlquilerOriginal))){ 
-                dispose(); // Solo se cierra si se editó correctamente
+         if (esEdicion) {
+            // Si es edición, validamos que el ID no esté vacío antes de convertirlo
+            if (idAlquilerOriginal != null && !idAlquilerOriginal.trim().isEmpty()) {
+                if (controlador.editar(Integer.parseInt(idAlquilerOriginal))) {
+                    dispose(); 
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: El ID de alquiler no es válido para editar.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
-            if(controlador.insertar()){
-                dispose(); // Solo se cierra si se guardó correctamente
+        } else {
+            // Si es nuevo, simplemente llamamos a insertar sin tocar ningún ID
+            if (controlador.insertar()) {
+                dispose(); 
             }
         }
 

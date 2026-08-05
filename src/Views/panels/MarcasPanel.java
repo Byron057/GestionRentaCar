@@ -25,7 +25,9 @@ public class MarcasPanel extends javax.swing.JPanel {
     private boolean isCuatroSelected = false;
     public MarcasPanel() {
         initComponents();
-        tableMarcas.agregarFila(new Object[]{"2", "Toyota","Activo"});
+        
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        
         activarBotonesAccion(false);
         isUnoSelected = true;
         btnUno.setBackground(new Color(253, 239, 222));
@@ -445,28 +447,25 @@ public class MarcasPanel extends javax.swing.JPanel {
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
-        // 2. Creamos el efecto de fondo oscuro
         javax.swing.JPanel fondoOscuro = new javax.swing.JPanel() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
                 super.paintComponent(g);
-                g.setColor(new java.awt.Color(0, 0, 0, 150)); // Negro con transparencia
+                g.setColor(new java.awt.Color(0, 0, 0, 150)); 
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
         fondoOscuro.setOpaque(false);
-        fondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {}); // Bloquea los clics de atrás
+        fondoOscuro.addMouseListener(new java.awt.event.MouseAdapter() {}); 
 
-        //Encendemos el fondo oscuro
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        MarcasForm modal = new MarcasForm(ventanaPadre, true); 
-        modal.setLocationRelativeTo(ventanaPadre); // Lo centra en la pantalla
-        
-        modal.setVisible(true); // Abre la ventana (el código se pausa aquí hasta que cierres el modal)
+        // AQUÍ ESTABA EL ERROR: Se agregó 'this' como tercer parámetro
+        MarcasForm modal = new MarcasForm(ventanaPadre, true, this); 
+        modal.setLocationRelativeTo(ventanaPadre); 
+        modal.setVisible(true); 
 
-        //SApagamos el fondo oscuro cuando se cierra el JDialog
         fondoOscuro.setVisible(false);
        
     }//GEN-LAST:event_btnAgregarMouseClicked
@@ -504,13 +503,9 @@ public class MarcasPanel extends javax.swing.JPanel {
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
      if (idClienteSeleccionado == null) return;
 
-        // Obtenemos la fila
         int fila = tableMarcas.getTabla().getSelectedRow();
-        
-        // Evitamos que el código continúe si se perdió la selección visual
         if (fila == -1) return;
 
-        // Extraer los datos basándonos en tu tabla: ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado
         String marca = tableMarcas.getTabla().getValueAt(fila, 1).toString();
         String estado = tableMarcas.getTabla().getValueAt(fila, 2).toString();
 
@@ -530,14 +525,13 @@ public class MarcasPanel extends javax.swing.JPanel {
         ventanaPadre.setGlassPane(fondoOscuro);
         fondoOscuro.setVisible(true);
 
-        // ¡IMPORTANTE! Llamamos a RentasForm en lugar de ClientesForm
-        MarcasForm modal = new MarcasForm(ventanaPadre, true); 
-        
-        // Enviamos los datos (asegúrate de que el orden coincida con el método en RentasForm)
-        modal.cargarDatosEdicion(idClienteSeleccionado, marca,estado);
-        
+        MarcasForm modal = new MarcasForm(ventanaPadre, true, this); 
+        modal.cargarDatosEdicion(idClienteSeleccionado, marca, estado);
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
+
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        controller.listarMarcas(this);
 
         fondoOscuro.setVisible(false);
     }//GEN-LAST:event_btnEditarMouseClicked
@@ -548,28 +542,11 @@ public class MarcasPanel extends javax.swing.JPanel {
         int fila = tableMarcas.getTabla().getSelectedRow();
         if (fila == -1) return;
 
-        // 1. Mostrar ventana de confirmación corregida para Alquileres
-        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-            this, 
-            "¿Está seguro que desea eliminar este alquiler del cliente " + tableMarcas.getTabla().getValueAt(fila, 1).toString() + "?", 
-            "Confirmar Eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-        );
-
-        // 2. Si el usuario presiona "Sí"
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            // AQUÍ IRÁ TU LÓGICA SQL
-            System.out.println("Eliminando de la BD el alquiler ID: " + idClienteSeleccionado);
-            
-            // 3. Lo eliminamos visualmente de la tabla
-            tableMarcas.eliminarFila(fila);
-            
-            // 4. Como ya se eliminó, apagamos los botones de nuevo
-            activarBotonesAccion(false);
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        controller.eliminarMarcas(Integer.parseInt(idClienteSeleccionado));
         
-        }
+        controller.listarMarcas(this);
+        activarBotonesAccion(false);
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnUnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnoMouseClicked
@@ -678,7 +655,7 @@ public class MarcasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
     private assets.PanelRound panelRound2;
-    private assets.TableRow tableMarcas;
+    public assets.TableRow tableMarcas;
     private javax.swing.JLabel txtCuatro;
     private javax.swing.JLabel txtDos;
     private javax.swing.JLabel txtEditarAlquiler;
