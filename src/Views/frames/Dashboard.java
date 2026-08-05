@@ -14,6 +14,7 @@ import Views.panels.InicioPanel;
 import Views.panels.RentasPanel;
 import Views.panels.VehiculosPanel;
 import java.awt.BorderLayout;
+import Controls.dashboardController;
 
 /**
  *
@@ -40,6 +41,11 @@ public class Dashboard extends javax.swing.JFrame {
         iconInicio.setIcon(new ImageIcon(getClass().getResource("/assets/iconHomeOrange.png")));
         txtIncio.setForeground(new Color(251,124,20));
         showPanel(new InicioPanel());
+        new dashboardController(this);
+        
+    }
+    public Dashboard(String usuarioLogueado) {
+        this(); 
     }
     private void resetearBotonesMenu() {
     isInicioSelected = false;
@@ -169,18 +175,18 @@ public class Dashboard extends javax.swing.JFrame {
 
         txtAdministrador.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
         txtAdministrador.setText("Admin");
-        panelTopBar.add(txtAdministrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 150, 80));
+        panelTopBar.add(txtAdministrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 240, 80));
         panelTopBar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 290, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/userRoundOrange.png"))); // NOI18N
-        panelTopBar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, -1, 80));
+        panelTopBar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, -1, 80));
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        panelTopBar.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 10, 40));
+        panelTopBar.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 10, 40));
 
         txtFecha.setFont(new java.awt.Font("Roboto SemiBold", 1, 18)); // NOI18N
         txtFecha.setText("Viernes 24 de Junio del 2026");
-        panelTopBar.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 22, 260, 40));
+        panelTopBar.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 260, 40));
         panelTopBar.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 80, 770, 10));
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -610,10 +616,10 @@ public class Dashboard extends javax.swing.JFrame {
     private assets.PanelRound panelApartados;
     private assets.PanelRound panelTittle;
     private assets.PanelRound panelTopBar;
-    private javax.swing.JLabel txtAdministrador;
+    public javax.swing.JLabel txtAdministrador;
     private javax.swing.JLabel txtCatalogos;
     private javax.swing.JLabel txtClientes;
-    private javax.swing.JLabel txtFecha;
+    public javax.swing.JLabel txtFecha;
     private javax.swing.JLabel txtIncio;
     private javax.swing.JLabel txtLogout;
     private javax.swing.JLabel txtRentas;

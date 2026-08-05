@@ -44,18 +44,30 @@ public class CatalogosPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         contentCatalogo = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         contentCatalogo.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Nuevo Cliente");
 
         javax.swing.GroupLayout contentCatalogoLayout = new javax.swing.GroupLayout(contentCatalogo);
         contentCatalogo.setLayout(contentCatalogoLayout);
         contentCatalogoLayout.setHorizontalGroup(
             contentCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(contentCatalogoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(295, 295, 295))
         );
         contentCatalogoLayout.setVerticalGroup(
             contentCatalogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(contentCatalogoLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -73,5 +85,6 @@ public class CatalogosPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contentCatalogo;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

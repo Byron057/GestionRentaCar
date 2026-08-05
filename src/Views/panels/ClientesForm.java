@@ -6,6 +6,7 @@ package Views.panels;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import Controls.clientesController;
 
 
 /**
@@ -440,15 +441,24 @@ public class ClientesForm extends javax.swing.JDialog {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
-        if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idClienteOriginal);
+        clientesController cl = new clientesController(this);
+        // Lógica para UPDATE en la base de datos SQLite
+        if (esEdicion) { 
+            if(cl.editar(Integer.parseInt(idClienteOriginal))){
+              this.dispose();
+            }
+            
         } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
+           
+          if(cl.insertar()){
+             
+              this.dispose();
+              
+          }
         }
         
-        this.dispose(); // Cierra el modal al finalizar
+        
+       // Cierra el modal al finalizar
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -509,12 +519,12 @@ public class ClientesForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxsEstadoCliente;
-    private javax.swing.JTextField flApellidoCliente;
-    private javax.swing.JTextField flCedula;
-    private javax.swing.JTextField flDireccionCliente;
-    private javax.swing.JTextField flNombreCliente;
-    private javax.swing.JTextField flTelefonoCliente;
+    public assets.ComboBoxRound cbxsEstadoCliente;
+    public javax.swing.JTextField flApellidoCliente;
+    public javax.swing.JTextField flCedula;
+    public javax.swing.JTextField flDireccionCliente;
+    public javax.swing.JTextField flNombreCliente;
+    public javax.swing.JTextField flTelefonoCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

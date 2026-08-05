@@ -16,6 +16,7 @@ public class InicioPanel extends javax.swing.JPanel {
      */
     public InicioPanel() {
         initComponents();
+        new Controls.dashboardController(this);
     }
 
     /**
@@ -28,8 +29,20 @@ public class InicioPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         panelRound1 = new assets.PanelRound();
+        jLabel3 = new javax.swing.JLabel();
+        panelRound6 = new assets.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
+        txtVehiculoClientes = new javax.swing.JLabel();
         panelRound2 = new assets.PanelRound();
+        panelRound7 = new assets.PanelRound();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtAlquierelesFinalizados = new javax.swing.JLabel();
         panelRound3 = new assets.PanelRound();
+        jLabel1 = new javax.swing.JLabel();
+        panelRound5 = new assets.PanelRound();
+        jLabel2 = new javax.swing.JLabel();
+        txtVehiculosNumero = new javax.swing.JLabel();
         panelRound4 = new assets.PanelRound();
         tableInicio = new assets.TableRow();
 
@@ -37,59 +50,107 @@ public class InicioPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(710, 502));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelRound1.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound1.setBorderSize(1);
         panelRound1.setRoundBottomLeft(20);
         panelRound1.setRoundBottomRight(20);
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
+        panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
-        panelRound1.setLayout(panelRound1Layout);
-        panelRound1Layout.setHorizontalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 206, Short.MAX_VALUE)
-        );
-        panelRound1Layout.setVerticalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
-        );
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Clientes");
+        panelRound1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 190, 34));
 
-        add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(246, 71, -1, -1));
+        panelRound6.setBackground(new java.awt.Color(234, 242, 222));
+        panelRound6.setPreferredSize(new java.awt.Dimension(50, 50));
+        panelRound6.setRoundBottomLeft(50);
+        panelRound6.setRoundBottomRight(50);
+        panelRound6.setRoundTopLeft(50);
+        panelRound6.setRoundTopRight(50);
+        panelRound6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconGroupGreen.png"))); // NOI18N
+        panelRound6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 40, 50));
+
+        panelRound1.add(panelRound6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
+
+        txtVehiculoClientes.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtVehiculoClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtVehiculoClientes.setText("8");
+        panelRound1.add(txtVehiculoClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 80, 50));
+
+        add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 190, 100));
+
+        panelRound2.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound2.setBorderSize(1);
         panelRound2.setRoundBottomLeft(20);
         panelRound2.setRoundBottomRight(20);
         panelRound2.setRoundTopLeft(20);
         panelRound2.setRoundTopRight(20);
+        panelRound2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
-        panelRound2.setLayout(panelRound2Layout);
-        panelRound2Layout.setHorizontalGroup(
-            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 206, Short.MAX_VALUE)
-        );
-        panelRound2Layout.setVerticalGroup(
-            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
-        );
+        panelRound7.setBackground(new java.awt.Color(242, 235, 245));
+        panelRound7.setPreferredSize(new java.awt.Dimension(50, 50));
+        panelRound7.setRoundBottomLeft(50);
+        panelRound7.setRoundBottomRight(50);
+        panelRound7.setRoundTopLeft(50);
+        panelRound7.setRoundTopRight(50);
+        panelRound7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 71, -1, -1));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconListPurple.png"))); // NOI18N
+        panelRound7.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 40, 50));
 
+        panelRound2.add(panelRound7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
+
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 16)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Alquileres Finalizados");
+        panelRound2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 190, 34));
+
+        txtAlquierelesFinalizados.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtAlquierelesFinalizados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtAlquierelesFinalizados.setText("8");
+        panelRound2.add(txtAlquierelesFinalizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 80, 50));
+
+        add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 240, 100));
+
+        panelRound3.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound3.setBorderSize(1);
         panelRound3.setRoundBottomLeft(20);
         panelRound3.setRoundBottomRight(20);
         panelRound3.setRoundTopLeft(20);
         panelRound3.setRoundTopRight(20);
+        panelRound3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
-        panelRound3.setLayout(panelRound3Layout);
-        panelRound3Layout.setHorizontalGroup(
-            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 206, Short.MAX_VALUE)
-        );
-        panelRound3Layout.setVerticalGroup(
-            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 101, Short.MAX_VALUE)
-        );
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Vehiculos");
+        panelRound3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 10, 190, 34));
 
-        add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        panelRound5.setBackground(new java.awt.Color(254, 232, 213));
+        panelRound5.setPreferredSize(new java.awt.Dimension(50, 50));
+        panelRound5.setRoundBottomLeft(50);
+        panelRound5.setRoundBottomRight(50);
+        panelRound5.setRoundTopLeft(50);
+        panelRound5.setRoundTopRight(50);
+        panelRound5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCarOrange.png"))); // NOI18N
+        panelRound5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 40, 50));
+
+        panelRound3.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 50, 50));
+
+        txtVehiculosNumero.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        txtVehiculosNumero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtVehiculosNumero.setText("num");
+        panelRound3.add(txtVehiculosNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 80, 50));
+
+        add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 190, 100));
 
         panelRound4.setBackground(new java.awt.Color(51, 51, 255));
         panelRound4.setRoundBottomLeft(20);
@@ -133,10 +194,22 @@ public class InicioPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private assets.PanelRound panelRound1;
     private assets.PanelRound panelRound2;
     private assets.PanelRound panelRound3;
     private assets.PanelRound panelRound4;
+    private assets.PanelRound panelRound5;
+    private assets.PanelRound panelRound6;
+    private assets.PanelRound panelRound7;
     private assets.TableRow tableInicio;
+    public javax.swing.JLabel txtAlquierelesFinalizados;
+    public javax.swing.JLabel txtVehiculoClientes;
+    public javax.swing.JLabel txtVehiculosNumero;
     // End of variables declaration//GEN-END:variables
 }

@@ -54,6 +54,55 @@ public class PanelRound extends JPanel {
     private int borderSize = 0;
     private java.awt.Color borderColor = new java.awt.Color(220, 220, 220); // Gris claro
     
+    // NUEVAS PROPIEDADES PARA TAMAÑO PERSONALIZADO
+    private int customWidth = 0;
+    private int customHeight = 0;
+
+    public int getCustomWidth() {
+        return customWidth;
+    }
+
+    public void setCustomWidth(int customWidth) {
+        this.customWidth = customWidth;
+        revalidate();
+        repaint();
+    }
+
+    public int getCustomHeight() {
+        return customHeight;
+    }
+
+    public void setCustomHeight(int customHeight) {
+        this.customHeight = customHeight;
+        revalidate();
+        repaint();
+    }
+
+    @Override
+    public java.awt.Dimension getPreferredSize() {
+        java.awt.Dimension size = super.getPreferredSize();
+        if (customWidth > 0) size.width = customWidth;
+        if (customHeight > 0) size.height = customHeight;
+        return size;
+    }
+
+    @Override
+    public java.awt.Dimension getMinimumSize() {
+        java.awt.Dimension size = super.getMinimumSize();
+        if (customWidth > 0) size.width = customWidth;
+        if (customHeight > 0) size.height = customHeight;
+        return size;
+    }
+
+    @Override
+    public java.awt.Dimension getMaximumSize() {
+        java.awt.Dimension size = super.getMaximumSize();
+        if (customWidth > 0) size.width = customWidth;
+        if (customHeight > 0) size.height = customHeight;
+        return size;
+    }
+    // FIN DE NUEVAS PROPIEDADES
+
     public int getBorderSize() {
         return borderSize;
     }
@@ -108,9 +157,6 @@ public class PanelRound extends JPanel {
 
         g2.dispose();
     }
-
-    // --- CORRECCIÓN --- 
-    // Restamos el borderSize al ancho y alto para que no se rebase a la derecha/abajo.
 
     private Shape createRoundTopLeft() {
         int offset = borderSize > 0 ? borderSize : 0;
