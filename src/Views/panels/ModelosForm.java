@@ -52,11 +52,11 @@ public class ModelosForm extends javax.swing.JDialog {
         this.esEdicion = true;
         this.idVehiculoOriginal = id;
         
-        jLabel3.setText("Editar Marca");
+        jLabel3.setText("Editar Modelo");
         jLabel1.setText(marca);
         
-        // Llenamos la placa y cambiamos el color a oscuro
-        flMarca.setText(marca);
+        // Cargamos el nombre del modelo (no de la marca) en el campo de texto
+        flMarca.setText(modelo);
         flMarca.setForeground(new java.awt.Color(60, 60, 60));
         
         cbxModelo.setSelectedItem(estado);
@@ -302,15 +302,19 @@ public class ModelosForm extends javax.swing.JDialog {
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         // TODO add your handling code here:
-        if (esEdicion) {
-            // Lógica para UPDATE en la base de datos SQLite
-            System.out.println("Actualizando cliente ID: " + idVehiculoOriginal);
-        } else {
-            // Lógica para INSERT en la base de datos SQLite
-            System.out.println("Guardando nuevo cliente");
-        }
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        String marcaSeleccionada = jLabel1.getText().trim();
         
-        this.dispose(); // Cierra el modal al finalizar
+        if (esEdicion) {
+            int idModelo = Integer.parseInt(idVehiculoOriginal);
+            if (controller.editarModelo(this, idModelo, marcaSeleccionada)) {
+                this.dispose();
+            }
+        } else {
+            if (controller.insertarModelo(this, marcaSeleccionada)) {
+                this.dispose();
+            }
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -367,8 +371,8 @@ public class ModelosForm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
-    private assets.ComboBoxRound cbxModelo;
-    private javax.swing.JTextField flMarca;
+    public assets.ComboBoxRound cbxModelo;
+    public javax.swing.JTextField flMarca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
