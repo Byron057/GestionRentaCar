@@ -13,8 +13,8 @@ import javax.swing.ImageIcon;
  * @author PC
  */
 public class ModelosPanel extends javax.swing.JPanel {
-        private String idClienteSeleccionado = null;
-       
+        private String idModeloSeleccionado = null;
+        
 
     /**
      * Creates new form ClientesPanel
@@ -26,7 +26,6 @@ public class ModelosPanel extends javax.swing.JPanel {
     public ModelosPanel() {
         initComponents();
         configurarPanelModelos();
-        tableMarcas.agregarFila(new Object[]{"2", "Toyota"});
         activarBotonesAccion(false);
         isDosSelected = true;
         btnDos.setBackground(new Color(253, 239, 222));
@@ -35,21 +34,31 @@ public class ModelosPanel extends javax.swing.JPanel {
 
     }
     private void configurarPanelModelos() {
-        cbxMarca.setOpciones("Toyota\nChevrolet\nMazda\n");
-        
-        // (Opcional pero seguro) Forzamos a que visualmente seleccione la primera posición
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        controller.cargarMarcasEnCombo(cbxMarca);
+
         if (cbxMarca.getItemCount() > 0) {
             cbxMarca.setSelectedIndex(0);
         }
-        
-        // 2. Leemos cuál es la marca que quedó seleccionada por defecto (Ej: "Toyota")
+
         String marcaInicial = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
-        
-       
+
+        cargarDatosTabla(marcaInicial);
+
+        cbxMarca.addActionListener(e -> {
+            String marcaSeleccionada = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
+            cargarDatosTabla(marcaSeleccionada); 
+        });
     }
 
     // Método que se conecta a tu controlador 'Controls.prueba' para llenar la tabla
-  
+    private void cargarDatosTabla(String filtroMarca) {
+     
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        controller.listarModelos(this, filtroMarca);
+
+        activarBotonesAccion(false);
+    }
     
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
     private void activarBotonesAccion(boolean activar) {
@@ -72,7 +81,7 @@ public class ModelosPanel extends javax.swing.JPanel {
             btnEliminar.setBackground(new Color(245, 245, 245)); 
             txtEliminarAlquiler.setForeground(new Color(170, 170, 170)); 
             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
-            idClienteSeleccionado = null;
+            idModeloSeleccionado = null;
         }
     }
     private void resetearBotonesCatalogos() {
@@ -103,7 +112,7 @@ public class ModelosPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         panelRound1 = new assets.PanelRound();
-        tableMarcas = new assets.TableRow();
+        tableModelos = new assets.TableRow();
         btnEditar = new assets.PanelRound();
         iconEditarAlquiler = new javax.swing.JLabel();
         txtEditarAlquiler = new javax.swing.JLabel();
@@ -136,10 +145,10 @@ public class ModelosPanel extends javax.swing.JPanel {
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
 
-        tableMarcas.setNombresColumnas("ID, Marca,Modelo,Estado");
-        tableMarcas.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableModelos.setNombresColumnas("ID, Marca,Modelo,Estado");
+        tableModelos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMarcasMouseClicked(evt);
+                tableModelosMouseClicked(evt);
             }
         });
 
@@ -149,14 +158,14 @@ public class ModelosPanel extends javax.swing.JPanel {
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableMarcas, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                .addComponent(tableModelos, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableMarcas, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(tableModelos, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -492,6 +501,8 @@ public class ModelosPanel extends javax.swing.JPanel {
         modal.setVisible(true); 
 
         fondoOscuro.setVisible(false);
+        
+        cargarDatosTabla(marcaSeleccionada);
        
     }//GEN-LAST:event_btnAgregarMouseClicked
 
@@ -505,15 +516,15 @@ public class ModelosPanel extends javax.swing.JPanel {
         btnAgregar.setBackground(new Color(255,153,0));
     }//GEN-LAST:event_btnAgregarMouseExited
 
-    private void tableMarcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMarcasMouseClicked
-        int filaSeleccionada = tableMarcas.getTabla().getSelectedRow();
+    private void tableModelosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableModelosMouseClicked
+        int filaSeleccionada = tableModelos.getTabla().getSelectedRow();
 
         if (filaSeleccionada != -1) {
-            Object id = tableMarcas.getTabla().getValueAt(filaSeleccionada, 0);
+            Object id = tableModelos.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
                 // Guardamos el ID y encendemos los botones
-                idClienteSeleccionado = id.toString();
+                idModeloSeleccionado = id.toString();
                 activarBotonesAccion(true);
             } else {
                 // Si hace clic en una fila de relleno vacía, los apagamos
@@ -523,18 +534,17 @@ public class ModelosPanel extends javax.swing.JPanel {
             // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
             activarBotonesAccion(false);
         }
-    }//GEN-LAST:event_tableMarcasMouseClicked
+    }//GEN-LAST:event_tableModelosMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        if (idClienteSeleccionado == null) return;
+        if (idModeloSeleccionado == null) return;
 
-        int fila = tableMarcas.getTabla().getSelectedRow();
+        int fila = tableModelos.getTabla().getSelectedRow();
         if (fila == -1) return;
 
-        // Tu tabla es: ID(0), Marca(1), Modelo(2), Estado(3)
-        String marca = tableMarcas.getTabla().getValueAt(fila, 1).toString();
-        String modelo = tableMarcas.getTabla().getValueAt(fila, 2).toString();
-        String estado = tableMarcas.getTabla().getValueAt(fila, 3).toString();
+        String marca = tableModelos.getTabla().getValueAt(fila, 1).toString();
+        String modelo = tableModelos.getTabla().getValueAt(fila, 2).toString();
+        String estado = tableModelos.getTabla().getValueAt(fila, 3).toString();
 
         javax.swing.JFrame ventanaPadre = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
         
@@ -554,35 +564,29 @@ public class ModelosPanel extends javax.swing.JPanel {
 
         ModelosForm modal = new ModelosForm(ventanaPadre, true); 
         
-        modal.cargarDatosEdicion(idClienteSeleccionado, marca, modelo, estado);
+        modal.cargarDatosEdicion(idModeloSeleccionado, marca, modelo, estado);
         
         modal.setLocationRelativeTo(ventanaPadre);
         modal.setVisible(true);
 
         fondoOscuro.setVisible(false);
+        
+        String marcaSeleccionada = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
+        cargarDatosTabla(marcaSeleccionada);
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        if (idClienteSeleccionado == null) return;
+        if (idModeloSeleccionado == null) return;
         
-        int fila = tableMarcas.getTabla().getSelectedRow();
+        int fila = tableModelos.getTabla().getSelectedRow();
         if (fila == -1) return;
 
-        // Corregido el mensaje para decir "modelo" y agarrar la columna 2 (que tiene el nombre del modelo)
-        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-            this, 
-            "¿Está seguro que desea eliminar el modelo " + tableMarcas.getTabla().getValueAt(fila, 2).toString() + "?", 
-            "Confirmar Eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-        );
-
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            System.out.println("Eliminando de la BD el modelo ID: " + idClienteSeleccionado);
-            
-            tableMarcas.eliminarFila(fila);
-            activarBotonesAccion(false);
+        Controls.catalogoController controller = new Controls.catalogoController(this);
+        int idModeloInt = Integer.parseInt(idModeloSeleccionado);
+        
+        if (controller.eliminarModelo(idModeloInt)) {
+            String marcaSeleccionada = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
+            cargarDatosTabla(marcaSeleccionada);
         }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -694,7 +698,7 @@ public class ModelosPanel extends javax.swing.JPanel {
     private assets.PanelRound panelRound1;
     private assets.PanelRound panelRound11;
     private assets.PanelRound panelRound2;
-    private assets.TableRow tableMarcas;
+    public assets.TableRow tableModelos;
     private javax.swing.JLabel txtCuatro;
     private javax.swing.JLabel txtDos;
     private javax.swing.JLabel txtEditarAlquiler;
