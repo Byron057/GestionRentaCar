@@ -18,7 +18,7 @@ public class main {
             Login login = new Login();
             login.setLocationRelativeTo(null); // Centra la ventana (opcional)
             login.setVisible(true);
-            System.out.println("conexion Exitosa");
+            System.out.println("conexion Esitosa");
         }else{
             System.out.println("Error en la conexion");
         }

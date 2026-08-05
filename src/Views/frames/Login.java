@@ -4,8 +4,6 @@
  */
 package Views.frames;
 import Views.frames.Dashboard;
-import Controls.loginController;
-import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.Cursor;
 
@@ -131,6 +129,7 @@ public class Login extends javax.swing.JFrame {
         panelUsuario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 37, -1));
 
         flUsuario.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        flUsuario.setForeground(new java.awt.Color(204, 204, 204));
         flUsuario.setText("Ingrese su Usuario");
         flUsuario.setBorder(null);
         flUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,6 +157,7 @@ public class Login extends javax.swing.JFrame {
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconLockOrange.png"))); // NOI18N
         panelContraseña.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
 
+        flContraseña.setForeground(new java.awt.Color(204, 204, 204));
         flContraseña.setText("********");
         flContraseña.setBorder(null);
         flContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -245,19 +245,10 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_flUsuarioActionPerformed
 
     private void btnIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIniciarSesionMouseClicked
-        String usuario = flUsuario.getText().trim();
-        String contraseña = String.valueOf(flContraseña.getPassword());
-
-        loginController controlador = new loginController();
-
-        // El controlador ya valida campos, consulta la BD y muestra los JOptionPane necesarios
-        if (controlador.iniciarSesion(usuario, contraseña)) {
-            // Si es true, abrimos el Dashboard y cerramos el Login
-            Dashboard dashboard = new Dashboard();
-            dashboard.setVisible(true);
-            this.dispose();
-        } 
-        // Si es false, el controlador ya mostró el mensaje de error, por lo que aquí no hace falta poner nada más.
+        // TODO add your handling code here:
+        Dashboard dashboard = new Dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnIniciarSesionMouseClicked
 
     /**
