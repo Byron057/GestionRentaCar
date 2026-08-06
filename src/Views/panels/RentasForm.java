@@ -305,11 +305,11 @@ public class RentasForm extends javax.swing.JDialog {
         panelRound3.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 60, 60));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel3.setText("Nuevo Vehiculo");
+        jLabel3.setText("Nueva Renta");
         panelRound3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, -1, -1));
 
         jLabel4.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel4.setText("Ingrese la Informacion del Vehiculos");
+        jLabel4.setText("Ingrese la Informacion de la Renta");
         panelRound3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, -1));
 
         panelRound1.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 619, 90));
@@ -368,8 +368,8 @@ public class RentasForm extends javax.swing.JDialog {
         panelRound12.setRoundTopRight(20);
         panelRound12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cbxAlquilerVehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
         cbxAlquilerVehiculo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxAlquilerVehiculo.setOpciones("Activo\nInactivo\n");
         cbxAlquilerVehiculo.addActionListener(this::cbxAlquilerVehiculoActionPerformed);
         panelRound12.add(cbxAlquilerVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 

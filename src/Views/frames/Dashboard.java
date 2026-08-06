@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Views.frames;
 import Views.panels.CatalogosPanel;
 import Views.panels.MarcasPanel;
@@ -16,17 +13,11 @@ import Views.panels.VehiculosPanel;
 import java.awt.BorderLayout;
 import Controls.dashboardController;
 
-/**
- *
- * @author PC
- */
+
 public class Dashboard extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
-    /**
-     * Creates new form Dashboard
-     */
     private boolean isInicioSelected = false;
     private boolean isClientesSelected = false;
     private boolean isVehiculosSelected = false;
@@ -35,8 +26,7 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();
         isInicioSelected = true;
-        
-        // 2. Forzamos los colores activos (por si acaso)
+       
         btnIncio.setBackground(new Color(253,239,222));
         iconInicio.setIcon(new ImageIcon(getClass().getResource("/assets/iconHomeOrange.png")));
         txtIncio.setForeground(new Color(251,124,20));
@@ -129,6 +119,7 @@ public class Dashboard extends javax.swing.JFrame {
         contentInicio = new assets.PanelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         fondoDashboard.setBackground(new java.awt.Color(252, 248, 243));
         fondoDashboard.setPreferredSize(new java.awt.Dimension(1020, 640));
@@ -185,8 +176,9 @@ public class Dashboard extends javax.swing.JFrame {
         panelTopBar.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 10, 40));
 
         txtFecha.setFont(new java.awt.Font("Roboto SemiBold", 1, 18)); // NOI18N
+        txtFecha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtFecha.setText("Viernes 24 de Junio del 2026");
-        panelTopBar.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 260, 40));
+        panelTopBar.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 350, 40));
         panelTopBar.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 80, 770, 10));
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -406,7 +398,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesMouseExited
 
     private void btnClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseEntered
-        // TODO add your handling code here:
+      
         if (!isClientesSelected) {
             btnClientes.setBackground(new Color(253,239,222));
             iconClientes.setIcon(new ImageIcon(getClass().getResource("/assets/iconGroupOrange.png")));
@@ -415,7 +407,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesMouseEntered
 
     private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
-        // TODO add your handling code here:
+       
         resetearBotonesMenu();
         isClientesSelected = true;
 
@@ -434,7 +426,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIncioMouseExited
 
     private void btnIncioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIncioMouseEntered
-        // TODO add your handling code here:
+       
         if (!isInicioSelected) {
             btnIncio.setBackground(new Color(253,239,222));
             iconInicio.setIcon(new ImageIcon(getClass().getResource("/assets/iconHomeOrange.png")));
@@ -461,7 +453,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogoutMouseClicked
 
     private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseEntered
-        // TODO add your handling code here:
+      
         btnLogout.setBackground(new Color(253,239,222));
         iconLogout.setIcon(new ImageIcon(getClass().getResource("/assets/iconLogoutOrange.png")));
         txtLogout.setForeground(new Color(251,124,20));

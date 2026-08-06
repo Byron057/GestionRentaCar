@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Views.frames;
 import Conexion.conexion;
 import java.sql.Connection;
-/**
 
-/**
- *
- * @author PC
- */
 public class main {
     public static void main(String[] args) {
          
@@ -18,7 +10,7 @@ public class main {
         Connection con = conn.getConnection();
         if(con !=null){
             Login login = new Login();
-            login.setLocationRelativeTo(null); // Centra la ventana (opcional)
+            login.setLocationRelativeTo(null); 
             login.setVisible(true);
             System.out.println("conexion Exitosa");
         }else{

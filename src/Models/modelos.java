@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Models;
 
-/**
- *
- * @author USER
- */
 public class modelos {
     private int id;
     private int fk_id_marca;
@@ -23,7 +16,7 @@ public class modelos {
         this.marca = marca;
     }
     
-    //cambio o borrar
+
     private String nombreModelo;
     
     public modelos() {

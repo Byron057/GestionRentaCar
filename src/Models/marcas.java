@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Models;
 
-/**
- *
- * @author USER
- */
 public class marcas {
     
     private int id;
@@ -55,7 +48,7 @@ public class marcas {
     
   @Override
 public String toString() {
-    return this.nombreMarca; // Asegúrate de que esta variable sea la que almacena el texto
+    return this.nombreMarca; 
 }
 
 }

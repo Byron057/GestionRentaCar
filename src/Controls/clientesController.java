@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controls;
 
 import DAO.clientesDAO;
@@ -50,7 +47,7 @@ public class clientesController {
         return false;
     }
 
-    // 2. Validar cédula (solo números, 10 dígitos)
+    //Validar cédula (solo números, 10 dígitos)
     if (!cedula.matches("\\d{10}")) {
         JOptionPane.showMessageDialog(vista,
                 "La cédula debe tener 10 dígitos numéricos.",
@@ -60,7 +57,7 @@ public class clientesController {
         return false;
     }
 
-    // 3. Validar teléfono (7-10 dígitos)
+    // Validar teléfono (7-10 dígitos)
     if (!telefono.matches("\\d{10}")) {
         JOptionPane.showMessageDialog(vista,
                 "El teléfono debe tener 10 dígitos.",
@@ -69,7 +66,7 @@ public class clientesController {
         return false;
     }
 
-    // 4. Validar que el combo tenga selección
+    //Validar que el combo tenga selección
     Object estadoObj = vista.cbxsEstadoCliente.getSelectedItem();
     if (estadoObj == null) {
         JOptionPane.showMessageDialog(vista,
@@ -80,7 +77,7 @@ public class clientesController {
     }
     String estado = estadoObj.toString();
 
-    // 5. Verificar cédula duplicada
+    //Verificar cédula duplicada
     if (dao.existeCedula(cedula)) {
         JOptionPane.showMessageDialog(vista,
                 "La cédula '" + cedula + "' ya está registrada.",
@@ -137,8 +134,7 @@ public class clientesController {
         String telefono = vista.flTelefonoCliente.getText().trim();
         String direccion = vista.flDireccionCliente.getText().trim();
         String estado = vista.cbxsEstadoCliente.getSelectedItem().toString();
-
-        // 2. Validar campos obligatorios
+        //Validar campos obligatorios
         if (cedula.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || direccion.isEmpty()) {
             JOptionPane.showMessageDialog(vista,
                     "Todos los campos son obligatorios.",
@@ -146,8 +142,7 @@ public class clientesController {
                     JOptionPane.WARNING_MESSAGE);
             return false;
         }
-
-        // 3. Validar formato de cédula
+        //Validar formato de cédula
         if (!cedula.matches("\\d{10}")) {
             JOptionPane.showMessageDialog(vista,
                     "La cédula debe contener 10 dígitos numéricos.",
@@ -164,8 +159,7 @@ public class clientesController {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
-        // 5. Verificar cédula duplicada (excluyendo el propio registro)
+        //Verificar cédula duplicada (excluyendo el propio registro)
         if (dao.existeCedulaAlEditar(cedula, id)) {
             JOptionPane.showMessageDialog(vista,
                     "La cédula '" + cedula + "' ya está registrada en otro cliente.",
@@ -173,8 +167,7 @@ public class clientesController {
                     JOptionPane.WARNING_MESSAGE);
             return false;
         }
-
-        // 6. Crear objeto y actualizar
+        //Crear objeto y actualizar
         clientes cl = new clientes();
         cl.setId_cliente(id);
         cl.setCedula(cedula);
@@ -183,7 +176,6 @@ public class clientesController {
         cl.setTelefono(telefono);
         cl.setDireccion(direccion);
         cl.setEstado(estado);
-
         if (dao.editarCliente(cl)) {
             JOptionPane.showMessageDialog(vista, "Cliente actualizado correctamente.");
             if (vistaP != null) {
@@ -196,7 +188,6 @@ public class clientesController {
         }
     }
 
-    // DESACTIVAR CLIENTE (eliminación lógica)
     public boolean desactivarCliente(int idCliente) {
         // Preguntar confirmación
         int respuesta = JOptionPane.showConfirmDialog(
@@ -210,7 +201,6 @@ public class clientesController {
             return false;
         }
 
-        // Cambiar estado a "Inactivo"
         boolean exito = dao.cambiarEstadoCliente(idCliente, "Inactivo");
         if (exito) {
             JOptionPane.showMessageDialog(

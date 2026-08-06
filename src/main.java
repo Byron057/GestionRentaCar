@@ -16,7 +16,7 @@ public class main {
         Connection con = conn.getConnection();
         if(con !=null){
             Login login = new Login();
-            login.setLocationRelativeTo(null); // Centra la ventana (opcional)
+            login.setLocationRelativeTo(null); 
             login.setVisible(true);
             System.out.println("conexion Exitosa");
         }else{

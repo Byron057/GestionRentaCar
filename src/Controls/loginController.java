@@ -2,15 +2,13 @@ package Controls;
 
 import DAO.usuariosDAO;
 import Models.usuarios;
-import javax.swing.JOptionPane; // Importante para las alertas
-
+import javax.swing.JOptionPane; 
 public class loginController {
 
     private usuariosDAO dao = new usuariosDAO();
 
     public boolean iniciarSesion(String usuario, String contraseña){
 
-        // 1. Validación de campos vacíos
         if(usuario == null || usuario.trim().isEmpty() || 
            contraseña == null || contraseña.trim().isEmpty()){
             JOptionPane.showMessageDialog(
@@ -21,8 +19,7 @@ public class loginController {
             );
             return false;
         }
-
-        // 2. Creamos el modelo y consultamos al DAO
+      
         usuarios u = new usuarios(usuario.trim(), contraseña.trim());
         boolean accesoConcedido = dao.login(u);
 

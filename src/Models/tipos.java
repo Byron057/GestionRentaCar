@@ -1,18 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Models;
 
-/**
- *
- * @author USER
- */
 public class tipos {
     private int id;
     private String tipo;
     private String estado;
-    //cambio o borrar si esta mal
     private String nombreTipo;
 
     public void setEstado(String estado) {
@@ -50,8 +42,7 @@ public class tipos {
     public void setNombreTipo(String nombreTipo) {
         this.nombreTipo = nombreTipo;
     }
-    
-    
+
     
       @Override
 public String toString() {

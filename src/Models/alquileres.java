@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Models;
 
 /**
- *
  * @author Nikholov
  */
 public class alquileres {
@@ -16,7 +12,6 @@ public class alquileres {
     private double total;
     private String estado;
     private int dias;
-    //auxiliares
     private String nombreCliente;
     private String placa;
 
@@ -27,8 +22,6 @@ public class alquileres {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-    
-    //contrsuctor
 
     public String getNombreCliente() {
         return nombreCliente;
@@ -41,8 +34,7 @@ public class alquileres {
     
     public alquileres() {
     }
-    
-    //get
+
 
     public int getIdAlquiler() {
         return idAlquiler;
@@ -71,8 +63,6 @@ public class alquileres {
     public int getDias() {
         return dias;
     }
-    //setters
-
     public void setIdAlquiler(int idAlquiler) {
         this.idAlquiler = idAlquiler;
     }

@@ -67,7 +67,7 @@ public class catalogoController {
         dao = new catalogoDAO();
     }
     
-    // ================= TIPOS =================
+    // TIPOS 
     
     public boolean insertarTipo(TiposForm form){
         String tipoTexto = form.flTipo.getText().trim();
@@ -164,7 +164,7 @@ public class catalogoController {
         return false;
     }
     
-    // ================= COLORES =================
+    //COLORES
         
     public boolean insertarColor(ColoresForm form){
         String colorTexto = form.flColores.getText().trim();
