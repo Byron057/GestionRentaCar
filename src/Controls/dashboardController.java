@@ -1,10 +1,12 @@
 package Controls;
 
 import DAO.dashboardDao;
+import Models.alquileres;
 import Views.frames.Dashboard;
 import Views.panels.InicioPanel;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.util.List;
 import java.util.Locale;
 
 public class dashboardController {
@@ -12,12 +14,14 @@ public class dashboardController {
     private InicioPanel inicioVista;
     private Dashboard dashboardVista;
     private dashboardDao dao;
+    private List<alquileres> listaAlquileres;
 
     // Para el panel de inicio (estadísticas)
     public dashboardController(InicioPanel inicioVista) {
         this.inicioVista = inicioVista;
         this.dao = new dashboardDao();
         cargarEstadisticas();
+        mostrarTabla();
     }
 
     // Para el Dashboard (nombre de usuario y fecha actual)
@@ -26,6 +30,7 @@ public class dashboardController {
         this.dao = new dashboardDao();
         cargarNombreUsuario();
         cargarFechaActual();
+        
     }
 
     public void cargarEstadisticas() {
@@ -59,6 +64,27 @@ public class dashboardController {
             String fechaFormateada = diaSemana + " " + fecha.getDayOfMonth() + " de " + mes + " del " + fecha.getYear();
             
             dashboardVista.txtFecha.setText(fechaFormateada);
+        }
+    }
+    public void mostrarTabla(){
+        // Validación de que la vista y la tabla no estén vacías o nulas
+        if(inicioVista != null && inicioVista.tableInicio != null){
+            inicioVista.tableInicio.limpiarTabla();
+
+            // Llenamos la lista global
+            listaAlquileres = dao.listarAlquileresActivos();
+
+            for(alquileres x : listaAlquileres){
+                inicioVista.tableInicio.agregarFila(new Object[]{
+                    x.getIdAlquiler(),
+                    x.getNombreCliente(),
+                    x.getPlaca(),
+                    x.getFechaAlquiler(),
+                    "$"+x.getTotal(),
+                    x.getDias(),
+                    x.getEstado()
+                });
+            }
         }
     }
 }

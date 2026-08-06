@@ -314,7 +314,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="210" width="470" height="240"/>
+          <AbsoluteConstraints x="20" y="210" width="670" height="240"/>
         </Constraint>
       </Constraints>
 
@@ -323,7 +323,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="tableInicio" pref="458" max="32767" attributes="0"/>
+                  <Component id="tableInicio" pref="658" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -344,9 +344,10 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="nombresColumnas" type="java.lang.String" value="ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tableInicio.setColumnas(&#xa;    new String[]{&quot;ID&quot;,&quot;Nombre&quot;,&quot;Stock&quot;,&quot;Hola&quot;}&#xa;);&#xa;&#xa;tableInicio.actualizarDatos(new Object[][]{&#xa;    {2, &quot;Teclado Mec&#xe1;nico&quot;, 15, &quot;Disponible&quot;},&#xa;    {3, &quot;Monitor 24 pulgadas&quot;, 8, &quot;Poco stock&quot;},&#xa;    {4, &quot;Auriculares Bluetooth&quot;, 30, &quot;Disponible&quot;},&#xa;    {5, &quot;C&#xe1;mara Web 1080p&quot;, 0, &quot;Agotado&quot;},&#xa;    {6, &quot;Micr&#xf3;fono USB&quot;, 25, &quot;Disponible&quot;}&#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
       </SubComponents>

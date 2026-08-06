@@ -17,6 +17,7 @@ public class InicioPanel extends javax.swing.JPanel {
     public InicioPanel() {
         initComponents();
         new Controls.dashboardController(this);
+        
     }
 
     /**
@@ -159,6 +160,7 @@ public class InicioPanel extends javax.swing.JPanel {
         panelRound4.setRoundTopRight(20);
 
         tableInicio.setBackground(new java.awt.Color(255, 255, 255));
+        tableInicio.setNombresColumnas("ID, Cliente, Vehiculo, Fecha, Total, Dias, Estado");
 
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
@@ -166,7 +168,7 @@ public class InicioPanel extends javax.swing.JPanel {
             panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(tableInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelRound4Layout.setVerticalGroup(
@@ -177,19 +179,7 @@ public class InicioPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        tableInicio.setColumnas(
-            new String[]{"ID","Nombre","Stock","Hola"}
-        );
-
-        tableInicio.actualizarDatos(new Object[][]{
-            {2, "Teclado Mecánico", 15, "Disponible"},
-            {3, "Monitor 24 pulgadas", 8, "Poco stock"},
-            {4, "Auriculares Bluetooth", 30, "Disponible"},
-            {5, "Cámara Web 1080p", 0, "Agotado"},
-            {6, "Micrófono USB", 25, "Disponible"}
-        });
-
-        add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 470, 240));
+        add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 670, 240));
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -207,7 +197,7 @@ public class InicioPanel extends javax.swing.JPanel {
     private assets.PanelRound panelRound5;
     private assets.PanelRound panelRound6;
     private assets.PanelRound panelRound7;
-    private assets.TableRow tableInicio;
+    public assets.TableRow tableInicio;
     public javax.swing.JLabel txtAlquierelesFinalizados;
     public javax.swing.JLabel txtVehiculoClientes;
     public javax.swing.JLabel txtVehiculosNumero;
