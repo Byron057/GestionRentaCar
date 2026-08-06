@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import java.sql.*;
@@ -13,10 +9,6 @@ import Models.colores;
 import Models.marcas;
 import Models.modelos;
 
-/**
- *
- * @author USER
- */
 public class catalogoDAO {
     conexion cn = new conexion();
     Connection con;
@@ -28,7 +20,6 @@ public class catalogoDAO {
         String sql = "SELECT * FROM tipos ";
         
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -42,14 +33,13 @@ public class catalogoDAO {
             }
             
         }catch(Exception e){
-            System.out.println("error"+e.toString());
         }finally {
             try{
                 if(rs != null)rs.close();
                 if(ps != null)ps.close();
                 if(con != null)con.close();
                 
-            }catch(Exception e){     
+            }catch(Exception e){    
             }
         } 
         return lista;
@@ -58,7 +48,6 @@ public class catalogoDAO {
     public boolean guardarTipos(tipos t){
         String sql = "INSERT INTO tipos(tipo,estado) VALUES(?,?)";
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             
@@ -72,12 +61,10 @@ public class catalogoDAO {
         }catch(Exception e){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
             } catch (Exception e) {
-
             } 
         }
     }
@@ -85,7 +72,6 @@ public class catalogoDAO {
     public boolean editarTipos(tipos t){
         String sql = "UPDATE tipos SET tipo=?, estado=? WHERE id_tipo=?";
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             
@@ -99,23 +85,18 @@ public class catalogoDAO {
         }catch(Exception e){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
-
             } catch (Exception e) {
-
             }
-        }   
-    
+        }    
     }
     
     public boolean eliminarTipos(int id){
-        String sql = "DELETE FROM tipos WHERE id_tipo=?";
+        String sql = "UPDATE tipos SET estado = 'Inactivo' WHERE id_tipo=?";
         
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -125,7 +106,6 @@ public class catalogoDAO {
         }catch(Exception e ){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
@@ -135,8 +115,27 @@ public class catalogoDAO {
         }
     }
     
-    
-    
+    public boolean activarTipos(int id){
+        String sql = "UPDATE tipos SET estado = 'Activo' WHERE id_tipo=?";
+        
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+            
+        }catch(Exception e ){
+            return false;
+        }finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    }
     
     // COLORES
     
@@ -145,7 +144,6 @@ public class catalogoDAO {
         String sql = "SELECT * FROM colores ";
         
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -159,14 +157,13 @@ public class catalogoDAO {
             }
             
         }catch(Exception e){
-            
         }finally {
             try{
                 if(rs != null)rs.close();
                 if(ps != null)ps.close();
                 if(con != null)con.close();
                 
-            }catch(Exception e){     
+            }catch(Exception e){    
             }
         } 
         return lista;
@@ -175,7 +172,6 @@ public class catalogoDAO {
    public boolean guardarColores(colores c){
         String sql = "INSERT INTO colores(color,estado) VALUES(?,?)";
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             
@@ -189,12 +185,10 @@ public class catalogoDAO {
         }catch(Exception e){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
             } catch (Exception e) {
-
             } 
         }
     }
@@ -202,7 +196,6 @@ public class catalogoDAO {
     public boolean editarColores(colores c){
         String sql = "UPDATE colores SET color=?, estado=? WHERE id_color=?";
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             
@@ -216,23 +209,18 @@ public class catalogoDAO {
         }catch(Exception e){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
-
             } catch (Exception e) {
-
             }
-        }   
-    
+        }    
     }
     
     public boolean eliminarColores(int id){
-        String sql = "DELETE FROM colores WHERE id_color=?";
+        String sql = "UPDATE colores SET estado = 'Inactivo' WHERE id_color=?";
         
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -242,7 +230,6 @@ public class catalogoDAO {
         }catch(Exception e ){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
@@ -251,12 +238,34 @@ public class catalogoDAO {
             }
         }
     }
+
+    public boolean activarColores(int id){
+        String sql = "UPDATE colores SET estado = 'Activo' WHERE id_color=?";
+        
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+            
+        }catch(Exception e ){
+            return false;
+        }finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    }
+
     public List<marcas> listarMarcas() {
         List<marcas> lista = new ArrayList<>();
         String sql = "SELECT * FROM marcas_vehiculos ";
         
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -270,14 +279,13 @@ public class catalogoDAO {
             }
             
         }catch(Exception e){
-            
         }finally {
             try{
                 if(rs != null)rs.close();
                 if(ps != null)ps.close();
                 if(con != null)con.close();
                 
-            }catch(Exception e){     
+            }catch(Exception e){    
             }
         } 
         return lista;
@@ -286,7 +294,6 @@ public class catalogoDAO {
    public boolean guardarMarcas(marcas m){
         String sql = "INSERT INTO marcas_vehiculos(marca,estado) VALUES(?,?)";
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             
@@ -300,12 +307,10 @@ public class catalogoDAO {
         }catch(Exception e){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
             } catch (Exception e) {
-
             } 
         }
     }
@@ -313,7 +318,6 @@ public class catalogoDAO {
     public boolean editarMarcas(marcas m){
         String sql = "UPDATE marcas_vehiculos SET marca=?, estado=? WHERE id_marca=?";
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             
@@ -327,23 +331,18 @@ public class catalogoDAO {
         }catch(Exception e){
             return false;
         }finally {
-
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
-
             } catch (Exception e) {
-
             }
         }    
-    
     }
     
     public boolean eliminarMarcas(int id){
-        String sql = "DELETE FROM marcas_vehiculos WHERE id_marca=?";
+        String sql = "UPDATE marcas_vehiculos SET estado = 'Inactivo' WHERE id_marca=?";
         
         try{
-            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -353,7 +352,28 @@ public class catalogoDAO {
         }catch(Exception e ){
             return false;
         }finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    }
 
+    public boolean activarMarcas(int id){
+        String sql = "UPDATE marcas_vehiculos SET estado = 'Activo' WHERE id_marca=?";
+        
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+            
+        }catch(Exception e ){
+            return false;
+        }finally {
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
@@ -393,6 +413,7 @@ public class catalogoDAO {
         }
         return lista;
     }
+
     public List<marcas> listarMarcasActivas() {
         List<marcas> lista = new ArrayList<>();
         String sql = "SELECT id_marca, marca, estado FROM marcas_vehiculos WHERE estado = 'Activo'";
@@ -408,7 +429,6 @@ public class catalogoDAO {
                 lista.add(m);
             }
         } catch (Exception e) {
-            System.out.println("Error al listar marcas activas con ID: " + e.toString());
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -418,6 +438,7 @@ public class catalogoDAO {
         }
         return lista;
     }
+
     public boolean guardarModelo(modelos m) {
         String sql = "INSERT INTO modelos(fk_id_marca, modelo, estado) VALUES(?,?,?)";
         try {
@@ -460,7 +481,7 @@ public class catalogoDAO {
     }
 
     public boolean eliminarModelo(int id) {
-        String sql = "DELETE FROM modelos WHERE id_modelo=?";
+        String sql = "UPDATE modelos SET estado = 'Inactivo' WHERE id_modelo=?";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -476,6 +497,22 @@ public class catalogoDAO {
             } catch (Exception e) {}
         }
     }
-    
-    
+
+    public boolean activarModelo(int id) {
+        String sql = "UPDATE modelos SET estado = 'Activo' WHERE id_modelo=?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {}
+        }
+    }
 }

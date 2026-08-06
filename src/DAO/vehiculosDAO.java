@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import java.sql.*;
@@ -11,7 +7,6 @@ import Models.vehiculos;
 import java.util.ArrayList;
 import java.util.List;
 
-//modelos axuliares
 import Models.colores;
 import Models.marcas;
 import Models.modelos;
@@ -23,7 +18,6 @@ public class vehiculosDAO {
     PreparedStatement ps;
     ResultSet rs;
     
-//metod para registrar un nuevo vehiculo
     public boolean insertarVehiculo(vehiculos v){
         String sql ="INSERT INTO vehiculos (placa, fk_id_marca, fk_id_modelo, fk_id_tipo, fk_id_color, estado) VALUES(?,?,?,?,?,?)";
         try{
@@ -40,18 +34,16 @@ public class vehiculosDAO {
            return true;
              
         }catch(Exception e){
-            return false;   
+            return false;    
         }finally {
             try {
                 if (ps != null) ps.close();
                 if (con != null) con.close();
             } catch (SQLException e) {
-                // Silenciado para entorno de producción
             }
         }
     }
     
-// Método principal para consultar y listar 
 public List<vehiculos>listarVehiculo(){
     List<vehiculos> lista = new ArrayList<>();
     
@@ -87,16 +79,14 @@ public List<vehiculos>listarVehiculo(){
             v.setIdTipo(rs.getInt("fk_id_tipo"));
             v.setIdColor(rs.getInt("fk_id_color"));
             v.setEstado(rs.getString("estado"));
-            //auxiliares
             v.setNombreMarca(rs.getString("nombre_marca"));
             v.setNombreModelo(rs.getString("nombre_modelo"));
             v.setNombreTipo(rs.getString("nombre_tipo"));
             v.setNombreColor(rs.getString("nombre_color"));
 
             lista.add(v);  
-        }   
+        }    
     }catch(Exception e){
-        // Silenciado
     }finally {
         try {
             if (rs != null) rs.close();
@@ -108,7 +98,6 @@ public List<vehiculos>listarVehiculo(){
     return lista;
 }
 
-//Metodos para listar marcas,modelos,tipos y colores activo
 public List<marcas> listarMarcasActivas() {
     List<marcas> lista = new ArrayList<>();
     String sql = "SELECT * FROM marcas_vehiculos WHERE estado = 'Activo'";
@@ -209,7 +198,6 @@ public List<colores> listarColoresActivos() {
     return lista;
 }
 
-//metodo para conectar marcas con modelos de vehiculos
 public List<modelos> listarModelosMarcas(int idMarca){
   List<modelos> lista = new ArrayList<>();
   String sql = "SELECT * FROM modelos WHERE fk_id_marca = ? AND estado = 'activo'";
@@ -239,7 +227,6 @@ public List<modelos> listarModelosMarcas(int idMarca){
   return lista;
 }
 
-//validacion si ya exite la placa en la Db
 public boolean existePlaca(String placa) {
     boolean existe = false;
     String sql = "SELECT * FROM vehiculos WHERE placa = ?"; 
@@ -262,15 +249,15 @@ public boolean existePlaca(String placa) {
     }
     return existe;
 }
+
 public boolean existePlacaAlEditar(String placa, int idVehiculo) {
     boolean existe = false;
-    // Buscamos la placa, pero le decimos que NO busque en el vehículo que estamos editando (!=)
     String sql = "SELECT * FROM vehiculos WHERE placa = ? AND id_vehiculo != ?"; 
     try {
         con = cn.getConnection();
         ps = con.prepareStatement(sql);
         ps.setString(1, placa);
-        ps.setInt(2, idVehiculo); // Le pasamos el ID actual
+        ps.setInt(2, idVehiculo); 
         rs = ps.executeQuery();
         if (rs.next()) {
             existe = true; 
@@ -287,13 +274,13 @@ public boolean existePlacaAlEditar(String placa, int idVehiculo) {
     return existe;
 }
 
-//metodo para eliminar un vehiculo usando su id
-public boolean eliminarVehiculo(int idVehiculo){
-    String sql="DELETE FROM vehiculos WHERE id_vehiculo=?";
+public boolean cambiarEstadoVehiculo(int idVehiculo, String nuevoEstado){
+    String sql = "UPDATE vehiculos SET estado = ? WHERE id_vehiculo = ?";
     try{
         con = cn.getConnection();
         ps = con.prepareStatement(sql);
-        ps.setInt(1, idVehiculo);
+        ps.setString(1, nuevoEstado);
+        ps.setInt(2, idVehiculo);
         ps.executeUpdate();
         return true;
     }catch(Exception e){

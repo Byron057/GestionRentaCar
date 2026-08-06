@@ -26,7 +26,7 @@ public class ModelosPanel extends javax.swing.JPanel {
     public ModelosPanel() {
         initComponents();
         configurarPanelModelos();
-        activarBotonesAccion(false);
+        activarBotonesAccion(false, "");
         isDosSelected = true;
         btnDos.setBackground(new Color(253, 239, 222));
         txtDos.setForeground(new Color(251, 124, 20));
@@ -57,29 +57,40 @@ public class ModelosPanel extends javax.swing.JPanel {
         Controls.catalogoController controller = new Controls.catalogoController(this);
         controller.listarModelos(this, filtroMarca);
 
-        activarBotonesAccion(false);
+        activarBotonesAccion(false, "");
     }
     
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
-    private void activarBotonesAccion(boolean activar) {
+    private void activarBotonesAccion(boolean activar,String estadoModelo) {
         if (activar) {
             btnEditar.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btnEditar.setBackground(new Color(254, 240, 228)); 
             txtEditarAlquiler.setForeground(new Color(251, 124, 20));
             iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
+            
             btnEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnEliminar.setBackground(new Color(254, 234, 232));
-            txtEliminarAlquiler.setForeground(new Color(255, 0, 51));
-             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            
+            if (estadoModelo != null && estadoModelo.equalsIgnoreCase("Inactivo")) {
+                btnEliminar.setBackground(new Color(234, 242, 222));
+                txtEliminarAlquiler.setForeground(new Color(40, 167, 69));
+                txtEliminarAlquiler.setText("Reactivar");
+                iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGreen.png")));
+            } else {
+                btnEliminar.setBackground(new Color(254, 234, 232));
+                txtEliminarAlquiler.setForeground(new Color(255, 0, 51));
+                txtEliminarAlquiler.setText("Eliminar");
+                iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            }
         } else {
-           
             btnEditar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEditar.setBackground(new Color(245, 245, 245)); 
             txtEditarAlquiler.setForeground(new Color(170, 170, 170)); 
             iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
+            
             btnEliminar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEliminar.setBackground(new Color(245, 245, 245)); 
             txtEliminarAlquiler.setForeground(new Color(170, 170, 170)); 
+            txtEliminarAlquiler.setText("Eliminar");
             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
             idModeloSeleccionado = null;
         }
@@ -523,16 +534,14 @@ public class ModelosPanel extends javax.swing.JPanel {
             Object id = tableModelos.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
-                // Guardamos el ID y encendemos los botones
                 idModeloSeleccionado = id.toString();
-                activarBotonesAccion(true);
+                String estadoActual = tableModelos.getTabla().getValueAt(filaSeleccionada, 3).toString();
+                activarBotonesAccion(true, estadoActual);
             } else {
-                // Si hace clic en una fila de relleno vacía, los apagamos
-                activarBotonesAccion(false);
+                activarBotonesAccion(false, "");
             }
         } else {
-            // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
-            activarBotonesAccion(false);
+            activarBotonesAccion(false, "");
         }
     }//GEN-LAST:event_tableModelosMouseClicked
 
@@ -581,13 +590,20 @@ public class ModelosPanel extends javax.swing.JPanel {
         int fila = tableModelos.getTabla().getSelectedRow();
         if (fila == -1) return;
 
+        String accionBoton = txtEliminarAlquiler.getText();
         Controls.catalogoController controller = new Controls.catalogoController(this);
         int idModeloInt = Integer.parseInt(idModeloSeleccionado);
         
-        if (controller.eliminarModelo(idModeloInt)) {
-            String marcaSeleccionada = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
-            cargarDatosTabla(marcaSeleccionada);
+        if (accionBoton.equalsIgnoreCase("Reactivar")) {
+            controller.cambiarEstadoModelo(idModeloInt, "Activo");
+        } else {
+            controller.cambiarEstadoModelo(idModeloInt, "Inactivo");
         }
+
+        String marcaSeleccionada = cbxMarca.getSelectedItem() != null ? cbxMarca.getSelectedItem().toString().trim() : "";
+        cargarDatosTabla(marcaSeleccionada);
+        activarBotonesAccion(false, "");
+        tableModelos.getTabla().clearSelection();
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnUnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnoMouseClicked

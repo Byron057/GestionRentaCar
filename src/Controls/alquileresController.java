@@ -24,22 +24,18 @@ public class alquileresController {
         this.vista2 = vistaPanel;
         dao = new alquileresDAO();
 
-        // Si es el formulario, cargamos los combos
         if(this.vista != null){
             cargarCombos();
         }
-        // Si es el panel, mostramos la tabla
         if(this.vista2 != null){
             mostrarTabla();
         }
     }
 
     public void mostrarTabla(){
-        // Validación de que la vista y la tabla no estén vacías o nulas
         if(vista2 != null && vista2.tableClientes != null){
             vista2.tableClientes.limpiarTabla();
 
-            // Llenamos la lista global
             listaAlquileres = dao.listarAlquileres();
 
             for(alquileres x : listaAlquileres){
@@ -55,10 +51,6 @@ public class alquileresController {
             }
         }
     }
-
-    //=========================================
-    // CARGAR COMBOS
-    //=========================================
 
     public void cargarClientes(JComboBox<Object> cbxAlquilerCliente){
         cbxAlquilerCliente.removeAllItems();
@@ -83,14 +75,9 @@ public class alquileresController {
         }
     }
 
-    //=========================================
-    // INSERTAR
-    //=========================================
-
     public boolean insertar(){
         alquileres a = new alquileres();
 
-        // 1. VALIDACIÓN DE CAMPOS VACÍOS
         if(vista.cbxAlquilerCliente.getSelectedItem() == null ||
            vista.cbxAlquilerVehiculo.getSelectedItem() == null ||
            vista.flFecha.getText().trim().isEmpty() ||
@@ -107,7 +94,6 @@ public class alquileresController {
             return false;
         }
 
-        // 2. VALIDACIÓN ESTRICTA DE FECHA (SQL DATE)
         String fechaTexto = vista.flFecha.getText().trim();
         try {
             LocalDate.parse(fechaTexto);
@@ -118,10 +104,9 @@ public class alquileresController {
                     "Error en la Fecha",
                     JOptionPane.ERROR_MESSAGE
             );
-            return false; // Se detiene aquí si la fecha está mal
+            return false; 
         }
 
-        // 3. VALIDACIÓN ESTRICTA DE NÚMEROS
         int dias = 0;
         double total = 0.0;
         
@@ -135,10 +120,9 @@ public class alquileresController {
                     "Error de Formato Numérico",
                     JOptionPane.ERROR_MESSAGE
             );
-            return false; // Se detiene si el usuario escribió letras
+            return false; 
         }
 
-        // 4. VALIDAR QUE LOS NÚMEROS SEAN LÓGICOS
         if(dias <= 0){
             JOptionPane.showMessageDialog(vista, "La cantidad de días debe ser mayor a cero.", "Dato Inválido", JOptionPane.WARNING_MESSAGE);
             return false;
@@ -149,7 +133,6 @@ public class alquileresController {
             return false;
         }
 
-        // 5. ASIGNAR DATOS AL MODELO Y GUARDAR
         a.setFkIdCliente(((clientes) vista.cbxAlquilerCliente.getSelectedItem()).getId_cliente());
         a.setFkIdVehiculo(((vehiculos) vista.cbxAlquilerVehiculo.getSelectedItem()).getIdVehiculo());
         a.setFechaAlquiler(fechaTexto);
@@ -167,15 +150,10 @@ public class alquileresController {
         }
     }
 
-    //=========================================
-    // EDITAR
-    //=========================================
-
     public boolean editar(int idAlquiler){
         alquileres a = new alquileres();
         a.setIdAlquiler(idAlquiler);
 
-        // 1. VALIDACIÓN DE CAMPOS VACÍOS
         if(vista.cbxAlquilerCliente.getSelectedItem() == null ||
            vista.cbxAlquilerVehiculo.getSelectedItem() == null ||
            vista.flFecha.getText().trim().isEmpty() ||
@@ -192,7 +170,6 @@ public class alquileresController {
             return false;
         }
 
-        // 2. VALIDACIÓN ESTRICTA DE FECHA (SQL DATE)
         String fechaTexto = vista.flFecha.getText().trim();
         try {
             LocalDate.parse(fechaTexto);
@@ -206,7 +183,6 @@ public class alquileresController {
             return false;
         }
 
-        // 3. VALIDACIÓN ESTRICTA DE NÚMEROS
         int dias = 0;
         double total = 0.0;
         
@@ -223,7 +199,6 @@ public class alquileresController {
             return false; 
         }
 
-        // 4. VALIDAR QUE LOS NÚMEROS SEAN LÓGICOS
         if(dias <= 0){
             JOptionPane.showMessageDialog(vista, "La cantidad de días debe ser mayor a cero.", "Dato Inválido", JOptionPane.WARNING_MESSAGE);
             return false;
@@ -234,7 +209,6 @@ public class alquileresController {
             return false;
         }
 
-        // 5. ASIGNAR DATOS AL MODELO Y EDITAR
         a.setFkIdCliente(((clientes) vista.cbxAlquilerCliente.getSelectedItem()).getId_cliente());
         a.setFkIdVehiculo(((vehiculos) vista.cbxAlquilerVehiculo.getSelectedItem()).getIdVehiculo());
         a.setFechaAlquiler(fechaTexto);
@@ -252,17 +226,36 @@ public class alquileresController {
         }
     }
 
-    //=========================================
-    // ELIMINAR
-    //=========================================
+    public boolean finalizarAlquiler(int idAlquiler) {
+        int respuesta = JOptionPane.showConfirmDialog(
+                (vista2 != null) ? vista2 : null,
+                "¿Está seguro de que desea finalizar esta renta?",
+                "Confirmar finalización",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
 
-    public void eliminar(int idAlquiler){
-        if(dao.eliminarAlquiler(idAlquiler)){
-            JOptionPane.showMessageDialog(null, "Alquiler eliminado correctamente.");
-            mostrarTabla();
-        }else{
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar el alquiler.");
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return false;
         }
+
+        boolean exito = dao.cambiarEstadoAlquiler(idAlquiler, "Finalizado");
+        if (exito) {
+            JOptionPane.showMessageDialog(
+                    (vista2 != null) ? vista2 : null,
+                    "Renta finalizada correctamente.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+            if (vista2 != null) {
+                mostrarTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(
+                    (vista2 != null) ? vista2 : null,
+                    "Error al finalizar la renta.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        return exito;
     }
 
     public void initEvents(){
@@ -280,5 +273,4 @@ public class alquileresController {
             }
         });
     }
-    
 }

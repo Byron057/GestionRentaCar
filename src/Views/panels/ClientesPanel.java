@@ -21,7 +21,7 @@ public class ClientesPanel extends javax.swing.JPanel {
      */
     public ClientesPanel() {
         initComponents();
-        activarBotonesAccion(false);
+        activarBotonesAccion(false,"");
         clientesController cl = new clientesController(this);
         cl.listar();
         
@@ -29,7 +29,7 @@ public class ClientesPanel extends javax.swing.JPanel {
 
     }
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
-    private void activarBotonesAccion(boolean activar) {
+    private void activarBotonesAccion(boolean activar, String estadoCliente) {
         if (activar) {
             btnEditarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btnEditarCliente.setBackground(new Color(254, 240, 228)); 
@@ -38,7 +38,19 @@ public class ClientesPanel extends javax.swing.JPanel {
             btnEliminarCliente.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btnEliminarCliente.setBackground(new Color(254, 234, 232));
             txtEliminarCliente.setForeground(new Color(255, 0, 51));
+            txtEliminarCliente.setText("Eliminar");
              iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+             if (estadoCliente != null && estadoCliente.equalsIgnoreCase("Inactivo")) {
+                btnEliminarCliente.setBackground(new Color(234, 242, 222)); // Fondo verdecito claro
+                txtEliminarCliente.setForeground(new Color(40, 167, 69));  // Texto verde
+                txtEliminarCliente.setText("Reactivar");
+                iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGreen.png"))); // Asegúrate de tener este icono o usa uno disponible
+            } else {
+                btnEliminarCliente.setBackground(new Color(254, 234, 232));
+                txtEliminarCliente.setForeground(new Color(255, 0, 51));
+                txtEliminarCliente.setText("Eliminar");
+                iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            }
         } else {
            
             btnEditarCliente.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -49,6 +61,7 @@ public class ClientesPanel extends javax.swing.JPanel {
             btnEliminarCliente.setBackground(new Color(245, 245, 245)); 
             txtEliminarCliente.setForeground(new Color(170, 170, 170)); 
             iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
+            txtEliminarCliente.setText("Eliminar");
             idClienteSeleccionado = null;
         }
     }
@@ -294,16 +307,17 @@ public class ClientesPanel extends javax.swing.JPanel {
             Object id = tableClientes.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
-                // Guardamos el ID y encendemos los botones
                 idClienteSeleccionado = id.toString();
-                activarBotonesAccion(true);
+                
+                // Extraemos también el estado de la columna correspondiente (asumiendo que está en la columna 6)
+                String estadoActual = tableClientes.getTabla().getValueAt(filaSeleccionada, 6).toString();
+                
+                activarBotonesAccion(true, estadoActual);
             } else {
-                // Si hace clic en una fila de relleno vacía, los apagamos
-                activarBotonesAccion(false);
+                activarBotonesAccion(false, "");
             }
         } else {
-            // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
-            activarBotonesAccion(false);
+            activarBotonesAccion(false, "");
         }
     }//GEN-LAST:event_tableClientesMouseClicked
 
@@ -354,35 +368,24 @@ public class ClientesPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditarClienteMouseClicked
 
     private void btnEliminarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarClienteMouseClicked
-        // TODO add your handling code here:
         if (idClienteSeleccionado == null) return;
+        
         int fila = tableClientes.getTabla().getSelectedRow();
-        if(fila ==-1)return ;
-        // 1. Mostrar ventana de confirmación
-        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-            this, 
-            "¿Está seguro que desea eliminar el cliente seleccionado?", 
-            "Confirmar Eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-        );
-
-        // 2. Si el usuario presiona "Sí"
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            // AQUÍ IRÁ TU LÓGICA SQL (DELETE FROM clientes WHERE id = ...)
-            int idCliente = Integer.parseInt(idClienteSeleccionado);
-            clientesController cl =  new clientesController(this);
+        if (fila == -1) return;
+        
+        // Obtenemos el texto actual del botón para saber si vamos a Desactivar o a Reactivar
+        String accionBoton = txtEliminarCliente.getText();
+        int idCliente = Integer.parseInt(idClienteSeleccionado);
+        clientesController cl = new clientesController(this);
+        
+        if (accionBoton.equalsIgnoreCase("Reactivar")) {
+            cl.activarCliente(idCliente);
+        } else {
             cl.desactivarCliente(idCliente);
-            // 3. Lo eliminamos visualmente de la tabla
-            tableClientes.eliminarFila(fila);
-            
-            // 4. Como ya se eliminó, apagamos los botones de nuevo
-            activarBotonesAccion(false);
-        }else{
-           clientesController cli =  new clientesController(this);
-           cli.listar();
         }
+        
+        activarBotonesAccion(false, "");
+    
     }//GEN-LAST:event_btnEliminarClienteMouseClicked
 
 

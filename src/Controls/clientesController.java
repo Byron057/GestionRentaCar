@@ -201,7 +201,7 @@ public class clientesController {
         // Preguntar confirmación
         int respuesta = JOptionPane.showConfirmDialog(
                 (vistaP != null) ? vistaP : vista,
-                "¿Está seguro de que desea desactivar (inactivar) este cliente?",
+                "¿Está seguro de que desea desactivar este cliente?",
                 "Confirmar desactivación",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
@@ -231,7 +231,6 @@ public class clientesController {
         return exito;
     }
 
-    //(Opcional) REACTIVAR CLIENTE 
     public boolean activarCliente(int idCliente) {
         boolean exito = dao.cambiarEstadoCliente(idCliente, "Activo");
         if (exito) {

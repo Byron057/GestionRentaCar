@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Conexion.conexion;
 import Models.alquileres;
-import Models.clientes;     // IMPORTANTE: Importamos el modelo
-import Models.vehiculos;    // IMPORTANTE: Importamos el modelo
+import Models.clientes;
+import Models.vehiculos;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +15,10 @@ public class alquileresDAO {
     PreparedStatement ps;
     ResultSet rs;
 
-
-    // =====================================================
-    // LISTAR CLIENTES ACTIVOS PARA COMBOBOX (Lógica de Modelos)
-    // =====================================================
     public List<clientes> listarClientesActivos() {
         List<clientes> lista = new ArrayList<>();
         String sql = "SELECT * FROM clientes WHERE estado = 'Activo'";
 
-   
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -36,17 +27,13 @@ public class alquileresDAO {
             while (rs.next()) {
                 clientes c = new clientes();
                 c.setId_cliente(rs.getInt("id_cliente"));
-                
-                // 👇 AGREGA ESTA LÍNEA 👇
-                c.setCedula(rs.getString("cedula")); 
-                
+                c.setCedula(rs.getString("cedula"));
                 c.setNombre(rs.getString("nombre"));
                 c.setApellido(rs.getString("apellido"));
                 lista.add(c);
             }
 
         } catch (Exception e) {
-            // Silenciado para el .exe
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -57,14 +44,9 @@ public class alquileresDAO {
         return lista;
     }
 
-
-    // =====================================================
-    // LISTAR VEHICULOS DISPONIBLES (Lógica de Modelos)
-    // =====================================================
     public List<vehiculos> listarVehiculosDisponibles() {
         List<vehiculos> lista = new ArrayList<>();
         
-        // Hacemos el JOIN para traer los nombres reales en lugar de los números (IDs)
         String sql = "SELECT v.id_vehiculo, v.placa, m.marca AS nombre_marca, mo.modelo AS nombre_modelo " +
                      "FROM vehiculos v " +
                      "INNER JOIN marcas_vehiculos m ON v.fk_id_marca = m.id_marca " +
@@ -80,16 +62,12 @@ public class alquileresDAO {
                 vehiculos v = new vehiculos();
                 v.setIdVehiculo(rs.getInt("id_vehiculo"));
                 v.setPlaca(rs.getString("placa"));
-                
-                // Guardamos la marca y el modelo auxiliarmente
                 v.setNombreMarca(rs.getString("nombre_marca"));
                 v.setNombreModelo(rs.getString("nombre_modelo"));
-                
                 lista.add(v);
             }
 
         } catch (Exception e) {
-            // Silenciado
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -100,10 +78,6 @@ public class alquileresDAO {
         return lista;
     }
 
-
-    // =====================================================
-    // INSERTAR ALQUILER
-    // =====================================================
     public boolean insertarAlquiler(alquileres a){
         String sql="INSERT INTO alquileres "
                 + "(fk_id_cliente,fk_id_vehiculo,fecha_alquiler,total,estado,dias)"
@@ -122,7 +96,6 @@ public class alquileresDAO {
 
             ps.executeUpdate();
 
-            // cambiar estado del vehículo
             actualizarEstadoVehiculo(a.getFkIdVehiculo(), "Alquilado");
 
             return true;
@@ -137,10 +110,6 @@ public class alquileresDAO {
         }
     }
 
-
-    // =====================================================
-    // LISTAR ALQUILERES
-    // =====================================================
     public List<alquileres> listarAlquileres(){
         List<alquileres> lista = new ArrayList<>();
         String sql="SELECT "
@@ -176,7 +145,6 @@ public class alquileresDAO {
                 a.setDias(rs.getInt("dias"));
                 a.setEstado(rs.getString("estado"));
 
-                // datos auxiliares para tabla
                 a.setNombreCliente(rs.getString("cliente"));
                 a.setPlaca(rs.getString("placa"));
 
@@ -194,10 +162,6 @@ public class alquileresDAO {
         return lista;
     }
 
-
-    // =====================================================
-    // EDITAR ALQUILER
-    // =====================================================
     public boolean editarAlquiler(alquileres a){
         String sql="UPDATE alquileres SET "
                 +"fk_id_cliente=?,"
@@ -233,37 +197,26 @@ public class alquileresDAO {
         }
     }
 
-
-    // =====================================================
-    // ELIMINAR ALQUILER
-    // =====================================================
-    public boolean eliminarAlquiler(int idAlquiler){
-        String sql="DELETE FROM alquileres "
-                 +"WHERE id_alquiler=?";
-
+    public boolean cambiarEstadoAlquiler(int idAlquiler, String nuevoEstado){
+        String sql = "UPDATE alquileres SET estado = ? WHERE id_alquiler = ?";
         try{
-            con=cn.getConnection();
-            ps=con.prepareStatement(sql);
-            ps.setInt(1,idAlquiler);
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nuevoEstado);
+            ps.setInt(2, idAlquiler);
             ps.executeUpdate();
-
             return true;
-
         }catch(Exception e){
             return false;
         }finally{
             try{
-                if(ps!=null)ps.close();
-                if(con!=null)con.close();
+                if(ps != null) ps.close();
+                if(con != null) con.close();
             }catch(SQLException e){}
         }
     }
 
-
-    // =====================================================
-    // CAMBIAR ESTADO DEL VEHICULO
-    // =====================================================
-    private void actualizarEstadoVehiculo(int idVehiculo,String estado){
+    private void actualizarEstadoVehiculo(int idVehiculo, String estado){
         String sql="UPDATE vehiculos "
                  +"SET estado=? "
                  +"WHERE id_vehiculo=?";

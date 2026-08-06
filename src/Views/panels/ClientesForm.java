@@ -400,6 +400,7 @@ public class ClientesForm extends javax.swing.JDialog {
         panelRound15.setRoundTopRight(20);
         panelRound15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cbxsEstadoCliente.setEnabled(false);
         cbxsEstadoCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxsEstadoCliente.setOpciones("Activo\nInactivo\n");
         cbxsEstadoCliente.setPlaceholderColor(new java.awt.Color(102, 255, 102));

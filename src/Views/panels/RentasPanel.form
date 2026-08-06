@@ -30,7 +30,7 @@
                   <Group type="102" attributes="0">
                       <Component id="btnEditarAlquiler" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnEliminarAlquiler" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnFinalizarAlquiler" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAgregarAlquiler" alignment="1" min="-2" pref="218" max="-2" attributes="0"/>
@@ -48,7 +48,7 @@
               <Component id="panelRound1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnEliminarAlquiler" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnFinalizarAlquiler" min="-2" max="-2" attributes="0"/>
                   <Component id="btnEditarAlquiler" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -100,6 +100,9 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableClientesMouseClicked"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
@@ -222,10 +225,10 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="assets.PanelRound" name="btnEliminarAlquiler">
+    <Container class="assets.PanelRound" name="btnFinalizarAlquiler">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="e8" green="ea" red="fe" type="rgb"/>
+          <Color blue="de" green="f2" red="ea" type="rgb"/>
         </Property>
         <Property name="roundBottomLeft" type="int" value="20"/>
         <Property name="roundBottomRight" type="int" value="20"/>
@@ -233,10 +236,10 @@
         <Property name="roundTopRight" type="int" value="20"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminarAlquilerMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnFinalizarAlquilerMouseClicked"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnEliminarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnFinalizarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));"/>
       </AuxValues>
 
       <Layout>
@@ -244,9 +247,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="iconEliminarAlquiler" min="-2" max="-2" attributes="0"/>
+                  <Component id="iconFinalizarAlquiler" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="txtEliminarAlquiler" pref="84" max="32767" attributes="0"/>
+                  <Component id="txtFinalizarAlquiler" pref="84" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -256,8 +259,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="iconEliminarAlquiler" pref="33" max="32767" attributes="0"/>
-                      <Component id="txtEliminarAlquiler" max="32767" attributes="0"/>
+                      <Component id="iconFinalizarAlquiler" pref="33" max="32767" attributes="0"/>
+                      <Component id="txtFinalizarAlquiler" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -265,23 +268,26 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="iconEliminarAlquiler">
+        <Component class="javax.swing.JLabel" name="iconFinalizarAlquiler">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/iconTrashRed.png"/>
+              <Image iconType="3" name="/assets/iconCheckGreen.png"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="txtEliminarAlquiler">
+        <Component class="javax.swing.JLabel" name="txtFinalizarAlquiler">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto" size="18" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="33" green="0" red="ff" type="rgb"/>
+              <Color blue="45" green="a7" red="28" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Eliminar"/>
+            <Property name="text" type="java.lang.String" value="Finalizar"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

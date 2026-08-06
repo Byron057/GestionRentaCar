@@ -208,7 +208,7 @@ public class ColoresForm extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Nueva Marca");
+        jLabel3.setText("Nuevo Color");
         panelRound3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 460, 40));
 
         panelRound1.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 50));
@@ -222,6 +222,7 @@ public class ColoresForm extends javax.swing.JDialog {
         panelRound15.setRoundTopRight(20);
         panelRound15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cbxColores.setEnabled(false);
         cbxColores.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxColores.setOpciones("Activo\nInactivo\n");
         panelRound15.add(cbxColores, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));

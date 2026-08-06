@@ -28,7 +28,7 @@ public class MarcasPanel extends javax.swing.JPanel {
         
         Controls.catalogoController controller = new Controls.catalogoController(this);
         
-        activarBotonesAccion(false);
+        activarBotonesAccion(false,"");
         isUnoSelected = true;
         btnUno.setBackground(new Color(253, 239, 222));
         txtUno.setForeground(new Color(251, 124, 20));
@@ -36,25 +36,36 @@ public class MarcasPanel extends javax.swing.JPanel {
 
     }
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
-    private void activarBotonesAccion(boolean activar) {
+    private void activarBotonesAccion(boolean activar, String estadoMarca) {
         if (activar) {
             btnEditar.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btnEditar.setBackground(new Color(254, 240, 228)); 
             txtEditarAlquiler.setForeground(new Color(251, 124, 20));
             iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
+            
             btnEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnEliminar.setBackground(new Color(254, 234, 232));
-            txtEliminarAlquiler.setForeground(new Color(255, 0, 51));
-             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            
+            if (estadoMarca != null && estadoMarca.equalsIgnoreCase("Inactivo")) {
+                btnEliminar.setBackground(new Color(234, 242, 222));
+                txtEliminarAlquiler.setForeground(new Color(40, 167, 69));
+                txtEliminarAlquiler.setText("Reactivar");
+                iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGreen.png")));
+            } else {
+                btnEliminar.setBackground(new Color(254, 234, 232));
+                txtEliminarAlquiler.setForeground(new Color(255, 0, 51));
+                txtEliminarAlquiler.setText("Eliminar");
+                iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            }
         } else {
-           
             btnEditar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEditar.setBackground(new Color(245, 245, 245)); 
             txtEditarAlquiler.setForeground(new Color(170, 170, 170)); 
             iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
+            
             btnEliminar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEliminar.setBackground(new Color(245, 245, 245)); 
             txtEliminarAlquiler.setForeground(new Color(170, 170, 170)); 
+            txtEliminarAlquiler.setText("Eliminar");
             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
             idClienteSeleccionado = null;
         }
@@ -481,22 +492,20 @@ public class MarcasPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarMouseExited
 
     private void tableMarcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMarcasMouseClicked
-      int filaSeleccionada = tableMarcas.getTabla().getSelectedRow();
+        int filaSeleccionada = tableMarcas.getTabla().getSelectedRow();
 
         if (filaSeleccionada != -1) {
             Object id = tableMarcas.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
-                // Guardamos el ID y encendemos los botones
                 idClienteSeleccionado = id.toString();
-                activarBotonesAccion(true);
+                String estadoActual = tableMarcas.getTabla().getValueAt(filaSeleccionada, 2).toString();
+                activarBotonesAccion(true, estadoActual);
             } else {
-                // Si hace clic en una fila de relleno vacía, los apagamos
-                activarBotonesAccion(false);
+                activarBotonesAccion(false, "");
             }
         } else {
-            // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
-            activarBotonesAccion(false);
+            activarBotonesAccion(false, "");
         }
     }//GEN-LAST:event_tableMarcasMouseClicked
 
@@ -542,11 +551,19 @@ public class MarcasPanel extends javax.swing.JPanel {
         int fila = tableMarcas.getTabla().getSelectedRow();
         if (fila == -1) return;
 
+        String accionBoton = txtEliminarAlquiler.getText();
+        int idMarca = Integer.parseInt(idClienteSeleccionado);
         Controls.catalogoController controller = new Controls.catalogoController(this);
-        controller.eliminarMarcas(Integer.parseInt(idClienteSeleccionado));
-        
+
+        if (accionBoton.equalsIgnoreCase("Reactivar")) {
+            controller.cambiarEstadoMarcas(idMarca, "Activo");
+        } else {
+            controller.cambiarEstadoMarcas(idMarca, "Inactivo");
+        }
+
         controller.listarMarcas(this);
-        activarBotonesAccion(false);
+        activarBotonesAccion(false, "");
+        tableMarcas.getTabla().clearSelection();
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnUnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnoMouseClicked

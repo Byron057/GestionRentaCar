@@ -93,7 +93,7 @@ public class dashboardDao {
                 + "ON a.fk_id_cliente=c.id_cliente "
                 + "INNER JOIN vehiculos v "
                 + "ON a.fk_id_vehiculo=v.id_vehiculo "
-                + "WHERE a.estado = 'Alquilado' "
+                + "WHERE a.estado = 'Activo' "
                 + "ORDER BY a.id_alquiler DESC";
 
         try {

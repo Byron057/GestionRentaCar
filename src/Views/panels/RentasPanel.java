@@ -27,34 +27,47 @@ public class RentasPanel extends javax.swing.JPanel {
      */
     public RentasPanel() {
         initComponents();
-       this.controlador = new alquileresController(null, this);
+        this.controlador = new alquileresController(null, this);
         controlador.mostrarTabla();
-        
-        activarBotonesAccion(false);
+        activarBotonesAccion(false, "");
         
 
     }
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
-    private void activarBotonesAccion(boolean activar) {
+    private void activarBotonesAccion(boolean activar,String estadoRenta) {
         if (activar) {
             btnEditarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btnEditarAlquiler.setBackground(new Color(254, 240, 228)); 
             txtEditarAlquiler.setForeground(new Color(251, 124, 20));
             iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
-            btnEliminarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnEliminarAlquiler.setBackground(new Color(254, 234, 232));
-            txtEliminarAlquiler.setForeground(new Color(255, 0, 51));
-             iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            
+            if (estadoRenta != null && estadoRenta.equalsIgnoreCase("Finalizado")) {
+                btnFinalizarAlquiler.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                btnFinalizarAlquiler.setBackground(new Color(245, 245, 245));
+                txtFinalizarAlquiler.setForeground(new Color(170, 170, 170));
+                txtFinalizarAlquiler.setText("Finalizado");
+                iconFinalizarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGray.png")));
+            } else {
+                btnFinalizarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                btnFinalizarAlquiler.setBackground(new Color(234, 242, 222));
+                txtFinalizarAlquiler.setForeground(new Color(40, 167, 69));
+                txtFinalizarAlquiler.setText("Finalizar");
+                iconFinalizarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGreen.png")));
+            }
         } else {
-           
             btnEditarAlquiler.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEditarAlquiler.setBackground(new Color(245, 245, 245)); 
             txtEditarAlquiler.setForeground(new Color(170, 170, 170)); 
             iconEditarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
-            btnEliminarAlquiler.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            btnEliminarAlquiler.setBackground(new Color(245, 245, 245)); 
-            txtEliminarAlquiler.setForeground(new Color(170, 170, 170)); 
-            iconEliminarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
+            
+            btnFinalizarAlquiler.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            btnFinalizarAlquiler.setBackground(new Color(245, 245, 245)); 
+            txtFinalizarAlquiler.setForeground(new Color(170, 170, 170)); 
+            txtFinalizarAlquiler.setText("Finalizar");
+            
+            // AQUÍ ESTABA EL DETALLE: Usamos el ícono gris inactivo al iniciar
+            iconFinalizarAlquiler.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGray.png")));
+            
             idRentaSeleccionado = null;
         }
     }
@@ -76,9 +89,9 @@ public class RentasPanel extends javax.swing.JPanel {
         btnAgregarAlquiler = new assets.PanelRound();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        btnEliminarAlquiler = new assets.PanelRound();
-        iconEliminarAlquiler = new javax.swing.JLabel();
-        txtEliminarAlquiler = new javax.swing.JLabel();
+        btnFinalizarAlquiler = new assets.PanelRound();
+        iconFinalizarAlquiler = new javax.swing.JLabel();
+        txtFinalizarAlquiler = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(710, 502));
@@ -182,42 +195,42 @@ public class RentasPanel extends javax.swing.JPanel {
         jLabel2.setText("Registrar Alquiler");
         btnAgregarAlquiler.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 9, 180, 20));
 
-        btnEliminarAlquiler.setBackground(new java.awt.Color(254, 234, 232));
-        btnEliminarAlquiler.setRoundBottomLeft(20);
-        btnEliminarAlquiler.setRoundBottomRight(20);
-        btnEliminarAlquiler.setRoundTopLeft(20);
-        btnEliminarAlquiler.setRoundTopRight(20);
-        btnEliminarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnEliminarAlquiler.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnFinalizarAlquiler.setBackground(new java.awt.Color(234, 242, 222));
+        btnFinalizarAlquiler.setRoundBottomLeft(20);
+        btnFinalizarAlquiler.setRoundBottomRight(20);
+        btnFinalizarAlquiler.setRoundTopLeft(20);
+        btnFinalizarAlquiler.setRoundTopRight(20);
+        btnFinalizarAlquiler.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnFinalizarAlquiler.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarAlquilerMouseClicked(evt);
+                btnFinalizarAlquilerMouseClicked(evt);
             }
         });
 
-        iconEliminarAlquiler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconTrashRed.png"))); // NOI18N
+        iconFinalizarAlquiler.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCheckGreen.png"))); // NOI18N
 
-        txtEliminarAlquiler.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtEliminarAlquiler.setForeground(new java.awt.Color(255, 0, 51));
-        txtEliminarAlquiler.setText("Eliminar");
+        txtFinalizarAlquiler.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtFinalizarAlquiler.setForeground(new java.awt.Color(40, 167, 69));
+        txtFinalizarAlquiler.setText("Finalizar");
 
-        javax.swing.GroupLayout btnEliminarAlquilerLayout = new javax.swing.GroupLayout(btnEliminarAlquiler);
-        btnEliminarAlquiler.setLayout(btnEliminarAlquilerLayout);
-        btnEliminarAlquilerLayout.setHorizontalGroup(
-            btnEliminarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEliminarAlquilerLayout.createSequentialGroup()
+        javax.swing.GroupLayout btnFinalizarAlquilerLayout = new javax.swing.GroupLayout(btnFinalizarAlquiler);
+        btnFinalizarAlquiler.setLayout(btnFinalizarAlquilerLayout);
+        btnFinalizarAlquilerLayout.setHorizontalGroup(
+            btnFinalizarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnFinalizarAlquilerLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(iconEliminarAlquiler)
+                .addComponent(iconFinalizarAlquiler)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtEliminarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(txtFinalizarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        btnEliminarAlquilerLayout.setVerticalGroup(
-            btnEliminarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnEliminarAlquilerLayout.createSequentialGroup()
+        btnFinalizarAlquilerLayout.setVerticalGroup(
+            btnFinalizarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnFinalizarAlquilerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(btnEliminarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(iconEliminarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(txtEliminarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(btnFinalizarAlquilerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconFinalizarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(txtFinalizarAlquiler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -231,7 +244,7 @@ public class RentasPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnEditarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnFinalizarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(11, Short.MAX_VALUE))
@@ -245,7 +258,7 @@ public class RentasPanel extends javax.swing.JPanel {
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEliminarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFinalizarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
@@ -292,23 +305,20 @@ public class RentasPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarAlquilerMouseExited
 
     private void tableClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClientesMouseClicked
-      int filaSeleccionada = tableClientes.getTabla().getSelectedRow();
+        int filaSeleccionada = tableClientes.getTabla().getSelectedRow();
 
         if (filaSeleccionada != -1) {
             Object id = tableClientes.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
-                // Guardamos el ID y encendemos los botones
                 idRentaSeleccionado = id.toString();
-                activarBotonesAccion(true);
+                String estadoActual = tableClientes.getTabla().getValueAt(filaSeleccionada, 6).toString();
+                activarBotonesAccion(true, estadoActual);
             } else {
-                
-                // Si hace clic en una fila de relleno vacía, los apagamos
-                activarBotonesAccion(false);
+                activarBotonesAccion(false, "");
             }
         } else {
-            // Si la fila es -1 (es decir, se deseleccionó al volver a hacer clic en la misma fila)
-            activarBotonesAccion(false);
+            activarBotonesAccion(false, "");
         }
     }//GEN-LAST:event_tableClientesMouseClicked
 
@@ -359,48 +369,38 @@ public class RentasPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnEditarAlquilerMouseClicked
 
-    private void btnEliminarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarAlquilerMouseClicked
-       if (idRentaSeleccionado == null) return;
+    private void btnFinalizarAlquilerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFinalizarAlquilerMouseClicked
+        if (idRentaSeleccionado == null) return;
+        
+        String accionBoton = txtFinalizarAlquiler.getText();
+        if (accionBoton.equalsIgnoreCase("Finalizado")) {
+            return; 
+        }
         
         int fila = tableClientes.getTabla().getSelectedRow();
         if (fila == -1) return;
 
-        // 1. Mostrar ventana de confirmación corregida para Alquileres
-        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-            this, 
-            "¿Está seguro que desea eliminar este alquiler del cliente " + tableClientes.getTabla().getValueAt(fila, 1).toString() + "?", 
-            "Confirmar Eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-        );
-
+        int idAlquiler = Integer.parseInt(idRentaSeleccionado);
         
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            int idCliente = Integer.parseInt(idRentaSeleccionado);
-            
-            controlador.eliminar(idCliente);
-            tableClientes.eliminarFila(fila);
-            
-            // Apagamos los botones porque la selección desapareció
-            activarBotonesAccion(false);
-        }else{
-            controlador.mostrarTabla();
-        }
-    }//GEN-LAST:event_btnEliminarAlquilerMouseClicked
+        controlador.finalizarAlquiler(idAlquiler);
+        
+        controlador.mostrarTabla();
+        activarBotonesAccion(false, "");
+        tableClientes.getTabla().clearSelection();
+    }//GEN-LAST:event_btnFinalizarAlquilerMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private assets.PanelRound btnAgregarAlquiler;
     private assets.PanelRound btnEditarAlquiler;
-    private assets.PanelRound btnEliminarAlquiler;
+    private assets.PanelRound btnFinalizarAlquiler;
     private javax.swing.JLabel iconEditarAlquiler;
-    private javax.swing.JLabel iconEliminarAlquiler;
+    private javax.swing.JLabel iconFinalizarAlquiler;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private assets.PanelRound panelRound1;
     public assets.TableRow tableClientes;
     private javax.swing.JLabel txtEditarAlquiler;
-    private javax.swing.JLabel txtEliminarAlquiler;
+    public javax.swing.JLabel txtFinalizarAlquiler;
     // End of variables declaration//GEN-END:variables
 }

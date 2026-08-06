@@ -64,7 +64,7 @@ public class VehiculosForm extends javax.swing.JDialog {
         seleccionarItemComboBox(cbxModeloVehiculo, modelo); 
         seleccionarItemComboBox(cbxTipoVehiculo, tipo);
         seleccionarItemComboBox(cbxColorVehiculo, color);
-        seleccionarItemComboBox(cbxEstadoCliente, estado);
+        seleccionarItemComboBox(cbxEstadoVehiculo, estado);
     }
     private void seleccionarItemComboBox(assets.ComboBoxRound combo, String textoBuscar) {
         if (textoBuscar == null || textoBuscar.trim().isEmpty()) {
@@ -98,7 +98,7 @@ public class VehiculosForm extends javax.swing.JDialog {
         aplicarPlaceholderComboBox(cbxMarcaVehiculo);
         aplicarPlaceholderComboBox(cbxModeloVehiculo);
         aplicarPlaceholderComboBox(cbxColorVehiculo);
-        aplicarPlaceholderComboBox(cbxEstadoCliente);
+        aplicarPlaceholderComboBox(cbxEstadoVehiculo);
     }
 
     private void aplicarPlaceholder(javax.swing.JTextField campo, String textoGuia) {
@@ -182,7 +182,7 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound14 = new assets.PanelRound();
         cbxColorVehiculo = new assets.ComboBoxRound();
         panelRound15 = new assets.PanelRound();
-        cbxEstadoCliente = new assets.ComboBoxRound();
+        cbxEstadoVehiculo = new assets.ComboBoxRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -278,7 +278,7 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound4.setRoundTopLeft(20);
         panelRound4.setRoundTopRight(20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconGroupOrange2.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCarOrange2.png"))); // NOI18N
 
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
@@ -320,7 +320,6 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbxModeloVehiculo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxModeloVehiculo.setOpciones("Activo\nInactivo\n");
         panelRound5.add(cbxModeloVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 250, 40));
@@ -421,9 +420,11 @@ public class VehiculosForm extends javax.swing.JDialog {
         panelRound15.setRoundTopRight(20);
         panelRound15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cbxEstadoCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxEstadoCliente.setOpciones("Activo\nInactivo\n");
-        panelRound15.add(cbxEstadoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
+        cbxEstadoVehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "Finalizado", "Inactivo" }));
+        cbxEstadoVehiculo.setEnabled(false);
+        cbxEstadoVehiculo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        cbxEstadoVehiculo.setOpciones("Activo\nFinalizado\nInactivo\n");
+        panelRound15.add(cbxEstadoVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 250, 40));
 
@@ -533,7 +534,7 @@ public class VehiculosForm extends javax.swing.JDialog {
     private assets.PanelRound btnCancelar;
     private assets.PanelRound btnGuardar;
     public assets.ComboBoxRound cbxColorVehiculo;
-    public assets.ComboBoxRound cbxEstadoCliente;
+    public assets.ComboBoxRound cbxEstadoVehiculo;
     public assets.ComboBoxRound cbxMarcaVehiculo;
     public assets.ComboBoxRound cbxModeloVehiculo;
     public assets.ComboBoxRound cbxTipoVehiculo;

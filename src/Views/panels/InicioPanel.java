@@ -153,7 +153,7 @@ public class InicioPanel extends javax.swing.JPanel {
 
         add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 190, 100));
 
-        panelRound4.setBackground(new java.awt.Color(51, 51, 255));
+        panelRound4.setBackground(new java.awt.Color(253, 251, 250));
         panelRound4.setRoundBottomLeft(20);
         panelRound4.setRoundBottomRight(20);
         panelRound4.setRoundTopLeft(20);

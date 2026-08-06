@@ -286,7 +286,7 @@ public class RentasForm extends javax.swing.JDialog {
         panelRound4.setRoundTopLeft(20);
         panelRound4.setRoundTopRight(20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconGroupOrange2.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/iconCatalogoOrange2.png"))); // NOI18N
 
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
@@ -430,8 +430,10 @@ public class RentasForm extends javax.swing.JDialog {
         panelRound15.setRoundTopRight(20);
         panelRound15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cbxEstadoCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Activo", "Finalizado" }));
+        cbxEstadoCliente.setEnabled(false);
         cbxEstadoCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        cbxEstadoCliente.setOpciones("Disponible\nAlquilado\n");
+        cbxEstadoCliente.setOpciones("Activo\nFinalizado");
         panelRound15.add(cbxEstadoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));
 
         panelRound1.add(panelRound15, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 250, 40));

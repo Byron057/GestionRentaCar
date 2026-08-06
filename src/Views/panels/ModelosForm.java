@@ -240,6 +240,7 @@ public class ModelosForm extends javax.swing.JDialog {
         panelRound15.setRoundTopRight(20);
         panelRound15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cbxModelo.setEnabled(false);
         cbxModelo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         cbxModelo.setOpciones("Activo\nInactivo\n");
         panelRound15.add(cbxModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, 230, 30));

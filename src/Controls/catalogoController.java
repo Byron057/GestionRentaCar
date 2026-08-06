@@ -138,20 +138,30 @@ public class catalogoController {
         }
     }
     
-    public void eliminarTipos(int id){
+    public boolean cambiarEstadoTipos(int id, String nuevoEstado){
         int opc = JOptionPane.showConfirmDialog(
                 null,
-                "¿Desea eliminar este registro?",
+                "¿Desea cambiar el estado de este registro a " + nuevoEstado + "?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION);
 
         if (opc == JOptionPane.YES_OPTION) {
-            if (dao.eliminarTipos(id)) {
-                JOptionPane.showMessageDialog(null, "Tipo eliminado correctamente");
+            boolean exito = false;
+            if (nuevoEstado.equalsIgnoreCase("Activo")) {
+                exito = dao.activarTipos(id);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                exito = dao.eliminarTipos(id);
+            }
+
+            if (exito) {
+                JOptionPane.showMessageDialog(null, "Estado actualizado correctamente a " + nuevoEstado);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el estado", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
+        return false;
     }
     
     // ================= COLORES =================
@@ -226,21 +236,32 @@ public class catalogoController {
         }
     }
     
-    public void eliminarColor(int id){
+    public boolean cambiarEstadoColores(int id, String nuevoEstado){
         int opc = JOptionPane.showConfirmDialog(
                 null,
-                "¿Desea eliminar este registro?",
+                "¿Desea cambiar el estado de este registro a " + nuevoEstado + "?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION);
 
         if (opc == JOptionPane.YES_OPTION) {
-            if (dao.eliminarColores(id)) {
-                JOptionPane.showMessageDialog(null, "Color eliminado correctamente");
+            boolean exito = false;
+            if (nuevoEstado.equalsIgnoreCase("Activo")) {
+                exito = dao.activarColores(id);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                exito = dao.eliminarColores(id);
+            }
+
+            if (exito) {
+                JOptionPane.showMessageDialog(null, "Estado actualizado correctamente a " + nuevoEstado);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el estado", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
+        return false;
     }
+
     public boolean insertarMarca(MarcasForm form){
         String marcaTexto = form.flMarca.getText().trim();
         
@@ -310,21 +331,32 @@ public class catalogoController {
         }
     }
     
-    public void eliminarMarcas(int id){
+    public boolean cambiarEstadoMarcas(int id, String nuevoEstado){
         int opc = JOptionPane.showConfirmDialog(
                 null,
-                "¿Desea eliminar este registro?",
+                "¿Desea cambiar el estado de este registro a " + nuevoEstado + "?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION);
 
         if (opc == JOptionPane.YES_OPTION) {
-            if (dao.eliminarMarcas(id)) {
-                JOptionPane.showMessageDialog(null, "Marca eliminada correctamente");
+            boolean exito = false;
+            if (nuevoEstado.equalsIgnoreCase("Activo")) {
+                exito = dao.activarMarcas(id);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                exito = dao.eliminarMarcas(id);
+            }
+
+            if (exito) {
+                JOptionPane.showMessageDialog(null, "Estado actualizado correctamente a " + nuevoEstado);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el estado", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
+        return false;
     }
+
     public void cargarMarcasEnCombo(assets.ComboBoxRound cbx) {
         List<marcas> marcas = dao.listarMarcasActivas();
         StringBuilder sb = new StringBuilder();
@@ -335,6 +367,7 @@ public class catalogoController {
             cbx.setOpciones(sb.toString());
         }
     }
+
     public void listarModelos(ModelosPanel panelModelosRef, String filtroMarca) {
         if (panelModelosRef != null && panelModelosRef.tableModelos != null) {
             panelModelosRef.tableModelos.limpiarTabla();
@@ -353,6 +386,7 @@ public class catalogoController {
             }
         }
     }
+
     public boolean insertarModelo(ModelosForm form, String nombreMarcaSeleccionada) {
         String modeloTexto = form.flMarca.getText().trim();
         
@@ -436,19 +470,26 @@ public class catalogoController {
         }
     }
 
-    public boolean eliminarModelo(int id) {
+    public boolean cambiarEstadoModelo(int id, String nuevoEstado) {
         int opc = JOptionPane.showConfirmDialog(
                 null,
-                "¿Desea eliminar este registro?",
+                "¿Desea cambiar el estado de este registro a " + nuevoEstado + "?",
                 "Confirmar",
                 JOptionPane.YES_NO_OPTION);
 
         if (opc == JOptionPane.YES_OPTION) {
-            if (dao.eliminarModelo(id)) {
-                JOptionPane.showMessageDialog(null, "Modelo eliminado correctamente");
+            boolean exito = false;
+            if (nuevoEstado.equalsIgnoreCase("Activo")) {
+                exito = dao.activarModelo(id);
+            } else {
+                exito = dao.eliminarModelo(id);
+            }
+
+            if (exito) {
+                JOptionPane.showMessageDialog(null, "Estado actualizado correctamente a " + nuevoEstado);
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "Error al eliminar el registro", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al actualizar el estado", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }

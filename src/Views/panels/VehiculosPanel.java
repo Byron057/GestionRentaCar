@@ -26,30 +26,41 @@ public class VehiculosPanel extends javax.swing.JPanel {
         initComponents();
         this.controlador = new vehiculosControls(null, this);
         controlador.mostrarTabla();
-        activarBotonesAccion(false);
+        activarBotonesAccion(false, "");
         
 
     }
     // Método para activar o desactivar los botones dependiendo de si hay algo seleccionado
-    private void activarBotonesAccion(boolean activar) {
+    private void activarBotonesAccion(boolean activar,String estadoVehiculo) {
         if (activar) {
             btnEditarVehiculo.setCursor(new Cursor(Cursor.HAND_CURSOR));
             btnEditarVehiculo.setBackground(new Color(254, 240, 228)); 
             txtEditarCliente.setForeground(new Color(251, 124, 20));
             iconEditarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilOrange.png")));
+            
             btnEliminarVehiculos.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnEliminarVehiculos.setBackground(new Color(254, 234, 232));
-            txtEliminarCliente.setForeground(new Color(255, 0, 51));
-             iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            
+            if (estadoVehiculo != null && estadoVehiculo.equalsIgnoreCase("Inactivo")) {
+                btnEliminarVehiculos.setBackground(new Color(234, 242, 222));
+                txtEliminarCliente.setForeground(new Color(40, 167, 69));
+                txtEliminarCliente.setText("Reactivar");
+                iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconCheckGreen.png")));
+            } else {
+                btnEliminarVehiculos.setBackground(new Color(254, 234, 232));
+                txtEliminarCliente.setForeground(new Color(255, 0, 51));
+                txtEliminarCliente.setText("Eliminar");
+                iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashRed.png")));
+            }
         } else {
-           
             btnEditarVehiculo.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEditarVehiculo.setBackground(new Color(245, 245, 245)); 
             txtEditarCliente.setForeground(new Color(170, 170, 170)); 
             iconEditarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconPencilGray.png")));
+            
             btnEliminarVehiculos.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             btnEliminarVehiculos.setBackground(new Color(245, 245, 245)); 
             txtEliminarCliente.setForeground(new Color(170, 170, 170)); 
+            txtEliminarCliente.setText("Eliminar");
             iconEliminarCliente.setIcon(new ImageIcon(getClass().getResource("/assets/iconTrashGray.png")));
             idVehiculoSeleccionado = null;
         }
@@ -288,21 +299,20 @@ public class VehiculosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarVehiculoMouseExited
 
     private void tableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableVehiculosMouseClicked
-     int filaSeleccionada = tableVehiculos.getTabla().getSelectedRow();
+        int filaSeleccionada = tableVehiculos.getTabla().getSelectedRow();
 
         if (filaSeleccionada != -1) {
             Object id = tableVehiculos.getTabla().getValueAt(filaSeleccionada, 0);
             
             if (id != null && !id.toString().trim().isEmpty()) {
-                // Guardamos el ID del vehículo y encendemos los botones
                 idVehiculoSeleccionado = id.toString();
-                activarBotonesAccion(true);
+                String estadoActual = tableVehiculos.getTabla().getValueAt(filaSeleccionada, 6).toString();
+                activarBotonesAccion(true, estadoActual);
             } else {
-                activarBotonesAccion(false);
+                activarBotonesAccion(false, "");
             }
         } else {
-            // Si se deselecciona la fila
-            activarBotonesAccion(false);
+            activarBotonesAccion(false, "");
         }
     }//GEN-LAST:event_tableVehiculosMouseClicked
 
@@ -350,33 +360,24 @@ public class VehiculosPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditarVehiculoMouseClicked
 
     private void btnEliminarVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarVehiculosMouseClicked
-     if (idVehiculoSeleccionado == null) return;
+     
+        if (idVehiculoSeleccionado == null) return;
         
         int fila = tableVehiculos.getTabla().getSelectedRow();
-        if (fila == -1) return; // Validación anti-crasheo
+        if (fila == -1) return;
 
-        // Ventana de confirmación
-        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-            this, 
-            "¿Está seguro que desea eliminar el vehículo con placa: " + tableVehiculos.getTabla().getValueAt(fila, 1).toString() + "?", 
-            "Confirmar Eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.WARNING_MESSAGE
-        );
+        String accionBoton = txtEliminarCliente.getText();
+        int idVehiculo = Integer.parseInt(idVehiculoSeleccionado);
 
-        // Si presiona "Sí"
-        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-            
-            int idVehiculo = Integer.parseInt(idVehiculoSeleccionado);
-            
-            controlador.eliminar(idVehiculo);
-            tableVehiculos.eliminarFila(fila);
-            
-            // Apagamos los botones porque la selección desapareció
-            activarBotonesAccion(false);
-        }else{
-            controlador.mostrarTabla();
+        if (accionBoton.equalsIgnoreCase("Reactivar")) {
+            controlador.activarVehiculo(idVehiculo);
+        } else {
+            controlador.desactivarVehiculo(idVehiculo);
         }
+
+        controlador.mostrarTabla();
+        activarBotonesAccion(false, "");
+        tableVehiculos.getTabla().clearSelection();
     }//GEN-LAST:event_btnEliminarVehiculosMouseClicked
 
 
